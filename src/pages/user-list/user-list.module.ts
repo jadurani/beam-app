@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { UsersListPage } from './users-list';
+import { UserListPage } from './user-list';
 
 @NgModule({
   declarations: [
-    UsersListPage,
+    UserListPage,
   ],
   imports: [
-    IonicPageModule.forChild(UsersListPage),
+    IonicPageModule.forChild(UserListPage),
   ],
 })
-export class UsersListPageModule {}
+export class UserListPageModule {}
