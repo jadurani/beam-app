@@ -22,7 +22,7 @@
 <ion-content>
   <ng-container *ngIf="users && users.length > 0">
     <ion-list>
-      <button ion-item *ngFor="let user of users">
+      <button ion-item *ngFor="let user of users" (click)="showUserDetails(user)">
         <!-- replace icon with image if exists -->
         <ion-icon name="person" item-start></ion-icon>
         {{user.firstName}} {{user.lastName}} - {{user.userType | uppercase}}

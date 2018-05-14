@@ -32,4 +32,8 @@ export class UserListPage {
     this.userProvider.getUsers()
       .subscribe(users => this.users = users);
   }
+
+  showUserDetails(user: User) {
+    console.log(user);
+  }
 }
