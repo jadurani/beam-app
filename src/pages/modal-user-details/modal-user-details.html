@@ -7,7 +7,10 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>modal-user-details</ion-title>
+    <ion-title>{{user.firstName}} {{user.lastName}}</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="closeModal()">CLOSE</button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>

@@ -22,7 +22,18 @@ export class UserProvider {
     return of(USERS_MOCK_LIST);
   }
 
-  getUserById() {}
+  getUserById(id: any): Observable<User> {
+    const currUser = USERS_MOCK_LIST.find(user => user.id === id);
+    return of(currUser);
+  }
+
+  // getHero(id: number): Observable<Hero> {
+  //   const url = `${this.heroesUrl}/${id}`;
+  //   return this.http.get<Hero>(url).pipe(
+  //     tap(_ => this.log(`fetched hero id=${id}`)),
+  //     catchError(this.handleError<Hero>(`getHero id=${id}`))
+  //   );
+  // }
 
   updateUser() {}
 
@@ -34,7 +45,7 @@ export class UserProvider {
 
   searchUsers() {}
 
-  private log(message: string) {}
+  // private log(message: string) {}
 }
 
 export class User {

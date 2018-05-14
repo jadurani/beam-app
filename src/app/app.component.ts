@@ -14,8 +14,9 @@ import { DashboardPage } from '../pages/dashboard/dashboard';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
+  // rootPage: any = HomePage;
   // rootPage: any = DashboardPage;
+  rootPage: any = UserListPage;
 
   pages: Array<{title: string, component: any}>;
 
