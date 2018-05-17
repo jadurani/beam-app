@@ -33,3 +33,7 @@ $RECYCLE.BIN/
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate
+
+# ADDED BY jedimasterani
+package-lock.json*
+src/environments/environment.ts*
