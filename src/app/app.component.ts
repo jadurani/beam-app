@@ -8,6 +8,10 @@ import { ListPage } from '../pages/list/list';
 import { UserListPage } from '../pages/user-list/user-list';
 import { DashboardPage } from '../pages/dashboard/dashboard';
 
+import { firebaseConfig } from '../environments/environment';
+
+import * as firebase from 'firebase';
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -40,6 +44,8 @@ export class MyApp {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
+
+    firebase.initializeApp(firebaseConfig.staging);
   }
 
   openPage(page) {
