@@ -53,24 +53,22 @@ export class UserProvider {
 
   signup(accountInfo: any): Promise<any> {
     return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        reject('hiiiii');
-      }, 0);
+      firebase.auth().createUserWithEmailAndPassword(
+        accountInfo.email, accountInfo.password
+      )
+      .then((userCredential) => {
+        console.log(userCredential);
+        resolve('meow new user created now');
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        reject(errorMessage);
+      });
     });
-    // return firebase.auth().createUserWithEmailAndPassword(
-    //   accountInfo.email, accountInfo.password
-    // )
-    // .then((userCredential) => {
-    //   console.log(userCredential);
-    //   console.log('meow new user created now');
-    // })
-    // .catch(function (error) {
-    //   // Handle Errors here.
-    //   var errorCode = error.code;
-    //   var errorMessage = error.message;
-    //   // ...
-    // });
   }
+
   // private log(message: string) {}
 }
 
