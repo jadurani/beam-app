@@ -9,6 +9,7 @@ import { ListPage } from '../pages/list/list';
 import { DashboardPage } from '../pages/dashboard/dashboard';
 import { UserListPage } from '../pages/user-list/user-list';
 import { ModalUserDetailsPage } from '../pages/modal-user-details/modal-user-details';
+import { SignUpPage } from '../pages/sign-up/sign-up';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -21,7 +22,8 @@ import { UserProvider } from '../providers/user/user';
     ListPage,
     DashboardPage,
     UserListPage,
-    ModalUserDetailsPage
+    ModalUserDetailsPage,
+    SignUpPage
   ],
   imports: [
     BrowserModule,
@@ -35,7 +37,8 @@ import { UserProvider } from '../providers/user/user';
     ListPage,
     DashboardPage,
     UserListPage,
-    ModalUserDetailsPage
+    ModalUserDetailsPage,
+    SignUpPage
   ],
   providers: [
     StatusBar,

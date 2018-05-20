@@ -7,6 +7,7 @@ import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { UserListPage } from '../pages/user-list/user-list';
 import { DashboardPage } from '../pages/dashboard/dashboard';
+import { SignUpPage } from '../pages/sign-up/sign-up';
 
 import { firebaseConfig } from '../environments/environment';
 
@@ -20,7 +21,8 @@ export class MyApp {
 
   // rootPage: any = HomePage;
   // rootPage: any = DashboardPage;
-  rootPage: any = UserListPage;
+  // rootPage: any = UserListPage;
+  rootPage: any = SignUpPage;
 
   pages: Array<{title: string, component: any}>;
 

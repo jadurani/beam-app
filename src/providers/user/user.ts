@@ -5,8 +5,8 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 // import { catchError, map, tap } from 'rxjs/operators';
 
-// import * as firebase from 'firebase';
-// import 'firebase/firestore';
+import * as firebase from 'firebase'; //need to address later
+import 'firebase/firestore';
 
 /*
   Generated class for the UserProvider provider.
@@ -16,9 +16,12 @@ import { of } from 'rxjs/observable/of';
 */
 @Injectable()
 export class UserProvider {
+  db: any;
 
   constructor(public http: HttpClient) {
     console.log('Hello UserProvider Provider');
+
+    this.db = firebase.firestore();
   }
 
   getUsers(): Observable<User[]> {
@@ -48,6 +51,26 @@ export class UserProvider {
 
   searchUsers() {}
 
+  signup(accountInfo: any): Promise<any> {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        reject('hiiiii');
+      }, 0);
+    });
+    // return firebase.auth().createUserWithEmailAndPassword(
+    //   accountInfo.email, accountInfo.password
+    // )
+    // .then((userCredential) => {
+    //   console.log(userCredential);
+    //   console.log('meow new user created now');
+    // })
+    // .catch(function (error) {
+    //   // Handle Errors here.
+    //   var errorCode = error.code;
+    //   var errorMessage = error.message;
+    //   // ...
+    // });
+  }
   // private log(message: string) {}
 }
 
