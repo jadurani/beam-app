@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { UserProvider } from './../../providers/user/user';
+import { HomePage } from './../home/home';
 
 /**
  * Generated class for the SignUpPage page.
@@ -20,8 +21,10 @@ export class SignUpPage {
   account: { name: string, email: string, password: string } = {
     name: 'Test Human',
     email: 'test@example.com',
-    password: 'test'
+    password: 'test12'
   };
+
+  formError: string = '';
 
   constructor(
     public userProvider: UserProvider,
@@ -37,10 +40,11 @@ export class SignUpPage {
     // Attempt to login in through our User service
     this.userProvider.signup(this.account)
     .then((resp) => {
-      // this.navCtrl.push(MainPage);
+      this.navCtrl.setRoot(HomePage);
       console.log(resp);
       console.log('resolved back here at doSignUp');
     }, (err) => {
+      this.formError = err;
       console.log(err);
       console.log('rejected back here at doSignUp');
 

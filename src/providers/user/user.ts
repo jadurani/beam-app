@@ -52,16 +52,20 @@ export class UserProvider {
   searchUsers() {}
 
   signup(accountInfo: any): Promise<any> {
+    // return new Promise((resolve, reject) => {
+    //   setTimeout(() => {
+    //       reject('Im an error message');
+    //     }, 0);
+    // });
+
     return new Promise((resolve, reject) => {
       firebase.auth().createUserWithEmailAndPassword(
         accountInfo.email, accountInfo.password
       )
       .then((userCredential) => {
         console.log(userCredential);
-        resolve('meow new user created now');
       })
       .catch((error) => {
-        // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
         reject(errorMessage);
