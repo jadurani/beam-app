@@ -6,7 +6,38 @@
 
 </ion-header>
 
+<ion-content>
+  <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+    <ion-list>
 
+      <ion-item error>
+        <ion-label floating>Email</ion-label>
+        <ion-input type="email" formControlName="email" email></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Password</ion-label>
+        <ion-input type="password" formControlName="password"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Confirm Password</ion-label>
+        <ion-input type="password" formControlName="confirmPassword"></ion-input>
+      </ion-item>
+
+    </ion-list>
+
+    <div *ngIf="email.invalid && email.dirty" class="danger">
+      <div *ngIf="email.errors.required">Email is required.</div>
+      <div *ngIf="email.errors.email && !email.errors.required">Email format should be <i>john@doe.com</i>.</div>
+    </div>
+    <div padding>
+      <!-- <p *ngIf="formError" class="danger">{{formError}}</p> -->
+      <button ion-button type="submit" color="primary" block>SIGN UP</button>
+      <!-- <button ion-button type="submit" color="primary" [disabled]="!signUpForm.valid" block>SIGN UP</button> -->
+    </div>
+  </form>
+</ion-content>
+<!--
 <ion-content>
   <form (submit)="doSignup()" autocomplete="off">
     <ion-list>
@@ -28,9 +59,9 @@
 
       <div padding>
         <p *ngIf="formError" class="danger">{{formError}}</p>
-        <button ion-button color="primary" block>SIGN UP</button>
+        <button ion-button type="submit" color="primary" [disabled]="!form.valid" block>SIGN UP</button>
       </div>
 
     </ion-list>
   </form>
-</ion-content>
+</ion-content> -->
