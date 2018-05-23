@@ -32,5 +32,8 @@
     <div padding>
       <button ion-button type="submit" color="primary" [disabled]="!logInForm.valid" block>LOG IN</button>
     </div>
+    <div padding-left padding-right>
+      <button ion-button type="button" (click)="showSignUpForm()" outline block>CREATE AN ACCOUNT</button>
+    </div>
   </form>
 </ion-content>

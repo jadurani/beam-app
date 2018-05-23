@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators, FormBuilder, AbstractControl } from
 
 import { UserProvider } from './../../providers/user/user';
 import { HomePage } from './../home/home';
+import { SignUpPage } from './../sign-up/sign-up';
 
 /**
  * LogInPage
@@ -90,5 +91,9 @@ export class LogInPage {
             break;
         }
       });
+  }
+
+  showSignUpForm() {
+    this.navCtrl.push(SignUpPage);
   }
 }
