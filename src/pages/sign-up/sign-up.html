@@ -1,9 +1,7 @@
 <ion-header>
-
   <ion-navbar>
     <ion-title>Create an account</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 <ion-content>
@@ -36,7 +34,7 @@
       </div>
     </div>
     <div *ngIf="confirmPassword.invalid && confirmPassword.dirty" class="danger">
-      <div *ngIf="confirmPassword.errors.required">Enter password again.</div>
+      <div *ngIf="confirmPassword.errors.required">Enter password.</div>
       <div *ngIf="signUpForm.errors && signUpForm.errors.passwordMismatch && !confirmPassword.errors.required">
         Passwords do not match.
       </div>

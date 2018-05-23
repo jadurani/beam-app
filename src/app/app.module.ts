@@ -11,6 +11,7 @@ import { DashboardPage } from '../pages/dashboard/dashboard';
 import { UserListPage } from '../pages/user-list/user-list';
 import { ModalUserDetailsPage } from '../pages/modal-user-details/modal-user-details';
 import { SignUpPage } from '../pages/sign-up/sign-up';
+import { LogInPage } from '../pages/log-in/log-in';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -24,7 +25,8 @@ import { UserProvider } from '../providers/user/user';
     DashboardPage,
     UserListPage,
     ModalUserDetailsPage,
-    SignUpPage
+    SignUpPage,
+    LogInPage
   ],
   imports: [
     BrowserModule,
@@ -40,7 +42,8 @@ import { UserProvider } from '../providers/user/user';
     DashboardPage,
     UserListPage,
     ModalUserDetailsPage,
-    SignUpPage
+    SignUpPage,
+    LogInPage
   ],
   providers: [
     StatusBar,

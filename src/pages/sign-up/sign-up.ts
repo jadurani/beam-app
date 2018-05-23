@@ -99,7 +99,7 @@ export class SignUpPage {
       password: this.signUpForm.get('password').value
     };
 
-    // Login in through our User service
+    // Sign up through our User service
     this.userProvider.signup(accountInfo)
     .then(() => {
       this.navCtrl.setRoot(HomePage);

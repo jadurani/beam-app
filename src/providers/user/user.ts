@@ -58,6 +58,21 @@ export class UserProvider {
     });
   }
 
+  login(accountInfo: any): Promise<any> {
+    return new Promise((resolve, reject) => {
+      firebase.auth().signInWithEmailAndPassword(
+        accountInfo.email, accountInfo.password
+      )
+        .then(() => {
+          resolve();
+        })
+        .catch((errorObj) => {
+          // `error` has attributes `code` and `message`
+          reject(errorObj);
+        });
+    });
+  }
+
   // private log(message: string) {}
 }
 
