@@ -33,42 +33,27 @@ export class UserProvider {
     return of(currUser);
   }
 
-  // getHero(id: number): Observable<Hero> {
-  //   const url = `${this.heroesUrl}/${id}`;
-  //   return this.http.get<Hero>(url).pipe(
-  //     tap(_ => this.log(`fetched hero id=${id}`)),
-  //     catchError(this.handleError<Hero>(`getHero id=${id}`))
-  //   );
-  // }
+  // updateUser() {}
 
-  updateUser() {}
+  // addUser() {}
 
-  addUser() {}
-
-  deactivateUser() {}
+  // deactivateUser() {}
 
   // activateUser() {}
 
   searchUsers() {}
 
   signup(accountInfo: any): Promise<any> {
-    // return new Promise((resolve, reject) => {
-    //   setTimeout(() => {
-    //       reject('Im an error message');
-    //     }, 0);
-    // });
-
     return new Promise((resolve, reject) => {
       firebase.auth().createUserWithEmailAndPassword(
         accountInfo.email, accountInfo.password
       )
-      .then((userCredential) => {
-        console.log(userCredential);
+      .then(() => {
+        resolve();
       })
-      .catch((error) => {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        reject(errorMessage);
+      .catch((errorObj) => {
+        // `error` has attributes `code` and `message`
+        reject(errorObj);
       });
     });
   }
