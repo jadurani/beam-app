@@ -3,17 +3,15 @@ import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-// import { catchError, map, tap } from 'rxjs/operators';
 
-import * as firebase from 'firebase'; //need to address later
-// import 'firebase/firestore';
+import * as firebase from 'firebase';
 
-/*
-  Generated class for the UserProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
+/**
+ * UserProvider
+ *
+ * @method getUsers
+ * @method getUserById
+ */
 @Injectable()
 export class UserProvider {
   db: any;
@@ -39,31 +37,7 @@ export class UserProvider {
 
   // activateUser() {}
 
-  searchUsers() {}
-
-  signup(accountInfo: any): Promise<any> {
-    return new Promise((resolve, reject) => {
-      firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-        .then(() => {
-          firebase.auth().createUserWithEmailAndPassword(accountInfo.email, accountInfo.password)
-            .then(() => resolve())
-            .catch(errorObj => reject(errorObj));
-        })
-        .catch(errorObj => reject(errorObj));
-    });
-  }
-
-  login(accountInfo: any): Promise<any> {
-    return new Promise((resolve, reject) => {
-      firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-        .then(() => {
-          firebase.auth().signInWithEmailAndPassword(accountInfo.email, accountInfo.password)
-            .then(() => resolve())
-            .catch(errorObj => reject(errorObj));
-        })
-        .catch(errorObj => reject(errorObj));
-    });
-  }
+  // searchUsers() {}
 
   // private log(message: string) {}
 }

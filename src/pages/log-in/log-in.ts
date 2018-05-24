@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { FormGroup, FormControl, Validators, FormBuilder, AbstractControl } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
-import { UserProvider } from './../../providers/user/user';
-import { HomePage } from './../home/home';
+import { AuthProvider } from './../../providers/auth/auth';
 import { SignUpPage } from './../sign-up/sign-up';
-
 
 /**
  * LogInPage
@@ -28,7 +26,7 @@ export class LogInPage {
 
   constructor(
     public formBuilder: FormBuilder,
-    public userProvider: UserProvider,
+    public authProvider: AuthProvider,
     public navCtrl: NavController,
     public navParams: NavParams) {
 
@@ -62,7 +60,7 @@ export class LogInPage {
   }
 
 /**
- * Sends a request to UserProvider to create a user
+ * Sends a request to AuthProvider to create a user
  * based on the email and password credentials entered
  * by the user.
  *
@@ -77,8 +75,8 @@ export class LogInPage {
       password: this.logInForm.get('password').value
     };
 
-    // Log in in through our User service
-    this.userProvider.login(accountInfo)
+    // Log in through AuthProvider
+    this.authProvider.login(accountInfo)
       .catch((errorObj) => {
         switch (errorObj.code) {
           case 'auth/invalid-email':

@@ -7,7 +7,6 @@ import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { UserListPage } from '../pages/user-list/user-list';
 import { DashboardPage } from '../pages/dashboard/dashboard';
-import { SignUpPage } from '../pages/sign-up/sign-up';
 import { LogInPage } from '../pages/log-in/log-in';
 
 import { firebaseConfig } from '../environments/environment';
