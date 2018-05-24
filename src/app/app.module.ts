@@ -7,7 +7,6 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
-import { DashboardPage } from '../pages/dashboard/dashboard';
 import { UserListPage } from '../pages/user-list/user-list';
 import { ModalUserDetailsPage } from '../pages/modal-user-details/modal-user-details';
 import { SignUpPage } from '../pages/sign-up/sign-up';
@@ -23,7 +22,6 @@ import { AuthProvider } from '../providers/auth/auth';
     MyApp,
     HomePage,
     ListPage,
-    DashboardPage,
     UserListPage,
     ModalUserDetailsPage,
     SignUpPage,
@@ -40,7 +38,6 @@ import { AuthProvider } from '../providers/auth/auth';
     MyApp,
     HomePage,
     ListPage,
-    DashboardPage,
     UserListPage,
     ModalUserDetailsPage,
     SignUpPage,

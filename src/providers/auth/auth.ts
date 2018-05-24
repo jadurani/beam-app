@@ -36,4 +36,12 @@ export class AuthProvider {
         .catch(errorObj => reject(errorObj));
     });
   }
+
+  signOut() {
+    firebase.auth().signOut();
+  }
+
+  getCurrentUser() {
+    return firebase.auth().currentUser;
+  }
 }
