@@ -6,6 +6,7 @@ import { UserProvider } from './../../providers/user/user';
 import { HomePage } from './../home/home';
 import { SignUpPage } from './../sign-up/sign-up';
 
+
 /**
  * LogInPage
  *
@@ -78,10 +79,7 @@ export class LogInPage {
 
     // Log in in through our User service
     this.userProvider.login(accountInfo)
-      .then(() => {
-        this.navCtrl.setRoot(HomePage);
-      }, (errorObj) => {
-        console.log(errorObj);
+      .catch((errorObj) => {
         switch (errorObj.code) {
           case 'auth/invalid-email':
             this.logInForm.get('email').setErrors({ email: true });

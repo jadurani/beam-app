@@ -6,7 +6,7 @@ import { of } from 'rxjs/observable/of';
 // import { catchError, map, tap } from 'rxjs/operators';
 
 import * as firebase from 'firebase'; //need to address later
-import 'firebase/firestore';
+// import 'firebase/firestore';
 
 /*
   Generated class for the UserProvider provider.
@@ -19,8 +19,6 @@ export class UserProvider {
   db: any;
 
   constructor(public http: HttpClient) {
-    console.log('Hello UserProvider Provider');
-
     this.db = firebase.firestore();
   }
 
@@ -45,31 +43,25 @@ export class UserProvider {
 
   signup(accountInfo: any): Promise<any> {
     return new Promise((resolve, reject) => {
-      firebase.auth().createUserWithEmailAndPassword(
-        accountInfo.email, accountInfo.password
-      )
-      .then(() => {
-        resolve();
-      })
-      .catch((errorObj) => {
-        // `error` has attributes `code` and `message`
-        reject(errorObj);
-      });
+      firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+        .then(() => {
+          firebase.auth().createUserWithEmailAndPassword(accountInfo.email, accountInfo.password)
+            .then(() => resolve())
+            .catch(errorObj => reject(errorObj));
+        })
+        .catch(errorObj => reject(errorObj));
     });
   }
 
   login(accountInfo: any): Promise<any> {
     return new Promise((resolve, reject) => {
-      firebase.auth().signInWithEmailAndPassword(
-        accountInfo.email, accountInfo.password
-      )
+      firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
         .then(() => {
-          resolve();
+          firebase.auth().signInWithEmailAndPassword(accountInfo.email, accountInfo.password)
+            .then(() => resolve())
+            .catch(errorObj => reject(errorObj));
         })
-        .catch((errorObj) => {
-          // `error` has attributes `code` and `message`
-          reject(errorObj);
-        });
+        .catch(errorObj => reject(errorObj));
     });
   }
 

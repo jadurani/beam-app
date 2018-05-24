@@ -19,11 +19,7 @@ import * as firebase from 'firebase';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  // rootPage: any = HomePage;
-  // rootPage: any = DashboardPage;
-  // rootPage: any = UserListPage;
-  // rootPage: any = SignUpPage;
-  rootPage: any = LogInPage;
+  rootPage: any;
 
   pages: Array<{title: string, component: any}>;
 
@@ -49,11 +45,22 @@ export class MyApp {
     });
 
     firebase.initializeApp(firebaseConfig.staging);
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.rootPage = HomePage;
+      } else {
+        this.rootPage = LogInPage;
+      }
+    });
   }
 
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
+  }
+
+  signOut() {
+    firebase.auth().signOut();
   }
 }
