@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, ViewController, NavParams } from 'ionic-angular';
-import { UserProvider, User } from '../../providers/user/user';
+
+import { User } from './../../models/user-model';
+import { UserProvider } from '../../providers/user/user';
 
 /**
  * Generated class for the ModalUserDetailsPage page.
@@ -16,26 +18,21 @@ import { UserProvider, User } from '../../providers/user/user';
 })
 export class ModalUserDetailsPage {
   user: User;
-  // we may need a minimal user later
 
   constructor(
     public viewCtrl: ViewController,
     public navParams: NavParams,
     public userProvider: UserProvider) {
 
-    const userId = this.navParams.get('userId');
-    this.loadUser(userId);
+    const user = this.navParams.get('user');
+    this.loadUser(user);
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ModalUserDetailsPage');
-  }
-
-  loadUser(userId: any) {
-    this.userProvider.getUserById(userId)
+  // later on to be basic info
+  loadUser(user: User) {
+    this.userProvider.getUserById(user.id)
       .subscribe(user => {
         this.user = user;
-        console.log('meow here');
       });
   }
 

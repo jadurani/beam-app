@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, ModalController, NavParams } from 'ionic-angular';
-import { UserProvider, User } from '../../providers/user/user';
+
+import { User } from './../../models/user-model';
+
+import { UserProvider } from '../../providers/user/user';
 import { ModalUserDetailsPage } from '../modal-user-details/modal-user-details';
 
 /**
@@ -25,7 +28,6 @@ export class UserListPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad UserListPage');
     this.getUsers();
   }
 
@@ -35,9 +37,8 @@ export class UserListPage {
   }
 
   showUserDetails(user: User) {
-    console.log(user);
     // we're passing the id only, supposing the ID above is just a minified version of UserObject
-    const userModal = this.modalCtrl.create(ModalUserDetailsPage, {userId: user.id});
+    const userModal = this.modalCtrl.create(ModalUserDetailsPage, { user });
     userModal.present();
   }
 }
