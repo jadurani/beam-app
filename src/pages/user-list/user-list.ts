@@ -19,21 +19,26 @@ import { ModalUserDetailsPage } from '../modal-user-details/modal-user-details';
   templateUrl: 'user-list.html',
 })
 export class UserListPage {
-  public users: User[];
+  users: User[];
+  loading: boolean = true;
 
   constructor(
     public modalCtrl: ModalController,
     public navParams: NavParams,
-    public userProvider: UserProvider) {
-  }
-
-  ionViewDidLoad() {
+    public userProvider: UserProvider
+  ) {
     this.getUsers();
   }
 
   getUsers() {
     this.userProvider.getUsers()
-      .subscribe(users => this.users = users);
+      .then(users => {
+        this.users = users
+        this.loading = false;
+      })
+      .catch(() => {
+        this.loading = false;
+      });
   }
 
   showUserDetails(user: User) {

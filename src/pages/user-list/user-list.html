@@ -20,19 +20,22 @@
 
 </ion-content>
 <ion-content>
-  <ng-container *ngIf="users && users.length > 0">
+  <ng-container *ngIf="loading">
+    <ion-spinner></ion-spinner>
+  </ng-container>
+  <ng-container *ngIf="!loading && users && users.length > 0">
     <ion-list>
       <button ion-item *ngFor="let user of users" (click)="showUserDetails(user)">
         <!-- replace icon with image if exists -->
         <ion-icon name="person" item-start></ion-icon>
           {{ user.displayName }}
         <div class="item-note" item-end>
-          {{user.dateJoined | date:'h:mm a, d MMM yyyy'}}
+          {{user.dateJoined | date:'d MMM yyyy'}}
         </div>
       </button>
     </ion-list>
   </ng-container>
-  <ng-container *ngIf="!users || users.length === 0">
+  <ng-container *ngIf="!loading && users && users.length === 0">
     Seems like you don't have any user yet! Add one now!
   </ng-container>
 </ion-content>

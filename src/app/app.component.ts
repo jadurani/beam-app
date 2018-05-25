@@ -55,7 +55,8 @@ export class MyApp {
     firebase.initializeApp(firebaseConfig.staging);
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        this.rootPage = HomePage;
+        // this.rootPage = HomePage;
+        this.rootPage = UserListPage;
       } else {
         this.rootPage = LogInPage;
       }

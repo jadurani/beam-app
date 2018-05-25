@@ -18,6 +18,8 @@ import { UserProvider } from '../../providers/user/user';
 })
 export class ModalUserDetailsPage {
   user: User;
+  loading: boolean = true;
+  errorMsg: string = '';
 
   constructor(
     public viewCtrl: ViewController,
@@ -31,8 +33,13 @@ export class ModalUserDetailsPage {
   // later on to be basic info
   loadUser(user: User) {
     this.userProvider.getUserById(user.id)
-      .subscribe(user => {
+      .then(user => {
         this.user = user;
+        this.loading = false;
+      })
+      .catch(error => {
+        this.loading = false;
+        this.errorMsg = error.message;
       });
   }
 

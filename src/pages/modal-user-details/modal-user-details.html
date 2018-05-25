@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{user.firstName}} {{user.lastName}}</ion-title>
+    <ion-title *ngIf="user && !loading">{{ user.displayName }}</ion-title>
     <ion-buttons end>
       <button ion-button (click)="closeModal()">CLOSE</button>
     </ion-buttons>
@@ -17,15 +17,15 @@
 
 
 <ion-content padding>
-  <ion-list>
-    <ion-list-header>
-      <ion-header>
-        Basic Details
-      </ion-header>
-    </ion-list-header>
-    <ion-item-group>
-      <ion-item>{{user.firstName || '' }}</ion-item>
-      <ion-item>{{user.lastName || ''}}</ion-item>
-    </ion-item-group>
-  </ion-list>
+  <ng-container *ngIf="user && !loading">
+    <h3>Basic Information</h3>
+    <p>{{ user.firstName }}</p>
+    <p>{{ user.lastName }}</p>
+    <p>{{ user.suffix }}</p>
+    <p>{{ user.gender }}</p>
+    <p>{{ user.dateOfBirth | date:'h:mm a, d MMM yyyy' }}</p>
+  </ng-container>
+  <ng-container *ngIf="!user || loading">
+    <ion-spinner></ion-spinner>
+  </ng-container>
 </ion-content>

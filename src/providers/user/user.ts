@@ -1,12 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
-
 import { User } from './../../models/user-model';
 
 import * as firebase from 'firebase';
+
 
 /**
  * UserProvider
@@ -17,18 +13,59 @@ import * as firebase from 'firebase';
 @Injectable()
 export class UserProvider {
   db: any;
+  usersList : User[];
+  COLLECTION: string = 'users';
 
-  constructor(public http: HttpClient) {
+  constructor() {
     this.db = firebase.firestore();
+    this.db.settings({
+      timestampsInSnapshots: true,
+    });
   }
 
-  getUsers(): Observable<User[]> {
-    return of(USERS_MOCK_LIST);
+  getUsers(useCache = true): Promise<any> {
+    return new Promise((resolve, reject) => {
+      if (useCache && this.usersList){
+        resolve(this.usersList);
+        return;
+      }
+
+      this.db.collection(this.COLLECTION)
+        .get()
+        .then(querySnapshot => {
+          let usersArray = [];
+
+          querySnapshot.forEach(doc => {
+            var userObj = JSON.parse(JSON.stringify(doc.data()));
+            userObj.id = doc.id;
+            const user = this._setUser(userObj);
+            usersArray.push(user);
+          });
+
+          this.usersList = usersArray;
+          resolve(this.usersList);
+        })
+        .catch((error: any) => {
+          reject(error);
+        });
+    });
   }
 
-  getUserById(id: string): Observable<User> {;
-    const currUser = USERS_MOCK_LIST.find(user => user.id === id);
-    return of(currUser);
+  getUserById(userId: string): Promise<User> {
+    return new Promise((resolve, reject) => {
+      this.db.collection(this.COLLECTION)
+        .doc(userId)
+        .get()
+        .then(doc => {
+          var userObj = JSON.parse(JSON.stringify(doc.data()));
+          userObj.id = doc.id;
+          const user = this._setUser(userObj);
+          resolve(user);
+        })
+        .catch((error: any) => {
+          reject(error);
+        });
+    });
   }
 
   // updateUser() {}
@@ -42,10 +79,26 @@ export class UserProvider {
   // searchUsers() {}
 
   // private log(message: string) {}
-}
 
-const USERS_MOCK_LIST: User[] = [
-  new User('1', 'Cornelius'),
-  new User('2', 'Parke'),
-  new User('3', 'Nancie')
-];
+  private _setUser(userObj: any) {
+    let user = new User(userObj.id, userObj.dateJoined);
+
+    user.setFirebaseAuthInfo(
+      userObj.authId ? userObj.authId : null,
+      userObj.displayName ? userObj.displayName : null,
+      userObj.email ? userObj.email : null,
+      userObj.phoneNumber ? userObj.phoneNumber : null,
+      userObj.photoUrl ? userObj.photoUrl : null
+    );
+
+    user.setBasicInfo(
+      userObj.firstName ? userObj.firstName : null,
+      userObj.lastName ? userObj.lastName : null,
+      userObj.suffix ? userObj.suffix : null,
+      userObj.gender ? userObj.gender : null,
+      userObj.dateOfBirth ? userObj.dateOfBirth : null,
+    );
+
+    return user;
+  }
+}
