@@ -170,6 +170,8 @@ export class UserProvider {
       }
 
       if (userObj.iceContact) user.setICE(userObj.iceContact);
+
+      if (userObj.otherRemarks) user.setOtherRemarks(userObj.otherRemarks);
     }
     return user;
   }

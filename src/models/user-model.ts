@@ -17,13 +17,17 @@ export class User {
     phoneNumbers: Array<PhoneNumber> | null;
     address: Address | null;
 
-    // Person to contact in case of emergency
-    iceContact: ICEContact | null;
-
     // Permission roles
     roles: UserPermissions;
 
+    // Person to contact in case of emergency
+    iceContact: ICEContact | null;
+
+    // Fitness Parameters
     bodyInfo: UserBodyInfo | null;
+
+    // Medical history, other preferences
+    otherRemarks: string | null;
 
     constructor(
         id: string,
@@ -78,6 +82,10 @@ export class User {
 
     public setICE (iceContact: ICEContact) {
         this.iceContact = iceContact;
+    }
+
+    public setOtherRemarks (remarks: string) {
+        this.otherRemarks = remarks;
     }
 
     public getRoles (): Array<string> {

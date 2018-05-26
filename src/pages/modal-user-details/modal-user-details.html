@@ -41,6 +41,14 @@
       Add a person to contact in case of emergency!
     </ng-container>
 
+    <h3>Medical Remarks</h3>
+    <ng-container *ngIf="user.otherRemarks">
+      {{ user.otherRemarks }}
+    </ng-container>
+    <ng-container *ngIf="!user.otherRemarks">
+      Add medical remarks.
+    </ng-container>
+
     <h3>Fitness Parameters</h3>
     <ng-container *ngIf="user.bodyInfo">
       {{ user.bodyInfo.dateTaken | date:'h:mm a, d MMM yyyy' }}
