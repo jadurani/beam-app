@@ -14,6 +14,7 @@ import { UserProvider } from '../../providers/user/user';
 })
 export class ModalUserDetailsPage {
   user: User;
+  currentLoggedInUser: User;
   loading: boolean = true;
   errorMsg: string = '';
 
@@ -22,6 +23,7 @@ export class ModalUserDetailsPage {
     public navParams: NavParams,
     public userProvider: UserProvider) {
 
+    this.currentLoggedInUser = this.userProvider.getCurrentUser();
     const user = this.navParams.get('user');
     this.loadUser(user);
   }

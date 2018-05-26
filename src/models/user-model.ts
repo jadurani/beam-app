@@ -18,24 +18,23 @@ export class User {
     address: Address | null;
 
     // Permission roles
-    roles: {
-        owner: boolean | null,
-        staff: boolean | null,
-        trainer: boolean | null,
-        client: boolean | null,
-    };
+    roles: UserPermissions;
 
     bodyInfo: UserBodyInfo | null;
 
     constructor(
         id: string,
-        dateJoined: {seconds: number, nanoseconds: number}
+        dateJoined: FirebaseDate,
+        roles: UserPermissions,
     ) {
         if (!id) throw "Provide User ID!";
         this.id = id;
 
-        if (!id) throw "Provide Date user joined!";
+        if (!dateJoined) throw "Provide the date when user joined!";
         this.dateJoined = new Date(dateJoined.seconds * 1000);
+
+        if(!roles) throw "Provide the user's roles!";
+        this.roles = roles;
     }
 
     public setFirebaseAuthInfo (
@@ -72,6 +71,10 @@ export class User {
 
     public setFitnessParams (bodyInfo: UserBodyInfo) {
         this.bodyInfo = bodyInfo;
+    }
+
+    public getRoles (): Array<string> {
+        return Object.keys(this.roles);
     }
 }
 
@@ -169,3 +172,10 @@ interface FirebaseDate {
     seconds: number;
     nanoseconds: number;
 }
+
+interface UserPermissions {
+    owner: boolean | null,
+    staff: boolean | null,
+    trainer: boolean | null,
+    client: boolean | null,
+};

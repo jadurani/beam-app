@@ -17,6 +17,10 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { UserProvider } from '../providers/user/user';
 import { AuthProvider } from '../providers/auth/auth';
 
+// Backend Config
+import * as firebase from 'firebase';
+import { firebaseConfig } from '../environments/environment';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -51,4 +55,9 @@ import { AuthProvider } from '../providers/auth/auth';
     AuthProvider
   ]
 })
-export class AppModule {}
+export class AppModule {
+
+  constructor() {
+    firebase.initializeApp(firebaseConfig.staging);
+  }
+}

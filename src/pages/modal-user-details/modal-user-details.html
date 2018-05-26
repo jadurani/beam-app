@@ -9,6 +9,13 @@
 
 <ion-content padding>
   <ng-container *ngIf="user && !loading">
+    <ng-container *ngIf="currentLoggedInUser.roles.owner">
+      <h3>User Permissions</h3>
+      This user is can act as any of the following:
+      <ul>
+        <li *ngFor="let role of user.getRoles()">{{ role }} </li>
+      </ul>
+    </ng-container>
     <h3>Basic Information</h3>
     <p>{{ user.firstName }} {{ user.lastName }} {{ user.suffix }}</p>
     <p>{{ user.gender }}</p>

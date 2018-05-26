@@ -4,10 +4,6 @@ import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-// Backend Config
-import * as firebase from 'firebase';
-import { firebaseConfig } from '../environments/environment';
-
 // Components
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
@@ -16,7 +12,10 @@ import { LogInPage } from '../pages/log-in/log-in';
 
 // Providers
 import { AuthProvider } from './../providers/auth/auth';
+import { UserProvider } from './../providers/user/user';
 
+// Backend
+import * as firebase from 'firebase';
 
 @Component({
   templateUrl: 'app.html'
@@ -30,6 +29,7 @@ export class MyApp {
 
   constructor(
     public authProvider: AuthProvider,
+    public userProvider: UserProvider,
     public platform: Platform,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen) {
@@ -52,9 +52,9 @@ export class MyApp {
       this.splashScreen.hide();
     });
 
-    firebase.initializeApp(firebaseConfig.staging);
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
+        this.userProvider.setCurrentUser();
         // this.rootPage = HomePage;
         this.rootPage = UserListPage;
       } else {

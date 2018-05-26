@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User, UserBodyInfo } from './../../models/user-model';
 
+import { AuthProvider } from './../../providers/auth/auth';
 import * as firebase from 'firebase';
 
 
@@ -13,14 +14,59 @@ import * as firebase from 'firebase';
 @Injectable()
 export class UserProvider {
   db: any;
+  currentUser: User;
   usersList : User[];
   COLLECTION: string = 'users';
 
-  constructor() {
+  constructor(public authProvider: AuthProvider) {
     this.db = firebase.firestore();
     this.db.settings({
       timestampsInSnapshots: true,
     });
+  }
+
+  /**
+   * @method UserProvider.setCurrentUser
+   * @description
+   * Sets the current user as an instance of User, by also
+   * using the attributes of firebase.User
+   */
+  setCurrentUser() {
+    let authCurrentUser = this.authProvider.getCurrentUser();
+    this.db.collection(this.COLLECTION)
+      .where('authId', '==', authCurrentUser.uid)
+      .get()
+      .then((querySnapshot) => {
+        let userObj;
+
+        querySnapshot.forEach(doc => {
+          userObj = JSON.parse(JSON.stringify(doc.data()))
+          userObj.id = doc.id;
+        });
+
+        userObj.displayName = authCurrentUser.displayName;
+        userObj.email = authCurrentUser.email;
+        userObj.phoneNumber = authCurrentUser.phoneNumber;
+        userObj.photoUrl = authCurrentUser.photoURL;
+
+        this.currentUser = this._getUser(userObj);
+      })
+      .catch((error: any) => {
+        console.log(error);
+      });
+  }
+
+  /**
+   * @method UserProvider.getCurrentUser
+   * @description
+   * setCurrentUser must always be called at the root component.
+   * Only then can this function getCurrentUser be called anywhere
+   * else in the app.
+   *
+   * @returns The current logged in user
+   */
+  getCurrentUser(): User {
+    return this.currentUser;
   }
 
   getUsers(useCache = true): Promise<any> {
@@ -84,7 +130,7 @@ export class UserProvider {
     userObj: any,
     getBodyInfo: boolean = false,
   ) {
-    const user = new User(userObj.id, userObj.dateJoined);
+    const user = new User(userObj.id, userObj.dateJoined, userObj.roles);
 
     user.setFirebaseAuthInfo(
       userObj.authId ? userObj.authId : null,
@@ -94,19 +140,15 @@ export class UserProvider {
       userObj.photoUrl ? userObj.photoUrl : null
     );
 
-    try {
-      user.setBasicInfo(
-        userObj.firstName ? userObj.firstName : null,
-        userObj.lastName ? userObj.lastName : null,
-        userObj.suffix ? userObj.suffix : null,
-        userObj.gender ? userObj.gender : null,
-        userObj.dateOfBirth ? userObj.dateOfBirth : null,
-        userObj.phoneNumbers ? userObj.phoneNumbers : null,
-        userObj.address ? userObj.address : null,
-      );
-    } catch (error) {
-      console.log(error);
-    }
+    user.setBasicInfo(
+      userObj.firstName ? userObj.firstName : null,
+      userObj.lastName ? userObj.lastName : null,
+      userObj.suffix ? userObj.suffix : null,
+      userObj.gender ? userObj.gender : null,
+      userObj.dateOfBirth ? userObj.dateOfBirth : null,
+      userObj.phoneNumbers ? userObj.phoneNumbers : null,
+      userObj.address ? userObj.address : null,
+    );
 
     if (getBodyInfo && userObj.bodyInfo) {
       const userBodyInfo = new UserBodyInfo(
