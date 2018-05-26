@@ -7,7 +7,7 @@ export class User {
     photoUrl: string | null;
 
     // Basic Information
-    id: string; // Document ID in Firebase for
+    id: string; // Document ID in Firebase
     dateJoined: Date;
     firstName: string | null;
     lastName: string | null;
@@ -29,7 +29,7 @@ export class User {
         client: boolean | null,
     };
 
-    bodyInfo: Array<UserBodyInfo>;
+    bodyInfo: UserBodyInfo | null;
 
     constructor(
         id: string,
@@ -40,12 +40,6 @@ export class User {
 
         if (!id) throw "Provide Date user joined!";
         this.dateJoined = new Date(dateJoined.seconds * 1000);
-
-
-    }
-
-    public addBodyDetails(bodyInfo: UserBodyInfo): void {
-        this.bodyInfo.push(bodyInfo);
     }
 
     public setFirebaseAuthInfo (
@@ -75,9 +69,14 @@ export class User {
         this.gender = gender;
         this.dateOfBirth = dateOfBirth ? new Date(dateOfBirth.seconds * 1000) : null;
     }
+
+    public setFitnessParams (bodyInfo: UserBodyInfo) {
+        this.bodyInfo = bodyInfo;
+    }
 }
 
-class UserBodyInfo {
+export class UserBodyInfo {
+    uid: string;
     dateTaken: Date;
     trueAge: number;
     weight: number; // (kg)
@@ -103,7 +102,8 @@ class UserBodyInfo {
     };
 
     constructor(
-        dateTaken: Date,
+        uid: string,
+        dateTaken: { seconds: number, nanoseconds: number },
         trueAge: number,
         weight: number,
         height: number,
@@ -115,16 +115,41 @@ class UserBodyInfo {
         subcutaneousMeasurements: { total, trunk, arms, legs },
         skeletalMeasurements: { total, trunk, arms, legs },
     ) {
-        this.dateTaken = dateTaken;
+        if (!uid) throw "Provide uid!";
+        this.uid = uid;
+
+        if (!dateTaken) throw "Provide dateTaken!";
+        this.dateTaken = new Date(dateTaken.seconds
+             * 1000);;
+        if (!trueAge) throw "Provide trueAge!";
         this.trueAge = trueAge;
+
+        if (!weight) throw "Provide weight!";
         this.weight = weight;
+
+        if (!height) throw "Provide height!";
         this.height = height;
+
+        if (!percBodyFat) throw "Provide percBodyFat!";
         this.percBodyFat = percBodyFat;
+
+        if (!visceralFatRating) throw "Provide visceralFatRating!";
         this.visceralFatRating = visceralFatRating;
+
+        if (!restingMetabolism) throw "Provide restingMetabolism!";
         this.restingMetabolism = restingMetabolism;
+
+        if (!bmi) throw "Provide bmi!";
         this.bmi = bmi;
+
+        if (!bodyAge) throw "Provide bodyAge!";
         this.bodyAge = bodyAge;
+
+        if (!subcutaneousMeasurements) throw "Provide subcutaneousMeasurements!";
         this.subcutaneousMeasurements = subcutaneousMeasurements;
+
+        if (!skeletalMeasurements) throw "Provide skeletalMeasurements!";
         this.skeletalMeasurements = skeletalMeasurements;
+
     }
 }

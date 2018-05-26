@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { User } from './../../models/user-model';
+import { User, UserBodyInfo } from './../../models/user-model';
 
 import * as firebase from 'firebase';
 
@@ -38,7 +38,7 @@ export class UserProvider {
           querySnapshot.forEach(doc => {
             var userObj = JSON.parse(JSON.stringify(doc.data()));
             userObj.id = doc.id;
-            const user = this._setUser(userObj);
+            const user = this._getUser(userObj);
             usersArray.push(user);
           });
 
@@ -59,7 +59,7 @@ export class UserProvider {
         .then(doc => {
           var userObj = JSON.parse(JSON.stringify(doc.data()));
           userObj.id = doc.id;
-          const user = this._setUser(userObj);
+          let user = this._getUser(userObj, true)
           resolve(user);
         })
         .catch((error: any) => {
@@ -80,8 +80,11 @@ export class UserProvider {
 
   // private log(message: string) {}
 
-  private _setUser(userObj: any) {
-    let user = new User(userObj.id, userObj.dateJoined);
+  private _getUser(
+    userObj: any,
+    getBodyInfo: boolean = false,
+  ) {
+    const user = new User(userObj.id, userObj.dateJoined);
 
     user.setFirebaseAuthInfo(
       userObj.authId ? userObj.authId : null,
@@ -98,6 +101,24 @@ export class UserProvider {
       userObj.gender ? userObj.gender : null,
       userObj.dateOfBirth ? userObj.dateOfBirth : null,
     );
+
+    if (getBodyInfo && userObj.bodyInfo) {
+      const userBodyInfo = new UserBodyInfo(
+        userObj.id,
+        userObj.bodyInfo.dateTaken,
+        userObj.bodyInfo.trueAge,
+        userObj.bodyInfo.weight,
+        userObj.bodyInfo.height,
+        userObj.bodyInfo.percBodyFat,
+        userObj.bodyInfo.visceralFatRating,
+        userObj.bodyInfo.restingMetabolism,
+        userObj.bodyInfo.bodyAge,
+        userObj.bodyInfo.bmi,
+        userObj.bodyInfo.subcutaneousMeasurements,
+        userObj.bodyInfo.skeletalMeasurements,
+      );
+      user.setFitnessParams(userBodyInfo);
+    }
 
     return user;
   }

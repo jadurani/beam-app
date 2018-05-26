@@ -1,29 +1,45 @@
-<!--
-  Generated template for the ModalUserDetailsPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
   <ion-navbar>
     <ion-title *ngIf="user && !loading">{{ user.displayName }}</ion-title>
     <ion-buttons end>
       <button ion-button (click)="closeModal()">CLOSE</button>
     </ion-buttons>
   </ion-navbar>
-
 </ion-header>
-
 
 <ion-content padding>
   <ng-container *ngIf="user && !loading">
     <h3>Basic Information</h3>
-    <p>{{ user.firstName }}</p>
-    <p>{{ user.lastName }}</p>
-    <p>{{ user.suffix }}</p>
+    <p>{{ user.firstName }} {{ user.lastName }} {{ user.suffix }}</p>
     <p>{{ user.gender }}</p>
     <p>{{ user.dateOfBirth | date:'h:mm a, d MMM yyyy' }}</p>
+    <p>{{ user.phoneNumber }}</p>
+    <p>{{ user.email }}</p>
+    <h3>Fitness Parameters</h3>
+    <ng-container *ngIf="user.bodyInfo">
+      {{ user.bodyInfo.dateTaken | date:'h:mm a, d MMM yyyy' }}
+      {{ user.bodyInfo.trueAge }}
+      {{ user.bodyInfo.weight }} kg
+      {{ user.bodyInfo.height }} cm
+      {{ user.bodyInfo.percBodyFat }} %
+      {{ user.bodyInfo.visceralFatRating }} %
+      {{ user.bodyInfo.restingMetabolism }}
+      {{ user.bodyInfo.bmi }}
+      {{ user.bodyInfo.bodyAge }}
+
+      {{ user.bodyInfo.subcutaneousMeasurements.total }}
+      {{ user.bodyInfo.subcutaneousMeasurements.trunk }}
+      {{ user.bodyInfo.subcutaneousMeasurements.arms }}
+      {{ user.bodyInfo.subcutaneousMeasurements.legs }}
+
+      {{ user.bodyInfo.skeletalMeasurements.total }}
+      {{ user.bodyInfo.skeletalMeasurements.trunk }}
+      {{ user.bodyInfo.skeletalMeasurements.arms }}
+      {{ user.bodyInfo.skeletalMeasurements.legs }}
+    </ng-container>
+    <ng-container *ngIf="!user.bodyInfo">
+      Looks like you haven't had your fitness parameters taken yet!
+    </ng-container>
   </ng-container>
   <ng-container *ngIf="!user || loading">
     <ion-spinner></ion-spinner>

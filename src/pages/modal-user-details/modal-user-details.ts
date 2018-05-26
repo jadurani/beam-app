@@ -5,12 +5,8 @@ import { User } from './../../models/user-model';
 import { UserProvider } from '../../providers/user/user';
 
 /**
- * Generated class for the ModalUserDetailsPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
+ * Modal to show user details.
  */
-
 @IonicPage()
 @Component({
   selector: 'page-modal-user-details',
@@ -30,7 +26,6 @@ export class ModalUserDetailsPage {
     this.loadUser(user);
   }
 
-  // later on to be basic info
   loadUser(user: User) {
     this.userProvider.getUserById(user.id)
       .then(user => {
