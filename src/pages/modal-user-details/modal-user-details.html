@@ -13,8 +13,19 @@
     <p>{{ user.firstName }} {{ user.lastName }} {{ user.suffix }}</p>
     <p>{{ user.gender }}</p>
     <p>{{ user.dateOfBirth | date:'h:mm a, d MMM yyyy' }}</p>
-    <p>{{ user.phoneNumber }}</p>
+
+    <h3>Contact Information</h3>
     <p>{{ user.email }}</p>
+    <ng-container *ngFor="let phone of user.phoneNumbers">
+      <p>{{ phone.type }} - {{ phone.number }}</p>
+    </ng-container>
+    <p *ngIf="user.address">
+      {{ user.address.street }}
+      {{ user.address.city }}
+      {{ user.address.region }}
+      {{ user.address.country }}
+    </p>
+
     <h3>Fitness Parameters</h3>
     <ng-container *ngIf="user.bodyInfo">
       {{ user.bodyInfo.dateTaken | date:'h:mm a, d MMM yyyy' }}

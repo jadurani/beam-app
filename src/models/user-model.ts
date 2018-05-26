@@ -14,12 +14,8 @@ export class User {
     suffix: string | null;
     gender: string | null;
     dateOfBirth: Date | null;
-    address: {
-        street: string | null,
-        city: string | null,
-        region: string | null,
-        country: string | null
-    };
+    phoneNumbers: Array<PhoneNumber> | null;
+    address: Address | null;
 
     // Permission roles
     roles: {
@@ -61,13 +57,17 @@ export class User {
         lastName: string | null = null,
         suffix: string | null = null,
         gender: string | null = null,
-        dateOfBirth: { seconds: number, nanoseconds: number } | null = null,
+        dateOfBirth: FirebaseDate | null = null,
+        phoneNumbers: Array<PhoneNumber> | null = null,
+        address: Address | null = null,
     ) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.suffix = suffix;
         this.gender = gender;
         this.dateOfBirth = dateOfBirth ? new Date(dateOfBirth.seconds * 1000) : null;
+        this.phoneNumbers = phoneNumbers;
+        this.address = address;
     }
 
     public setFitnessParams (bodyInfo: UserBodyInfo) {
@@ -103,7 +103,7 @@ export class UserBodyInfo {
 
     constructor(
         uid: string,
-        dateTaken: { seconds: number, nanoseconds: number },
+        dateTaken: FirebaseDate,
         trueAge: number,
         weight: number,
         height: number,
@@ -150,6 +150,22 @@ export class UserBodyInfo {
 
         if (!skeletalMeasurements) throw "Provide skeletalMeasurements!";
         this.skeletalMeasurements = skeletalMeasurements;
-
     }
+}
+
+interface PhoneNumber {
+    type: string;
+    number: string;
+};
+
+interface Address {
+    street: string | null;
+    city: string | null;
+    region: string | null;
+    country: string | null;
+};
+
+interface FirebaseDate {
+    seconds: number;
+    nanoseconds: number;
 }

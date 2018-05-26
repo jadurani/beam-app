@@ -94,13 +94,19 @@ export class UserProvider {
       userObj.photoUrl ? userObj.photoUrl : null
     );
 
-    user.setBasicInfo(
-      userObj.firstName ? userObj.firstName : null,
-      userObj.lastName ? userObj.lastName : null,
-      userObj.suffix ? userObj.suffix : null,
-      userObj.gender ? userObj.gender : null,
-      userObj.dateOfBirth ? userObj.dateOfBirth : null,
-    );
+    try {
+      user.setBasicInfo(
+        userObj.firstName ? userObj.firstName : null,
+        userObj.lastName ? userObj.lastName : null,
+        userObj.suffix ? userObj.suffix : null,
+        userObj.gender ? userObj.gender : null,
+        userObj.dateOfBirth ? userObj.dateOfBirth : null,
+        userObj.phoneNumbers ? userObj.phoneNumbers : null,
+        userObj.address ? userObj.address : null,
+      );
+    } catch (error) {
+      console.log(error);
+    }
 
     if (getBodyInfo && userObj.bodyInfo) {
       const userBodyInfo = new UserBodyInfo(
