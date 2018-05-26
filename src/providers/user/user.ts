@@ -128,7 +128,7 @@ export class UserProvider {
 
   private _getUser(
     userObj: any,
-    getBodyInfo: boolean = false,
+    fullUserInfo: boolean = false
   ) {
     const user = new User(userObj.id, userObj.dateJoined, userObj.roles);
 
@@ -150,24 +150,27 @@ export class UserProvider {
       userObj.address ? userObj.address : null,
     );
 
-    if (getBodyInfo && userObj.bodyInfo) {
-      const userBodyInfo = new UserBodyInfo(
-        userObj.id,
-        userObj.bodyInfo.dateTaken,
-        userObj.bodyInfo.trueAge,
-        userObj.bodyInfo.weight,
-        userObj.bodyInfo.height,
-        userObj.bodyInfo.percBodyFat,
-        userObj.bodyInfo.visceralFatRating,
-        userObj.bodyInfo.restingMetabolism,
-        userObj.bodyInfo.bodyAge,
-        userObj.bodyInfo.bmi,
-        userObj.bodyInfo.subcutaneousMeasurements,
-        userObj.bodyInfo.skeletalMeasurements,
-      );
-      user.setFitnessParams(userBodyInfo);
-    }
+    if (fullUserInfo) {
+      if (userObj.bodyInfo) {
+        const userBodyInfo = new UserBodyInfo(
+          userObj.id,
+          userObj.bodyInfo.dateTaken,
+          userObj.bodyInfo.trueAge,
+          userObj.bodyInfo.weight,
+          userObj.bodyInfo.height,
+          userObj.bodyInfo.percBodyFat,
+          userObj.bodyInfo.visceralFatRating,
+          userObj.bodyInfo.restingMetabolism,
+          userObj.bodyInfo.bodyAge,
+          userObj.bodyInfo.bmi,
+          userObj.bodyInfo.subcutaneousMeasurements,
+          userObj.bodyInfo.skeletalMeasurements,
+        );
+        user.setFitnessParams(userBodyInfo);
+      }
 
+      if (userObj.iceContact) user.setICE(userObj.iceContact);
+    }
     return user;
   }
 }

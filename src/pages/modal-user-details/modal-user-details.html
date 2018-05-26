@@ -33,6 +33,14 @@
       {{ user.address.country }}
     </p>
 
+    <h3>In Case of Emergency</h3>
+    <ng-container *ngIf="user.iceContact">
+      {{ user.iceContact.name }} {{ user.iceContact.phoneNumber }}
+    </ng-container>
+    <ng-container *ngIf="!user.iceContact">
+      Add a person to contact in case of emergency!
+    </ng-container>
+
     <h3>Fitness Parameters</h3>
     <ng-container *ngIf="user.bodyInfo">
       {{ user.bodyInfo.dateTaken | date:'h:mm a, d MMM yyyy' }}

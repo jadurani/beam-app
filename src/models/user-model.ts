@@ -17,6 +17,9 @@ export class User {
     phoneNumbers: Array<PhoneNumber> | null;
     address: Address | null;
 
+    // Person to contact in case of emergency
+    iceContact: ICEContact | null;
+
     // Permission roles
     roles: UserPermissions;
 
@@ -71,6 +74,10 @@ export class User {
 
     public setFitnessParams (bodyInfo: UserBodyInfo) {
         this.bodyInfo = bodyInfo;
+    }
+
+    public setICE (iceContact: ICEContact) {
+        this.iceContact = iceContact;
     }
 
     public getRoles (): Array<string> {
@@ -179,3 +186,8 @@ interface UserPermissions {
     trainer: boolean | null,
     client: boolean | null,
 };
+
+interface ICEContact {
+    name: string;
+    phoneNumber: PhoneNumber;
+}
