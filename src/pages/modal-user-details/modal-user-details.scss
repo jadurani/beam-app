@@ -1,3 +1,84 @@
 page-modal-user-details {
+    .PageModalUserDetails {
+        &-section {
+            padding: 4% 6%;
+            border-bottom: 1px solid rgba(0,0,0,0.12);
 
+            &-title {
+                font-size: 14px;
+                font-weight: 500;
+                opacity: 0.8;
+            }
+
+            &-content {
+                padding: 1% 0 1% 0;
+                display: table;
+                table-layout: fixed;
+                width: 100%;
+
+                &-row {
+                    display: table-row;
+
+                    :first-child {
+                        display: table-cell;
+                        opacity: 0.7;
+                        padding-bottom: 1%;
+                        padding-top: 4px;
+                        text-align: center;
+                        width: 6%;
+                    }
+
+                    :last-child {
+                        display: table-cell;
+                        opacity: 0.9;
+                        padding-bottom: 1%;
+                        padding-left: 4%;
+                        padding-top: 4px;
+                    }
+                }
+            }
+
+            &-bodyInfo {
+                padding: 1% 0 1% 0;
+                display: table;
+                table-layout: fixed;
+                width: 100%;
+
+                &-row {
+                    display: table-row;
+
+                    :first-child {
+                        display: table-cell;
+                        opacity: 0.7;
+                        padding-bottom: 1%;
+                        padding-top: 8px;
+                        padding-left: 8px;
+                        width: 30%;
+
+
+                        .subPerc {
+                            margin-left: 32px;
+                        }
+                    }
+
+                    &-subPerc:first-child  {
+                        display: table-cell;
+                        opacity: 0.7;
+                        padding-bottom: 1%;
+                        padding-top: 8px;
+                        padding-left: 12%;
+                        width: 30%;
+                    }
+
+                    :last-child {
+                        display: table-cell;
+                        opacity: 0.9;
+                        padding-bottom: 1%;
+                        padding-left: 4%;
+                        padding-top: 4px;
+                    }
+                }
+            }
+        }
+    }
 }

@@ -7,74 +7,268 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content class="PageModalUserDetails">
+  <!-- START OF USER CHECK -->
   <ng-container *ngIf="user && !loading">
-    <ng-container *ngIf="currentLoggedInUser.roles.owner">
-      <h3>User Permissions</h3>
-      This user is can act as any of the following:
-      <ul>
-        <li *ngFor="let role of user.getRoles()">{{ role }} </li>
-      </ul>
-    </ng-container>
-    <h3>Basic Information</h3>
-    <p>{{ user.firstName }} {{ user.lastName }} {{ user.suffix }}</p>
-    <p>{{ user.gender }}</p>
-    <p>{{ user.dateOfBirth | date:'h:mm a, d MMM yyyy' }}</p>
 
-    <h3>Contact Information</h3>
-    <p>{{ user.email }}</p>
-    <ng-container *ngFor="let phone of user.phoneNumbers">
-      <p>{{ phone.type }} - {{ phone.number }}</p>
-    </ng-container>
-    <p *ngIf="user.address">
-      {{ user.address.street }}
-      {{ user.address.city }}
-      {{ user.address.region }}
-      {{ user.address.country }}
-    </p>
+    <!-- BASIC INFORMATION -->
+    <section class="PageModalUserDetails-section">
+      <h6 class="PageModalUserDetails-section-title">Basic Information</h6>
+      <div class="PageModalUserDetails-section-content">
+        <div class="PageModalUserDetails-section-content-row">
+          <div><ion-icon name="person"></ion-icon></div>
+          <div>
+            {{ user.firstName }} {{ user.lastName }} {{ user.suffix }}
+          </div>
+        </div>
+        <div class="PageModalUserDetails-section-content-row"
+          *ngIf="user.gender">
+          <div>
+            <ion-icon name="transgender"></ion-icon>
+          </div>
+          <div>
+            {{ user.gender }}
+          </div>
+        </div>
+        <div class="PageModalUserDetails-section-content-row"
+         *ngIf="user.dateOfBirth">
+          <div>
+              <ion-icon name="calendar"></ion-icon>
+          </div>
+          <div>
+            {{ user.dateOfBirth | date:'d MMMM yyyy' }}
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <h3>In Case of Emergency</h3>
-    <ng-container *ngIf="user.iceContact">
-      {{ user.iceContact.name }} {{ user.iceContact.phoneNumber }}
-    </ng-container>
-    <ng-container *ngIf="!user.iceContact">
-      Add a person to contact in case of emergency!
-    </ng-container>
+    <!-- CONTACT DETAILS -->
+    <section class="PageModalUserDetails-section">
+      <h6 class="PageModalUserDetails-section-title">Contact Details</h6>
+      <div class="PageModalUserDetails-section-content">
+        <div class="PageModalUserDetails-section-content-row"
+          *ngIf="user.email">
+          <div>
+            <ion-icon name="mail"></ion-icon>
+          </div>
+          <div>
+            {{ user.email }}
+          </div>
+        </div>
+        <div *ngIf="user.phoneNumbers"
+          class="PageModalUserDetails-section-content-row">
+          <div>
+            <ion-icon name="call"></ion-icon>
+          </div>
+          <div>
+             {{ user.phoneNumbers[0].number }} • {{ user.phoneNumbers[0].type }}
+          </div>
+        </div>
+        <div class="PageModalUserDetails-section-content-row"
+           *ngFor="let phone of user.phoneNumbers | slice: 1">
+          <div>&nbsp;</div>
+          <div>
+            {{ phone.number }} • {{ phone.type }}
+          </div>
+        </div>
+        <div *ngIf="user.address"
+          class="PageModalUserDetails-section-content-row">
+          <div>
+            <ion-icon name="pin"></ion-icon>
+          </div>
+          <div>
+            {{ user.address.street }} {{ user.address.city }} {{ user.address.region }} {{ user.address.country }}
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <h3>Medical Remarks</h3>
-    <ng-container *ngIf="user.otherRemarks">
-      {{ user.otherRemarks }}
-    </ng-container>
-    <ng-container *ngIf="!user.otherRemarks">
-      Add medical remarks.
-    </ng-container>
+    <!-- PERSON TO CONTACT IN CASE OF EMERGENCY -->
+    <section class="PageModalUserDetails-section">
+      <h6 class="PageModalUserDetails-section-title">In Case of Emergency</h6>
+      <div class="PageModalUserDetails-section-content">
+        <ng-container *ngIf="user.iceContact">
+          <div class="PageModalUserDetails-section-content-row">
+            <div>
+              <ion-icon name="person"></ion-icon>
+            </div>
+            <div>
+              {{ user.iceContact.name }}
+            </div>
+          </div>
+          <div class="PageModalUserDetails-section-content-row">
+            <div>
+              <ion-icon name="call"></ion-icon>
+            </div>
+            <div>
+              {{ user.iceContact.phoneNumber }}
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="!user.iceContact">
+          <div class="PageModalUserDetails-section-row">
+            Add a person to contact in case of emergency!
+          </div>
+        </ng-container>
+      </div>
+    </section>
 
-    <h3>Fitness Parameters</h3>
-    <ng-container *ngIf="user.bodyInfo">
-      {{ user.bodyInfo.dateTaken | date:'h:mm a, d MMM yyyy' }}
-      {{ user.bodyInfo.trueAge }}
-      {{ user.bodyInfo.weight }} kg
-      {{ user.bodyInfo.height }} cm
-      {{ user.bodyInfo.percBodyFat }} %
-      {{ user.bodyInfo.visceralFatRating }} %
-      {{ user.bodyInfo.restingMetabolism }}
-      {{ user.bodyInfo.bmi }}
-      {{ user.bodyInfo.bodyAge }}
+    <!-- OTHER REMARKS -->
+    <section class="PageModalUserDetails-section">
+      <h6 class="PageModalUserDetails-section-title">Other Remarks</h6>
+      <div class="PageModalUserDetails-section-content">
+        <div class="PageModalUserDetails-section-content-row"
+          *ngIf="user.otherRemarks">
+          <div>
+            <ion-icon name="list-box"></ion-icon>
+          </div>
+          <div>
+            {{ user.otherRemarks }}
+          </div>
+        </div>
+        <div class="PageModalUserDetails-section-content-row"
+          *ngIf="!user.otherRemarks">
+          Add other remarks: allergies, medical conditions, etc.
+        </div>
+      </div>
+    </section>
 
-      {{ user.bodyInfo.subcutaneousMeasurements.total }}
-      {{ user.bodyInfo.subcutaneousMeasurements.trunk }}
-      {{ user.bodyInfo.subcutaneousMeasurements.arms }}
-      {{ user.bodyInfo.subcutaneousMeasurements.legs }}
+    <!-- FITNESS PARAMETERS -->
+    <section class="PageModalUserDetails-section">
+      <h6 class="PageModalUserDetails-section-title">Fitness Parameters</h6>
+      <div class="PageModalUserDetails-section-bodyInfo"
+        *ngIf="user.bodyInfo">
+        <div class="PageModalUserDetails-section-bodyInfo-row">
+          <div>Date Taken</div>
+          <div>
+            {{ user.bodyInfo.dateTaken | date:'d MMMM yyyy' }}
+          </div>
+        </div>
+        <div class="PageModalUserDetails-section-bodyInfo-row">
+          <div>Age</div>
+          <div>
+            {{ user.bodyInfo.trueAge }}
+          </div>
+        </div>
+        <div class="PageModalUserDetails-section-bodyInfo-row">
+          <div>Height</div>
+          <div>
+            {{ user.bodyInfo.height }} cm
+          </div>
+        </div>
+        <div class="PageModalUserDetails-section-bodyInfo-row">
+          <div>Weight</div>
+          <div>
+            {{ user.bodyInfo.weight }} kg
+          </div>
+        </div>
+        <div class="PageModalUserDetails-section-bodyInfo-row">
+          <div>% Body Fat</div>
+          <div>
+            {{ user.bodyInfo.percBodyFat }} %
+          </div>
+        </div>
+        <div class="PageModalUserDetails-section-bodyInfo-row">
+          <div>Visceral Fat Rating</div>
+          <div>
+            {{ user.bodyInfo.visceralFatRating }} %
+          </div>
+        </div>
+        <div class="PageModalUserDetails-section-bodyInfo-row">
+          <div>Resting Metabolism</div>
+          <div>
+            {{ user.bodyInfo.restingMetabolism }}
+          </div>
+        </div>
+        <div class="PageModalUserDetails-section-bodyInfo-row">
+          <div>Body Mass Index</div>
+          <div>
+            {{ user.bodyInfo.bmi }}
+          </div>
+        </div>
+        <div class="PageModalUserDetails-section-bodyInfo-row">
+          <div>Body Age</div>
+          <div>
+            {{ user.bodyInfo.bodyAge }}
+          </div>
+        </div>
 
-      {{ user.bodyInfo.skeletalMeasurements.total }}
-      {{ user.bodyInfo.skeletalMeasurements.trunk }}
-      {{ user.bodyInfo.skeletalMeasurements.arms }}
-      {{ user.bodyInfo.skeletalMeasurements.legs }}
-    </ng-container>
-    <ng-container *ngIf="!user.bodyInfo">
-      Looks like you haven't had your fitness parameters taken yet!
-    </ng-container>
+        <div class="PageModalUserDetails-section-bodyInfo-row">
+          <div>
+            % Subcutaneous Fat
+          </div>
+          <div>&nbsp;</div>
+        </div>
+        <div class="PageModalUserDetails-section-bodyInfo-row">
+          <div class="PageModalUserDetails-section-bodyInfo-row-subPerc">
+            Total
+          </div>
+          <div>{{ user.bodyInfo.subcutaneousMeasurements.total }}</div>
+        </div>
+        <div class="PageModalUserDetails-section-bodyInfo-row">
+          <div class="PageModalUserDetails-section-bodyInfo-row-subPerc">
+            Trunk
+          </div>
+          <div>{{ user.bodyInfo.subcutaneousMeasurements.trunk }}</div>
+        </div>
+        <div class="PageModalUserDetails-section-bodyInfo-row">
+          <div class="PageModalUserDetails-section-bodyInfo-row-subPerc">
+            Arms
+          </div>
+          <div>{{ user.bodyInfo.subcutaneousMeasurements.arms }}</div>
+        </div>
+        <div class="PageModalUserDetails-section-bodyInfo-row">
+          <div class="PageModalUserDetails-section-bodyInfo-row-subPerc">
+            Legs
+          </div>
+          <div>{{ user.bodyInfo.subcutaneousMeasurements.legs }}</div>
+        </div>
+
+        <div class="PageModalUserDetails-section-bodyInfo-row">
+          <div>
+            % Skeletal Muscle
+          </div>
+          <div>&nbsp;</div>
+        </div>
+        <div class="PageModalUserDetails-section-bodyInfo-row">
+          <div class="PageModalUserDetails-section-bodyInfo-row-subPerc">
+            Total
+          </div>
+          <div>{{ user.bodyInfo.skeletalMeasurements.total }}</div>
+        </div>
+        <div class="PageModalUserDetails-section-bodyInfo-row">
+          <div class="PageModalUserDetails-section-bodyInfo-row-subPerc">
+            Trunk
+          </div>
+          <div>{{ user.bodyInfo.skeletalMeasurements.trunk }}</div>
+        </div>
+        <div class="PageModalUserDetails-section-bodyInfo-row">
+          <div class="PageModalUserDetails-section-bodyInfo-row-subPerc">
+            Arms
+          </div>
+          <div>{{ user.bodyInfo.skeletalMeasurements.arms }}</div>
+        </div>
+        <div class="PageModalUserDetails-section-bodyInfo-row">
+          <div class="PageModalUserDetails-section-bodyInfo-row-subPerc">
+            Legs
+          </div>
+          <div>{{ user.bodyInfo.skeletalMeasurements.legs }}</div>
+        </div>
+
+
+      </div>
+      <!-- END OF BODY INFO CONTENT -->
+
+      <div class="PageModalUserDetails-section-content"
+      *ngIf="!user.bodyInfo">
+      <div class="PageModalUserDetails-section-content-row">
+        Looks like you haven't had your fitness parameters taken yet!
+      </div>
+    </div>
+    </section>
   </ng-container>
+  <!-- END OF USER CHECK -->
+
   <ng-container *ngIf="!user || loading">
     <ion-spinner></ion-spinner>
   </ng-container>

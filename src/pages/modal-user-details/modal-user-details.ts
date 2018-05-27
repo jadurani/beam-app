@@ -31,6 +31,7 @@ export class ModalUserDetailsPage {
   loadUser(user: User) {
     this.userProvider.getUserById(user.id)
       .then(user => {
+        console.log(JSON.stringify(user));
         this.user = user;
         this.loading = false;
       })
