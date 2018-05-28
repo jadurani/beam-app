@@ -2,6 +2,7 @@
   <ion-navbar>
     <ion-title *ngIf="user && !loading">{{ user.displayName }}</ion-title>
     <ion-buttons end>
+      <button ion-button (click)="editUser()">EDIT</button>
       <button ion-button (click)="closeModal()">CLOSE</button>
     </ion-buttons>
   </ion-navbar>
@@ -77,7 +78,7 @@
             <ion-icon name="pin"></ion-icon>
           </div>
           <div>
-            {{ user.address.street }} {{ user.address.city }} {{ user.address.region }} {{ user.address.country }}
+            {{ user.address }}
           </div>
         </div>
       </div>

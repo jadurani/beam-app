@@ -17,6 +17,7 @@ export class UserProvider {
   currentUser: User;
   usersList : User[];
   COLLECTION: string = 'users';
+  mockUser:any = MOCK_USER;
 
   constructor(public authProvider: AuthProvider) {
     this.db = firebase.firestore();
@@ -114,7 +115,21 @@ export class UserProvider {
     });
   }
 
-  // updateUser() {}
+  updateUser(user: User): Promise<any> {
+    return new Promise ((resolve, reject) => {
+      this.db.collection(this.COLLECTION)
+        .doc(user.id)
+        .update(user)
+        .then(() => {
+          console.log('successfully updated!');
+          resolve();
+        })
+        .catch(error => {
+          console.log(error);
+          reject();
+        });
+    });
+  }
 
   // addUser() {}
 
@@ -176,3 +191,61 @@ export class UserProvider {
     return user;
   }
 }
+
+const MOCK_USER = {
+  "id": "HUn9yDkhmltrSoTe5hqq",
+  "dateJoined": "2018-05-24T16:00:00.000Z",
+  "roles": {
+    "owner": true
+  },
+  "authId": "ZIqnDC1OAEUJG9gAohIV47VfwZq2",
+  "displayName": "Juan",
+  "email": "juan@dc.ph",
+  "phoneNumber": "+639171717171",
+  "photoUrl": null,
+  "firstName": "Juan Tiburcio Consolas",
+  "lastName": "Old Romano",
+  "suffix": "Jr.",
+  "gender": "Male",
+  "dateOfBirth": "1993-03-04T16:00:00.000Z",
+  "phoneNumbers": [
+    {
+      "number": "+639179171991",
+      "type": "home"
+    },
+    {
+      "number": "+639121212121",
+      "type": "Mobile"
+    }
+  ],
+  "address": "Luneta Park, Manila, National Capital Region, Philippines",
+  "bodyInfo": {
+    "uid": "HUn9yDkhmltrSoTe5hqq",
+    "dateTaken": "2018-03-19T16:00:00.000Z",
+    "trueAge": 23,
+    "weight": 54.9,
+    "height": 162.56,
+    "percBodyFat": 22.7,
+    "visceralFatRating": 2,
+    "restingMetabolism": 1227,
+    "bmi": 20.1,
+    "bodyAge": 23,
+    "subcutaneousMeasurements": {
+      "arms": 33.6,
+      "legs": 30.6,
+      "total": 20.8,
+      "trunk": 16.8
+    },
+    "skeletalMeasurements": {
+      "arms": 32.9,
+      "legs": 42.4,
+      "total": 29.4,
+      "trunk": 24.1
+    }
+  },
+  "iceContact": {
+    "name": "Pilar Pilapil",
+    "phoneNumber": "+639178080808"
+  },
+  "otherRemarks": "Allergy to peanuts; Family history of high blood pressues"
+};

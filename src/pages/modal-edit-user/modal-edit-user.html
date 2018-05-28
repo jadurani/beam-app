@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Edit User</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="saveEdits()">SAVE</button>
+    </ion-buttons>
+    <ion-buttons end>
+      <button ion-button (click)="closeModal()">CLOSE</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <form [formGroup]="editUserForm" novalidate (ngSubmit)="onSave()">
+    <!-- ABOUT USER -->
+    <section class="PageModalEditUser-section">
+      <!-- title here -->
+      <!-- START OF NAME -->
+      <div class="PageModalEditUser-section-subsection">
+        <div class="PageModalEditUser-section-subsection-row">
+          <div class="PageModalEditUser-section-subsection-row-label">
+            <ion-icon name="person"></ion-icon>
+          </div>
+          <div class="PageModalEditUser-section-subsection-row-textInput">
+            <ion-input type="text" placeholder="First Name" formControlName="firstName"></ion-input>
+          </div>
+        </div>
+        <div class="PageModalEditUser-section-subsection-row">
+          <div class="PageModalEditUser-section-subsection-row-label">
+            &nbsp;
+          </div>
+          <div class="PageModalEditUser-section-subsection-row-textInput">
+            <ion-input type="text" placeholder="Last Name" formControlName="lastName"></ion-input>
+          </div>
+        </div>
+      </div>
+      <!-- END OF NAME -->
+      <!-- START OF GENDER -->
+      <div class="PageModalEditUser-section-subsection">
+        <div class="PageModalEditUser-section-subsection-row">
+          <div class="PageModalEditUser-section-subsection-row-label">
+            <ion-icon name="transgender"></ion-icon>
+          </div>
+          <div class="PageModalEditUser-section-subsection-row-selectInput">
+            <select type="text" placeholder="Gender" formControlName="gender">
+              <option>Male</option>
+              <option>Female</option>
+              <option>Prefer not to say</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <!-- END OF GENDER -->
+    </section>
+
+
+  </form>
+</ion-content>

@@ -5,6 +5,7 @@ import { User } from './../../models/user-model';
 
 import { UserProvider } from '../../providers/user/user';
 import { ModalUserDetailsPage } from '../modal-user-details/modal-user-details';
+import { ModalEditUserPage } from '../modal-edit-user/modal-edit-user';
 
 /**
  * Generated class for the UserListPage page.
@@ -27,7 +28,9 @@ export class UserListPage {
     public navParams: NavParams,
     public userProvider: UserProvider
   ) {
-    this.getUsers();
+    // this.getUsers();
+    const user = this.userProvider.mockUser;
+    this.showEditUser(user);
   }
 
   getUsers() {
@@ -41,9 +44,20 @@ export class UserListPage {
       });
   }
 
+  // showEditUser(user: User) {
+  showEditUser(user: any) {
+    const editUserModal = this.modalCtrl.create(ModalEditUserPage, { user });
+    editUserModal.onDidDismiss(savedUser => {
+      console.log(savedUser);
+    });
+    editUserModal.present();
+  }
+
   showUserDetails(user: User) {
-    // we're passing the id only, supposing the ID above is just a minified version of UserObject
     const userModal = this.modalCtrl.create(ModalUserDetailsPage, { user });
+    userModal.onDidDismiss(editUser => {
+      if (editUser) this.showEditUser(user);
+    });
     userModal.present();
   }
 }

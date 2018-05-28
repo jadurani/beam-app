@@ -15,7 +15,7 @@ export class User {
     gender: string | null;
     dateOfBirth: Date | null;
     phoneNumbers: Array<PhoneNumber> | null;
-    address: Address | null;
+    address: string | null;
 
     // Permission roles
     roles: UserPermissions;
@@ -65,7 +65,7 @@ export class User {
         gender: string | null = null,
         dateOfBirth: FirebaseDate | null = null,
         phoneNumbers: Array<PhoneNumber> | null = null,
-        address: Address | null = null,
+        address: string | null = null,
     ) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -171,16 +171,9 @@ export class UserBodyInfo {
     }
 }
 
-interface PhoneNumber {
+export interface PhoneNumber {
     type: string;
     number: string;
-};
-
-interface Address {
-    street: string | null;
-    city: string | null;
-    region: string | null;
-    country: string | null;
 };
 
 interface FirebaseDate {
@@ -195,7 +188,7 @@ interface UserPermissions {
     client: boolean | null,
 };
 
-interface ICEContact {
+export interface ICEContact {
     name: string;
-    phoneNumber: PhoneNumber;
+    phoneNumber: string;
 }

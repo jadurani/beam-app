@@ -4,6 +4,8 @@ import { IonicPage, ViewController, NavParams } from 'ionic-angular';
 import { User } from './../../models/user-model';
 import { UserProvider } from '../../providers/user/user';
 
+import { ModalEditUserPage } from './../../pages/modal-edit-user/modal-edit-user';
+
 /**
  * Modal to show user details.
  */
@@ -21,7 +23,8 @@ export class ModalUserDetailsPage {
   constructor(
     public viewCtrl: ViewController,
     public navParams: NavParams,
-    public userProvider: UserProvider) {
+    public userProvider: UserProvider
+  ) {
 
     this.currentLoggedInUser = this.userProvider.getCurrentUser();
     const user = this.navParams.get('user');
@@ -30,18 +33,22 @@ export class ModalUserDetailsPage {
 
   loadUser(user: User) {
     this.userProvider.getUserById(user.id)
-      .then(user => {
-        console.log(JSON.stringify(user));
-        this.user = user;
-        this.loading = false;
-      })
-      .catch(error => {
-        this.loading = false;
-        this.errorMsg = error.message;
-      });
+    .then(user => {
+      console.log(JSON.stringify(user));
+      this.user = user;
+      this.loading = false;
+    })
+    .catch(error => {
+      this.loading = false;
+      this.errorMsg = error.message;
+    });
   }
 
   closeModal() {
     this.viewCtrl.dismiss();
+  }
+
+  editUser(user: User) {
+    this.viewCtrl.dismiss(true);
   }
 }
