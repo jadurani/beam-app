@@ -119,14 +119,12 @@ export class UserProvider {
     return new Promise ((resolve, reject) => {
       this.db.collection(this.COLLECTION)
         .doc(user.id)
-        .update(user)
+        .update(user.getClassAsObject())
         .then(() => {
-          console.log('successfully updated!');
-          resolve();
+          resolve(user);
         })
         .catch(error => {
-          console.log(error);
-          reject();
+          reject(error);
         });
     });
   }
@@ -194,7 +192,7 @@ export class UserProvider {
 
 const MOCK_USER = {
   "id": "HUn9yDkhmltrSoTe5hqq",
-  "dateJoined": "2018-05-24T16:00:00.000Z",
+  "dateJoined": new Date("2018-05-24T16:00:00.000Z"),
   "roles": {
     "owner": true
   },
@@ -207,11 +205,11 @@ const MOCK_USER = {
   "lastName": "Old Romano",
   "suffix": "Jr.",
   "gender": "Male",
-  "dateOfBirth": "1993-03-04T16:00:00.000Z",
+  "dateOfBirth": new Date("1993-03-04T16:00:00.000Z"),
   "phoneNumbers": [
     {
       "number": "+639179171991",
-      "type": "home"
+      "type": "Home"
     },
     {
       "number": "+639121212121",
@@ -221,7 +219,7 @@ const MOCK_USER = {
   "address": "Luneta Park, Manila, National Capital Region, Philippines",
   "bodyInfo": {
     "uid": "HUn9yDkhmltrSoTe5hqq",
-    "dateTaken": "2018-03-19T16:00:00.000Z",
+    "dateTaken": new Date("2018-03-19T16:00:00.000Z"),
     "trueAge": 23,
     "weight": 54.9,
     "height": 162.56,
