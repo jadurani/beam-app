@@ -1,3 +1,4 @@
+
 export class User {
     // Firebase Auth Info
     authId: string | null; // uid from Firebase Auth
@@ -91,6 +92,36 @@ export class User {
     public getRoles (): Array<string> {
         return Object.keys(this.roles);
     }
+
+    public getClassAsObject() {
+        return {
+            // Firebase Auth Info
+            authId: this.authId,
+            displayName: this.displayName,
+            email: this.email,
+            phoneNumber: this.phoneNumber,
+            photoUrl: this.photoUrl,
+
+            // Basic Information
+            id: this.id,
+            dateJoined: this.dateJoined,
+            firstName: this.firstName,
+            lastName: this.lastName,
+            suffix: this.suffix,
+            gender: this.gender,
+            dateOfBirth: this.dateOfBirth,
+            phoneNumbers: this.phoneNumbers,
+            address: this.address,
+
+            // Permission roles
+            roles: this.roles,
+
+            // Person to contact in case of emergency
+            iceContact: this.iceContact,
+            bodyInfo: this.bodyInfo ? this.bodyInfo.getClassAsObject() : null,
+            otherRemarks: this.otherRemarks
+        };
+    }
 }
 
 export class UserBodyInfo {
@@ -168,6 +199,23 @@ export class UserBodyInfo {
 
         if (!skeletalMeasurements) throw "Provide skeletalMeasurements!";
         this.skeletalMeasurements = skeletalMeasurements;
+    }
+
+    getClassAsObject() {
+        return {
+            uid: this.uid,
+            dateTaken: this.dateTaken,
+            trueAge: this.trueAge,
+            weight: this.weight,
+            height: this.height,
+            percBodyFat: this.percBodyFat,
+            visceralFatRating: this.visceralFatRating,
+            restingMetabolism: this.restingMetabolism,
+            bmi: this.bmi,
+            bodyAge: this.bodyAge,
+            subcutaneousMeasurements: this.subcutaneousMeasurements,
+            skeletalMeasurements: this.skeletalMeasurements
+        };
     }
 }
 
