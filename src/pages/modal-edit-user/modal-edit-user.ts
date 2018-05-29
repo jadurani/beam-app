@@ -1,9 +1,22 @@
 import { Component } from '@angular/core';
-import { IonicPage, ViewController, NavParams } from 'ionic-angular';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  IonicPage,
+  NavParams,
+  ToastController,
+  ViewController
+} from 'ionic-angular';
+import {
+  AbstractControl,
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators
+} from '@angular/forms';
 
 import { User, ICEContact, PhoneNumber } from './../../models/user-model';
-// import { UserProvider } from '../../providers/user/user';
+
+import { UserProvider } from '../../providers/user/user';
 
 /**
  * Modal to edit user info.
@@ -18,22 +31,23 @@ export class ModalEditUserPage {
   user: User;
 
   constructor(
-    public formBuilder: FormBuilder,
-    public viewCtrl: ViewController,
-    public navParams: NavParams
+    private formBuilder: FormBuilder,
+    private toastCtrl: ToastController,
+    private viewCtrl: ViewController,
+    private navParams: NavParams,
+    private userProvider: UserProvider,
   ) {
-
-    this.user = this.navParams.get('user');
+    this.user = this.navParams.get('userToEdit');
     this.createForm(this.user);
   }
 
   createForm(user: User): void {
     this.editUserForm = this.formBuilder.group({
-      firstName: user.firstName,
-      lastName: user.lastName,
+      firstName: [user.firstName, Validators.required],
+      lastName: [user.lastName, Validators.required],
       nickName: user.displayName,
       gender: user.gender,
-      dateOfBirth: user.dateOfBirth,
+      dateOfBirth: user.dateOfBirth ? user.dateOfBirth.toISOString() : new Date().toISOString(),
       email: user.email,
       phoneNumbers: this.formBuilder.array([]),
       address: user.address,
@@ -45,32 +59,103 @@ export class ModalEditUserPage {
     this._buildICE(user.iceContact);
   }
 
+  get phoneNumbers(): FormArray {
+    return this.editUserForm.get('phoneNumbers') as FormArray;
+  }
+
+  get gender(): AbstractControl {
+    return this.editUserForm.get('gender');
+  }
+
+  get GENDER_OPTIONS(): Array<string> {
+    return ['Male', 'Female', 'Unspecified'];
+  }
+
+  get PHONE_TYPES(): Array<string> {
+    return ['Home', 'Mobile', 'Work', 'Other'];
+  }
+
+  onSelect(control: FormControl, value: string) {
+    control.setValue(value);
+    this.editUserForm.markAsDirty();
+  }
+
+  save() {
+    if (this.editUserForm.invalid) return;
+
+    this._prepareSaveUser();
+    let toast = this.toastCtrl.create({
+      message: 'Saving changes...',
+      position: 'bottom',
+    });
+    toast.present();
+
+    this.userProvider.updateUser(this.user)
+      .then(updatedUser => {
+        toast.dismiss();
+        this.viewCtrl.dismiss(updatedUser);
+      })
+      .catch(error => {
+        toast.dismiss();
+
+        toast = this.toastCtrl.create({
+          message: error.message || 'Server Error. Try again later',
+          position: 'bottom',
+          duration: 3000,
+        });
+        toast.present();
+      });
+  }
+
+  closeModal() {
+    this.viewCtrl.dismiss();
+  }
+
   private _buildICE(contact: ICEContact | null): void {
     if (!contact) {
       contact = {
-        name: '',
-        phoneNumber: '',
+        name: null,
+        phoneNumber: null,
       };
     }
 
     const iceContactFG = this.formBuilder.group(contact);
     this.editUserForm.setControl('iceContact', iceContactFG);
   }
+
   private _buildPhoneNumbersList(phoneNumbers: PhoneNumber[]) {
+    if (!phoneNumbers) {
+      phoneNumbers = [{
+        number: '',
+        type: '',
+      }];
+    };
+
     const phoneFGs = phoneNumbers.map(phone => this.formBuilder.group(phone));
     const phoneFormArray = this.formBuilder.array(phoneFGs);
     this.editUserForm.setControl('phoneNumbers', phoneFormArray);
   }
 
-  get phoneNumbers(): FormArray {
-    return this.editUserForm.get('phoneNumbers') as FormArray;
-  }
+  private _prepareSaveUser(): void {
+    const formModel = this.editUserForm.value;
 
-  // add phone number
-  // remove phone number
+    this.user.firstName = formModel.firstName;
+    this.user.lastName = formModel.lastName;
+    this.user.displayName = formModel.nickName;
+    this.user.gender = formModel.gender;
+    this.user.dateOfBirth = new Date(formModel.dateOfBirth);
+    this.user.email = formModel.email;
 
-  closeModal() {
-    console.log(this.editUserForm.value);
-    this.viewCtrl.dismiss();
+    this.user.phoneNumbers = formModel.phoneNumbers.map(
+      (phone: PhoneNumber) => Object.assign({}, phone)
+    );
+
+    this.user.address = formModel.address;
+    if (!formModel.iceContact.name && !formModel.iceContact.phoneNumber) {
+      this.user.iceContact = null;
+    } else {
+      this.user.iceContact = Object.assign({}, formModel.iceContact);
+    }
+    this.user.otherRemarks = formModel.otherRemarks;
   }
 }
