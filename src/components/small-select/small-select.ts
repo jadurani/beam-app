@@ -8,10 +8,18 @@ import {
 } from '@angular/core';
 
 /**
- * Generated class for the SmallSelectComponent component.
+ * SmallSelectComponent
  *
- * See https://angular.io/api/core/Component for more info on Angular
- * Components.
+ * Serves as an alternative to <select>.
+ * Custom component contains an <input> and <ul> element
+ * Accepts:
+ *  - selectedChoice -- the initial value of the <input> element
+ *  - choices -- populates the <ul> element
+ *
+ * Fires
+ *  - selectAction -- sends the newly-selection option
+ *  back to parent component
+ *
  */
 @Component({
   selector: 'small-select',

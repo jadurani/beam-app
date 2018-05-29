@@ -68,7 +68,7 @@ export class SignUpPage {
 
   /**
    * Used to make the FormControl `password` visible to the template.
-   * @return {FormControl} email
+   * @return {FormControl} password
    */
   get password() {
     return this.signUpForm.get('password');
@@ -76,7 +76,7 @@ export class SignUpPage {
 
   /**
    * Used to make the FormControl `confirmPassword` visible to the template.
-   * @return {FormControl} email
+   * @return {FormControl} confirmPassword
    */
   get confirmPassword() {
     return this.signUpForm.get('confirmPassword');

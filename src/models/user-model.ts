@@ -1,4 +1,3 @@
-
 export class User {
     // Firebase Auth Info
     authId: string | null; // uid from Firebase Auth

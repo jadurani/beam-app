@@ -70,7 +70,14 @@ export class UserProvider {
     return this.currentUser;
   }
 
-  getUsers(useCache = true): Promise<any> {
+  /**
+   * @method UserProvider.getUsers
+   * @description
+   * Query all the users from database if !useCache
+   *
+   * @param useCache {boolean}
+   */
+  getUsers(useCache: boolean = true): Promise<any> {
     return new Promise((resolve, reject) => {
       if (useCache && this.usersList){
         resolve(this.usersList);
@@ -98,6 +105,14 @@ export class UserProvider {
     });
   }
 
+  /**
+   * @method UserProvider.getUserById
+   * @description
+   * Get user object by id, then initialize its values into
+   * User instance.
+   *
+   * @param userId {string} Same as the User.id property
+   */
   getUserById(userId: string): Promise<User> {
     return new Promise((resolve, reject) => {
       this.db.collection(this.COLLECTION)
@@ -115,11 +130,22 @@ export class UserProvider {
     });
   }
 
+  /**
+   * @method UserProvider.updateUser
+   * @description
+   * Update the user document in the firebase.
+   * Firebase only accepts objects as arguments, hence we
+   * get the User instance as object before passing it
+   * to the database.
+   *
+   * @param user {User}
+   */
   updateUser(user: User): Promise<any> {
+    const userObj = user.getClassAsObject();
     return new Promise ((resolve, reject) => {
       this.db.collection(this.COLLECTION)
         .doc(user.id)
-        .update(user.getClassAsObject())
+        .update(userObj)
         .then(() => {
           resolve(user);
         })
@@ -190,6 +216,10 @@ export class UserProvider {
   }
 }
 
+/**
+ * @constant MOCK_USER
+ * Mock user object used on staging
+ */
 const MOCK_USER = {
   "id": "HUn9yDkhmltrSoTe5hqq",
   "dateJoined": new Date("2018-05-24T16:00:00.000Z"),
