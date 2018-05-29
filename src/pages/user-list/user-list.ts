@@ -71,7 +71,11 @@ export class UserListPage {
   showEditUser(userToEdit: User) {
     const editUserModal = this.modalCtrl.create(ModalEditUserPage, { userToEdit });
     editUserModal.onDidDismiss(savedUser => {
-      this.showUserDetails(savedUser, false);
+      if (savedUser) {
+        this.showUserDetails(savedUser, false);
+      } else {
+        this.showUserDetails(userToEdit, false);
+      }
     });
     editUserModal.present();
   }
