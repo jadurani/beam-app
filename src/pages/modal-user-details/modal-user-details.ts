@@ -4,7 +4,6 @@ import { IonicPage, ViewController, NavParams } from 'ionic-angular';
 import { User } from './../../models/user-model';
 import { UserProvider } from '../../providers/user/user';
 
-import { ModalEditUserPage } from './../../pages/modal-edit-user/modal-edit-user';
 
 /**
  * Modal to show user details.
@@ -17,7 +16,7 @@ import { ModalEditUserPage } from './../../pages/modal-edit-user/modal-edit-user
 export class ModalUserDetailsPage {
   user: User;
   currentLoggedInUser: User;
-  loading: boolean = true;
+  loading: boolean;
   errorMsg: string = '';
 
   constructor(
@@ -27,14 +26,19 @@ export class ModalUserDetailsPage {
   ) {
 
     this.currentLoggedInUser = this.userProvider.getCurrentUser();
-    const user = this.navParams.get('user');
-    this.loadUser(user);
+    const userToView = this.navParams.get('userToView');
+    const reloadUser = this.navParams.get('reloadUser');
+    if (reloadUser) {
+      this.loadUser(userToView);
+    } else {
+      this.user = userToView;
+    }
   }
 
   loadUser(user: User) {
+    this.loading = true;
     this.userProvider.getUserById(user.id)
     .then(user => {
-      console.log(JSON.stringify(user));
       this.user = user;
       this.loading = false;
     })
@@ -48,7 +52,11 @@ export class ModalUserDetailsPage {
     this.viewCtrl.dismiss();
   }
 
-  editUser(user: User) {
-    this.viewCtrl.dismiss(true);
+  canEdit() {
+    return this.currentLoggedInUser.roles && this.currentLoggedInUser.roles.owner;
+  }
+
+  editUser() {
+    this.viewCtrl.dismiss(this.user);
   }
 }

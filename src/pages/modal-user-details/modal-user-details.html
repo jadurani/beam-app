@@ -2,7 +2,11 @@
   <ion-navbar>
     <ion-title *ngIf="user && !loading">{{ user.displayName }}</ion-title>
     <ion-buttons end>
-      <button ion-button (click)="editUser()">EDIT</button>
+      <button ion-button
+        *ngIf="canEdit()"
+        (click)="editUser()">
+        EDIT
+      </button>
       <button ion-button (click)="closeModal()">CLOSE</button>
     </ion-buttons>
   </ion-navbar>
@@ -271,6 +275,8 @@
   <!-- END OF USER CHECK -->
 
   <ng-container *ngIf="!user || loading">
-    <ion-spinner></ion-spinner>
+    <div class="spinner">
+      <ion-spinner></ion-spinner>
+    </div>
   </ng-container>
 </ion-content>
