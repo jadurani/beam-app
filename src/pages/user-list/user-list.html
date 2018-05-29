@@ -21,7 +21,9 @@
 </ion-content>
 <ion-content>
   <ng-container *ngIf="loading">
-    <ion-spinner></ion-spinner>
+    <div class="spinner">
+      <ion-spinner></ion-spinner>
+    </div>
   </ng-container>
   <ng-container *ngIf="!loading && users && users.length > 0">
     <ion-list>

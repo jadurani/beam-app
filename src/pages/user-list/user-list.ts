@@ -7,6 +7,8 @@ import { UserProvider } from '../../providers/user/user';
 import { ModalUserDetailsPage } from '../modal-user-details/modal-user-details';
 import { ModalEditUserPage } from '../modal-edit-user/modal-edit-user';
 
+const USE_MOCK = false;
+
 /**
  * Generated class for the UserListPage page.
  *
@@ -28,9 +30,12 @@ export class UserListPage {
     public navParams: NavParams,
     public userProvider: UserProvider
   ) {
-    // this.getUsers();
-    const user = this.userProvider.mockUser;
-    this.showEditUser(user);
+    if (!USE_MOCK)
+      this.getUsers();
+    else {
+      const user = this.userProvider.mockUser;
+      this.showEditUser(user);
+    }
   }
 
   getUsers() {
@@ -44,20 +49,25 @@ export class UserListPage {
       });
   }
 
-  // showEditUser(user: User) {
-  showEditUser(user: any) {
-    const editUserModal = this.modalCtrl.create(ModalEditUserPage, { user });
+  showEditUser(userToEdit: User) {
+    const editUserModal = this.modalCtrl.create(ModalEditUserPage, { userToEdit });
     editUserModal.onDidDismiss(savedUser => {
-      console.log(savedUser);
+      this.showUserDetails(savedUser, false);
     });
     editUserModal.present();
   }
 
-  showUserDetails(user: User) {
-    const userModal = this.modalCtrl.create(ModalUserDetailsPage, { user });
-    userModal.onDidDismiss(editUser => {
-      if (editUser) this.showEditUser(user);
+  showUserDetails(userToView: User, isMinimal: boolean = true) {
+    const userModal = this.modalCtrl.create(
+      ModalUserDetailsPage, {
+        userToView,
+        reloadUser: isMinimal
+      });
+
+    userModal.onDidDismiss((fullUser: User) => {
+      if (fullUser) this.showEditUser(fullUser);
     });
+
     userModal.present();
   }
 }
