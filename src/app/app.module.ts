@@ -5,6 +5,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { ReactiveFormsModule } from "@angular/forms";
 
 import { MyApp } from './app.component';
+import { SmallSelectComponent } from './../components/small-select/small-select';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { UserListPage } from '../pages/user-list/user-list';
@@ -25,6 +26,7 @@ import { firebaseConfig } from '../environments/environment';
 @NgModule({
   declarations: [
     MyApp,
+    SmallSelectComponent,
     HomePage,
     ListPage,
     UserListPage,
