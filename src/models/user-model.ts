@@ -76,12 +76,42 @@ export class User {
         this.address = address;
     }
 
+    public setFirstName (firstName: string) {
+        this.firstName = firstName;
+    }
+
+    public setLastName (lastName: string) {
+        this.lastName = lastName;
+    }
+
+    public setGender (gender: string) {
+        this.gender = gender;
+    }
+
+    public setDateOfBirth (dob: any) {
+        this.dateOfBirth = new Date(dob);
+    }
+
+    public setEmail (email:string) {
+        this.email = email;
+    }
+
+    public setPhoneNumbers (phoneNumbers: Array<PhoneNumber>) {
+        this.phoneNumbers = phoneNumbers.map(
+            (phone: PhoneNumber) => Object.assign({}, phone)
+        );
+    }
+
+    public setAddress (address: string) {
+        this.address = address;
+    }
+
     public setFitnessParams (bodyInfo: UserBodyInfo) {
         this.bodyInfo = bodyInfo;
     }
 
     public setICE (iceContact: ICEContact) {
-        this.iceContact = iceContact;
+        this.iceContact = Object.assign({}, iceContact);
     }
 
     public setOtherRemarks (remarks: string) {

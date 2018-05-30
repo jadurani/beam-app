@@ -139,23 +139,20 @@ export class ModalEditUserPage {
   private _prepareSaveUser(): void {
     const formModel = this.editUserForm.value;
 
-    this.user.firstName = formModel.firstName;
-    this.user.lastName = formModel.lastName;
-    this.user.displayName = formModel.nickName;
-    this.user.gender = formModel.gender;
-    this.user.dateOfBirth = new Date(formModel.dateOfBirth);
-    this.user.email = formModel.email;
+    this.user.setFirstName(formModel.firstName);
+    this.user.setLastName(formModel.lastName);
+    // this.user.setDisplayName(formModel.displayName);
+    this.user.setGender(formModel.gender);
+    this.user.setDateOfBirth(formModel.dateOfBirth);
 
-    this.user.phoneNumbers = formModel.phoneNumbers.map(
-      (phone: PhoneNumber) => Object.assign({}, phone)
-    );
+    this.user.setEmail(formModel.email);
+    this.user.setPhoneNumbers(formModel.phoneNumbers);
 
-    this.user.address = formModel.address;
+    this.user.setAddress(formModel.address);
     if (!formModel.iceContact.name && !formModel.iceContact.phoneNumber) {
-      this.user.iceContact = null;
-    } else {
-      this.user.iceContact = Object.assign({}, formModel.iceContact);
+      this.user.setICE(formModel.iceContact);
     }
-    this.user.otherRemarks = formModel.otherRemarks;
+
+    this.user.setOtherRemarks(formModel.otherRemarks);
   }
 }
