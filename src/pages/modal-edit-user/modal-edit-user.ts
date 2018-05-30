@@ -53,10 +53,12 @@ export class ModalEditUserPage {
       address: user.address,
       iceContact: this.formBuilder.control(null),
       otherRemarks: user.otherRemarks,
+      bodyInfo: this.initBodyInfo(),
     });
 
     this._buildPhoneNumbersList(user.phoneNumbers);
     this._buildICE(user.iceContact);
+    this.initBodyInfo();
   }
 
   get phoneNumbers(): FormArray {
@@ -136,6 +138,33 @@ export class ModalEditUserPage {
     this.editUserForm.setControl('phoneNumbers', phoneFormArray);
   }
 
+  private initBodyInfo() {
+    const dateToday = new Date();
+    return this.formBuilder.group({
+      dateTaken: [dateToday.toISOString(), Validators.required],
+      trueAge: [dateToday.getFullYear() - this.user.dateOfBirth.getFullYear(), Validators.required],
+      weight: [null, Validators.required],
+      height: [null, Validators.required],
+      percBodyFat: [null, Validators.required],
+      visceralFatRating: [null, Validators.required],
+      restingMetabolism: [null, Validators.required],
+      bodyAge: [null, Validators.required],
+      bmi: [null, Validators.required],
+      subcutaneousMeasurements: this.formBuilder.group({
+        total: [null, Validators.required],
+        trunk: [null, Validators.required],
+        arms: [null, Validators.required],
+        legs: [null, Validators.required],
+      }),
+      skeletalMeasurements: this.formBuilder.group({
+        total: [null, Validators.required],
+        trunk: [null, Validators.required],
+        arms: [null, Validators.required],
+        legs: [null, Validators.required],
+      }),
+    });
+  }
+
   private _prepareSaveUser(): void {
     const formModel = this.editUserForm.value;
 
@@ -154,5 +183,7 @@ export class ModalEditUserPage {
     }
 
     this.user.setOtherRemarks(formModel.otherRemarks);
+
+    this.user.setFitnessParams(formModel.bodyInfo);
   }
 }

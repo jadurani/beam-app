@@ -202,8 +202,8 @@ export class UserProvider {
           userObj.bodyInfo.restingMetabolism,
           userObj.bodyInfo.bodyAge,
           userObj.bodyInfo.bmi,
-          userObj.bodyInfo.subcutaneousMeasurements,
-          userObj.bodyInfo.skeletalMeasurements,
+          Object.assign({}, userObj.bodyInfo.subcutaneousMeasurements),
+          Object.assign({}, userObj.bodyInfo.skeletalMeasurements)
         );
         user.setFitnessParams(userBodyInfo);
       }

@@ -40,6 +40,7 @@ export class ModalUserDetailsPage {
     this.userProvider.getUserById(user.id)
     .then(user => {
       this.user = user;
+      console.log(user);
       this.loading = false;
     })
     .catch(error => {

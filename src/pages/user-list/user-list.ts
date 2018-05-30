@@ -11,7 +11,7 @@ import { ModalEditUserPage } from '../modal-edit-user/modal-edit-user';
  * @constant USE_MOCK
  * Set this variable to true when on staging mode.
  */
-const USE_MOCK = false;
+const USE_MOCK = true;
 
 /**
  * UserListPage
