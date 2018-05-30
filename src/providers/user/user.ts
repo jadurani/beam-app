@@ -16,7 +16,8 @@ export class UserProvider {
   db: any;
   currentUser: User;
   usersList : User[];
-  COLLECTION: string = 'users';
+  USER_COLLECTION: string = 'users';
+  BODYINFO_COLLECTION: string = 'userBodyInfo';
   mockUser:any = MOCK_USER;
 
   constructor(public authProvider: AuthProvider) {
@@ -34,7 +35,7 @@ export class UserProvider {
    */
   setCurrentUser() {
     let authCurrentUser = this.authProvider.getCurrentUser();
-    this.db.collection(this.COLLECTION)
+    this.db.collection(this.USER_COLLECTION)
       .where('authId', '==', authCurrentUser.uid)
       .get()
       .then((querySnapshot) => {
@@ -84,7 +85,7 @@ export class UserProvider {
         return;
       }
 
-      this.db.collection(this.COLLECTION)
+      this.db.collection(this.USER_COLLECTION)
         .get()
         .then(querySnapshot => {
           let usersArray = [];
@@ -115,18 +116,18 @@ export class UserProvider {
    */
   getUserById(userId: string): Promise<User> {
     return new Promise((resolve, reject) => {
-      this.db.collection(this.COLLECTION)
-        .doc(userId)
-        .get()
-        .then(doc => {
-          var userObj = JSON.parse(JSON.stringify(doc.data()));
-          userObj.id = doc.id;
-          let user = this._getUser(userObj, true)
-          resolve(user);
-        })
-        .catch((error: any) => {
-          reject(error);
-        });
+      this.db.collection(this.USER_COLLECTION)
+      .doc(userId)
+      .get()
+      .then(doc => {
+        var userObj = JSON.parse(JSON.stringify(doc.data()));
+        userObj.id = doc.id;
+        let user = this._getUser(userObj, true);
+        resolve(user);
+      })
+      .catch((error: any) => {
+        reject(error);
+      });
     });
   }
 
@@ -143,7 +144,7 @@ export class UserProvider {
   updateUser(user: User): Promise<any> {
     const userObj = user.getClassAsObject();
     return new Promise ((resolve, reject) => {
-      this.db.collection(this.COLLECTION)
+      this.db.collection(this.USER_COLLECTION)
         .doc(user.id)
         .update(userObj)
         .then(() => {
@@ -153,6 +154,31 @@ export class UserProvider {
           reject(error);
         });
     });
+  }
+
+  addBodyInfo(user: User): Promise<any> {
+    return new Promise((resolve, reject) => {
+      if (!user.bodyInfo) {
+        reject('Enter Fitness Parameters to save!');
+        return;
+      }
+
+      this.updateUser(user)
+        .then(updatedUser => {
+          const bodyInfoObj = user.bodyInfo.getClassAsObject();
+          this.db.collection(this.BODYINFO_COLLECTION)
+            .add(bodyInfoObj)
+            .then(() => {
+              resolve(updatedUser);
+            })
+            .catch(error => {
+              reject(error);
+            });
+        })
+        .catch(error => {
+          reject(error);
+        });
+      });
   }
 
   // addUser() {}

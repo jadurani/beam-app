@@ -2,16 +2,17 @@ import { Component } from '@angular/core';
 import { IonicPage, ModalController, NavParams } from 'ionic-angular';
 
 import { User } from './../../models/user-model';
-
 import { UserProvider } from '../../providers/user/user';
+
 import { ModalUserDetailsPage } from '../modal-user-details/modal-user-details';
 import { ModalEditUserPage } from '../modal-edit-user/modal-edit-user';
+import { ModalAddBodyInfoPage } from '../modal-add-body-info/modal-add-body-info';
 
 /**
  * @constant USE_MOCK
  * Set this variable to true when on staging mode.
  */
-const USE_MOCK = true;
+const USE_MOCK = false;
 
 /**
  * UserListPage
@@ -80,6 +81,18 @@ export class UserListPage {
     editUserModal.present();
   }
 
+  showAddBodyInfo(userToEdit: User) {
+    const addBodyInfoModal = this.modalCtrl.create(ModalAddBodyInfoPage, { userToEdit });
+    addBodyInfoModal.onDidDismiss(savedUser => {
+      if (savedUser) {
+        this.showUserDetails(savedUser, false);
+      } else {
+        this.showUserDetails(userToEdit, false);
+      }
+    });
+    addBodyInfoModal.present();
+  }
+
   /**
    * Initialize ModalUserDetails, passing the clicked user in the list
    * to the modal.
@@ -99,8 +112,14 @@ export class UserListPage {
         reloadUser: isMinimal
       });
 
-    userModal.onDidDismiss((fullUser: User) => {
-      if (fullUser) this.showEditUser(fullUser);
+    userModal.onDidDismiss((returnObj) => {
+      if (!returnObj) return;
+
+      if (returnObj.editUser) {
+        this.showEditUser(returnObj.user);
+      } else if (returnObj.addBodyInfo) {
+        this.showAddBodyInfo(returnObj.user);
+      }
     });
 
     userModal.present();

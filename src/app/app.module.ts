@@ -14,6 +14,7 @@ import { HomePage } from '../pages/home/home';
 import { UserListPage } from '../pages/user-list/user-list';
 import { ModalUserDetailsPage } from '../pages/modal-user-details/modal-user-details';
 import { ModalEditUserPage } from '../pages/modal-edit-user/modal-edit-user';
+import { ModalAddBodyInfoPage } from '../pages/modal-add-body-info/modal-add-body-info';
 import { SignUpPage } from '../pages/sign-up/sign-up';
 import { LogInPage } from '../pages/log-in/log-in';
 
@@ -37,6 +38,7 @@ import { firebaseConfig } from '../environments/environment';
     UserListPage,
     ModalUserDetailsPage,
     ModalEditUserPage,
+    ModalAddBodyInfoPage,
     SignUpPage,
     LogInPage
   ],
@@ -53,6 +55,7 @@ import { firebaseConfig } from '../environments/environment';
     UserListPage,
     ModalUserDetailsPage,
     ModalEditUserPage,
+    ModalAddBodyInfoPage,
     SignUpPage,
     LogInPage
   ],

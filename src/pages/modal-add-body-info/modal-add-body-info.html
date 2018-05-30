@@ -1,0 +1,306 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Record New Fitness Parameters</ion-title>
+    <ion-buttons end>
+      <button
+        ion-button
+        (click)="save()">
+        SAVE
+      </button>
+      <button
+        ion-button
+        (click)="closeModal()">
+        CANCEL
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <form
+    [formGroup]="addBodyInfoForm"
+    spellcheck="false"
+    novalidate>
+    <section class="AddBodyInfo-section">
+      <ion-grid>
+
+        <ion-row>
+          <ion-col padding-left>
+            <div class="AddBodyInfo-section-title" padding>
+              New Fitness Parameters
+            </div>
+          </ion-col>
+        </ion-row>
+
+        <!-- DATE TAKEN -->
+        <ion-row>
+          <ion-col col-5 class="AddBodyInfo-bodyInfo-label">
+            <ion-label>
+              Date Taken
+            </ion-label>
+          </ion-col>
+          <ion-col col-5 class="AddBodyInfo-bodyInfo-value">
+            <ion-datetime class="AddBodyInfo-textInput" placeholder="DD MM YYYY" formControlName="dateTaken" displayFormat="DD MMMM YYYY"
+              min="1928" max="2000">
+            </ion-datetime>
+          </ion-col>
+          <ion-col>
+            &nbsp;
+          </ion-col>
+        </ion-row>
+
+        <!-- AGE -->
+        <ion-row>
+          <ion-col col-5 class="AddBodyInfo-bodyInfo-label">
+            <ion-label>
+              Age
+            </ion-label>
+          </ion-col>
+          <ion-col col-5 class="AddBodyInfo-bodyInfo-value">
+            <ion-input class="AddBodyInfo-textInput" type="number" placeholder="Age as of recording" formControlName="trueAge">
+            </ion-input>
+          </ion-col>
+          <ion-col>
+            &nbsp;
+          </ion-col>
+        </ion-row>
+
+        <!-- WEIGHT -->
+        <ion-row>
+          <ion-col col-5 class="AddBodyInfo-bodyInfo-label">
+            <ion-label>Weight (kg)</ion-label>
+          </ion-col>
+          <ion-col col-5 class="AddBodyInfo-bodyInfo-value">
+            <ion-input class="AddBodyInfo-textInput" type="number" placeholder="Weight" formControlName="weight">
+            </ion-input>
+          </ion-col>
+          <ion-col>
+            &nbsp;
+          </ion-col>
+        </ion-row>
+
+        <!-- HEIGHT -->
+        <ion-row>
+          <ion-col col-5 class="AddBodyInfo-bodyInfo-label">
+            <ion-label>Height (cm)</ion-label>
+          </ion-col>
+          <ion-col col-5 class="AddBodyInfo-bodyInfo-value">
+            <ion-input class="AddBodyInfo-textInput" type="number" placeholder="Height" formControlName="height">
+            </ion-input>
+          </ion-col>
+          <ion-col>
+            &nbsp;
+          </ion-col>
+        </ion-row>
+
+        <!-- PERC BODY FAT -->
+        <ion-row>
+          <ion-col col-5 class="AddBodyInfo-bodyInfo-label">
+            <ion-label>% Body Fat</ion-label>
+          </ion-col>
+          <ion-col col-5 class="AddBodyInfo-bodyInfo-value">
+            <ion-input class="AddBodyInfo-textInput" type="number" placeholder="Percent Body Fat" formControlName="percBodyFat">
+            </ion-input>
+          </ion-col>
+          <ion-col>
+            &nbsp;
+          </ion-col>
+        </ion-row>
+
+        <!-- Visceral Fat Rating -->
+        <ion-row>
+          <ion-col col-5 class="AddBodyInfo-bodyInfo-label">
+            <ion-label>Visceral Fat Rating</ion-label>
+          </ion-col>
+          <ion-col col-5 class="AddBodyInfo-bodyInfo-value">
+            <ion-input class="AddBodyInfo-textInput" type="number" placeholder="Visceral Fat Rating" formControlName="visceralFatRating">
+            </ion-input>
+          </ion-col>
+          <ion-col>
+            &nbsp;
+          </ion-col>
+        </ion-row>
+
+        <!-- Resting Metabolism -->
+        <ion-row>
+          <ion-col col-5 class="AddBodyInfo-bodyInfo-label">
+            <ion-label>Resting Metabolism</ion-label>
+          </ion-col>
+          <ion-col col-5 class="AddBodyInfo-bodyInfo-value">
+            <ion-input class="AddBodyInfo-textInput" type="number" placeholder="Resting Metabolism" formControlName="restingMetabolism">
+            </ion-input>
+          </ion-col>
+          <ion-col>
+            &nbsp;
+          </ion-col>
+        </ion-row>
+
+        <!-- Body Age -->
+        <ion-row>
+          <ion-col col-5 class="AddBodyInfo-bodyInfo-label">
+            <ion-label>Body Age</ion-label>
+          </ion-col>
+          <ion-col col-5 class="AddBodyInfo-bodyInfo-value">
+            <ion-input class="AddBodyInfo-textInput" type="number" placeholder="Body Age" formControlName="bodyAge">
+            </ion-input>
+          </ion-col>
+          <ion-col>
+            &nbsp;
+          </ion-col>
+        </ion-row>
+
+        <!-- BMI -->
+        <ion-row>
+          <ion-col col-5 class="AddBodyInfo-bodyInfo-label">
+            <ion-label>Body Mass Index</ion-label>
+          </ion-col>
+          <ion-col col-5 class="AddBodyInfo-bodyInfo-value">
+            <ion-input class="AddBodyInfo-textInput" type="number" placeholder="BMI" formControlName="bmi">
+            </ion-input>
+          </ion-col>
+          <ion-col>
+            &nbsp;
+          </ion-col>
+        </ion-row>
+
+        <!-- SUBCUT -->
+        <ng-container formGroupName="subcutaneousMeasurements">
+          <ion-row>
+            <ion-col col-5 class="AddBodyInfo-bodyInfo-label">
+              <ion-label>% Subcutaneous Fat</ion-label>
+            </ion-col>
+            <ion-col>
+              &nbsp;
+            </ion-col>
+          </ion-row>
+
+          <!-- SUBCUT: Total -->
+          <ion-row>
+            <ion-col col-5 class="AddBodyInfo-bodyInfo-sublabel">
+              <ion-label>Total</ion-label>
+            </ion-col>
+            <ion-col col-5 class="AddBodyInfo-bodyInfo-value">
+              <ion-input class="AddBodyInfo-textInput" type="number" placeholder="Total" formControlName="total">
+              </ion-input>
+            </ion-col>
+            <ion-col>
+              &nbsp;
+            </ion-col>
+          </ion-row>
+
+          <!-- SUBCUT: Trunk -->
+          <ion-row>
+            <ion-col col-5 class="AddBodyInfo-bodyInfo-sublabel">
+              <ion-label>Trunk</ion-label>
+            </ion-col>
+            <ion-col col-5 class="AddBodyInfo-bodyInfo-value">
+              <ion-input class="AddBodyInfo-textInput" type="number" placeholder="Trunk" formControlName="trunk">
+              </ion-input>
+            </ion-col>
+            <ion-col>
+              &nbsp;
+            </ion-col>
+          </ion-row>
+
+          <!-- SUBCUT: Arms -->
+          <ion-row>
+            <ion-col col-5 class="AddBodyInfo-bodyInfo-sublabel">
+              <ion-label>Arms</ion-label>
+            </ion-col>
+            <ion-col col-5 class="AddBodyInfo-bodyInfo-value">
+              <ion-input class="AddBodyInfo-textInput" type="number" placeholder="Arms" formControlName="arms">
+              </ion-input>
+            </ion-col>
+            <ion-col>
+              &nbsp;
+            </ion-col>
+          </ion-row>
+
+          <!-- SUBCUT: Legs -->
+          <ion-row>
+            <ion-col col-5 class="AddBodyInfo-bodyInfo-sublabel">
+              <ion-label>Legs</ion-label>
+            </ion-col>
+            <ion-col col-5 class="AddBodyInfo-bodyInfo-value">
+              <ion-input class="AddBodyInfo-textInput" type="number" placeholder="Legs" formControlName="legs">
+              </ion-input>
+            </ion-col>
+            <ion-col>
+              &nbsp;
+            </ion-col>
+          </ion-row>
+        </ng-container>
+
+        <!-- SKELETAL -->
+        <ng-container formGroupName="skeletalMeasurements">
+          <ion-row>
+            <ion-col col-5 class="AddBodyInfo-bodyInfo-label">
+              <ion-label>% Skeletal Muscle</ion-label>
+            </ion-col>
+            <ion-col>
+              &nbsp;
+            </ion-col>
+          </ion-row>
+
+          <!-- SKELETAL: Total -->
+          <ion-row>
+            <ion-col col-5 class="AddBodyInfo-bodyInfo-sublabel">
+              <ion-label>Total</ion-label>
+            </ion-col>
+            <ion-col col-5 class="AddBodyInfo-bodyInfo-value">
+              <ion-input class="AddBodyInfo-textInput" type="number" placeholder="Total" formControlName="total">
+              </ion-input>
+            </ion-col>
+            <ion-col>
+              &nbsp;
+            </ion-col>
+          </ion-row>
+
+          <!-- SKELETAL: Trunk -->
+          <ion-row>
+            <ion-col col-5 class="AddBodyInfo-bodyInfo-sublabel">
+              <ion-label>Trunk</ion-label>
+            </ion-col>
+            <ion-col col-5 class="AddBodyInfo-bodyInfo-value">
+              <ion-input class="AddBodyInfo-textInput" type="number" placeholder="Trunk" formControlName="trunk">
+              </ion-input>
+            </ion-col>
+            <ion-col>
+              &nbsp;
+            </ion-col>
+          </ion-row>
+
+          <!-- SKELETAL: Arms -->
+          <ion-row>
+            <ion-col col-5 class="AddBodyInfo-bodyInfo-sublabel">
+              <ion-label>Arms</ion-label>
+            </ion-col>
+            <ion-col col-5 class="AddBodyInfo-bodyInfo-value">
+              <ion-input class="AddBodyInfo-textInput" type="number" placeholder="Arms" formControlName="arms">
+              </ion-input>
+            </ion-col>
+            <ion-col>
+              &nbsp;
+            </ion-col>
+          </ion-row>
+
+          <!-- SKELETAL: Legs -->
+          <ion-row>
+            <ion-col col-5 class="AddBodyInfo-bodyInfo-sublabel">
+              <ion-label>Legs</ion-label>
+            </ion-col>
+            <ion-col col-5 class="AddBodyInfo-bodyInfo-value">
+              <ion-input class="AddBodyInfo-textInput" type="number" placeholder="Legs" formControlName="legs">
+              </ion-input>
+            </ion-col>
+            <ion-col>
+              &nbsp;
+            </ion-col>
+          </ion-row>
+        </ng-container>
+
+      </ion-grid>
+    </section>
+  </form>
+</ion-content>

@@ -140,7 +140,10 @@
 
     <!-- FITNESS PARAMETERS -->
     <section class="PageModalUserDetails-section">
-      <h6 class="PageModalUserDetails-section-title">Fitness Parameters</h6>
+      <div>
+        <div float-left class="PageModalUserDetails-section-title">Most Recent Fitness Parameters</div>
+        <a float-right (click)="addNewFitnessParams()">ADD NEW</a>
+      </div>
       <div class="PageModalUserDetails-section-bodyInfo"
         *ngIf="user.bodyInfo">
         <div class="PageModalUserDetails-section-bodyInfo-row">

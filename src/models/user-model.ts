@@ -181,7 +181,7 @@ export class UserBodyInfo {
 
     constructor(
         uid: string,
-        dateTaken: FirebaseDate,
+        dateTaken: FirebaseDate & Date,
         trueAge: number,
         weight: number,
         height: number,
@@ -197,8 +197,11 @@ export class UserBodyInfo {
         this.uid = uid;
 
         if (!dateTaken) throw "Provide dateTaken!";
-        this.dateTaken = new Date(dateTaken.seconds
-             * 1000);;
+        if (dateTaken.seconds)
+            this.dateTaken = new Date(dateTaken.seconds * 1000);
+        else
+            this.dateTaken = new Date(dateTaken);
+
         if (!trueAge) throw "Provide trueAge!";
         this.trueAge = trueAge;
 

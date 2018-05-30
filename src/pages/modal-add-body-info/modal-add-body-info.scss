@@ -1,0 +1,46 @@
+page-modal-add-body-info {
+    .AddBodyInfo {
+
+        &-section {
+            &-title {
+                color: #444;
+                font-weight: bold;
+            }
+        }
+
+        &-textInput {
+            opacity: 0.9;
+            position: relative;
+            border-bottom: 1px solid #dedede;
+            z-index: 0;
+
+            &:focus-within {
+                border-bottom: 2px solid #2a56c6;
+            }
+
+            input {
+                padding-left: 8px;
+            }
+        }
+
+        &-bodyInfo {
+            &-label {
+                color: #444;
+                padding-left: 6%;
+            }
+
+            &-sublabel {
+                padding-left: 20%;
+                color: #666;
+            }
+
+            &-value {
+                input[type=number]::-webkit-inner-spin-button,
+                input[type=number]::-webkit-outer-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+                }
+            }
+        }
+    }
+}

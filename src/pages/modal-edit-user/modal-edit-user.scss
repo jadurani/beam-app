@@ -15,6 +15,10 @@ page-modal-edit-user {
             &:focus-within {
                 border-bottom: 2px solid #2a56c6;
             }
+
+            input {
+                padding-left: 8px;
+            }
         }
 
         &-selectInput {
@@ -22,6 +26,10 @@ page-modal-edit-user {
 
             &:focus-within {
                 border-bottom: 2px solid #2a56c6;
+            }
+
+            input {
+                padding-left: 8px;
             }
         }
 
@@ -55,6 +63,7 @@ page-modal-edit-user {
                 }
             }
         }
+
         .spinner {
             position: fixed;
             z-index: 999;
