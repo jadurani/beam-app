@@ -7,12 +7,7 @@ import { UserProvider } from '../../providers/user/user';
 import { ModalUserDetailsPage } from '../modal-user-details/modal-user-details';
 import { ModalEditUserPage } from '../modal-edit-user/modal-edit-user';
 import { ModalAddBodyInfoPage } from '../modal-add-body-info/modal-add-body-info';
-
-/**
- * @constant USE_MOCK
- * Set this variable to true when on staging mode.
- */
-const USE_MOCK = false;
+import { ModalAddUserPage } from '../modal-add-user/modal-add-user';
 
 /**
  * UserListPage
@@ -35,12 +30,7 @@ export class UserListPage {
     public navParams: NavParams,
     public userProvider: UserProvider
   ) {
-    if (!USE_MOCK)
-      this.getUsers();
-    else {
-      const user = this.userProvider.mockUser;
-      this.showEditUser(user);
-    }
+    this.getUsers();
   }
 
   /**
@@ -52,9 +42,29 @@ export class UserListPage {
         this.users = users
         this.loading = false;
       })
-      .catch(() => {
+      .catch((error) => {
+        console.log(error);
         this.loading = false;
       });
+  }
+
+  /**
+   * Initialize ModalAddUser
+   *
+   * On dismiss after a successful save, ModalUserDetails
+   * opens and shows the details of the newly-created user.
+   * The savedUser also gets pushed to `users`, thus updating
+   * this page's list of users.
+   */
+  showAddUser() {
+    const addUserModal = this.modalCtrl.create(ModalAddUserPage);
+    addUserModal.onDidDismiss(savedUser => {
+      if (savedUser) {
+        this.users.push(savedUser);
+        this.showUserDetails(savedUser, false);
+      }
+    });
+    addUserModal.present();
   }
 
   /**

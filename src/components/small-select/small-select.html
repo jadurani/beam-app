@@ -1,4 +1,8 @@
-<input type="text" [value]="selectedChoice" (click)="openMenu()">
+<input
+  type="text"
+  placeholder="Gender"
+  [value]="selectedChoice"
+  (click)="openMenu()">
 
 <ul *ngIf="isMenuShown">
   <li *ngFor="let choice of choices" (click)="onSelect(choice)">

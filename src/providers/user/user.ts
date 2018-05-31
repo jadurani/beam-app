@@ -95,6 +95,7 @@ export class UserProvider {
 
           querySnapshot.forEach(doc => {
             const userObj = doc.data();
+            userObj.id = doc.id;
             const user = this._getUser(userObj);
             usersArray.push(user);
           });
@@ -123,6 +124,7 @@ export class UserProvider {
       .get()
       .then(doc => {
         const userObj = doc.data();
+        userObj.id = doc.id;
         const user = this._getUser(userObj, true);
         resolve(user);
       })
@@ -151,6 +153,7 @@ export class UserProvider {
           resolve(user);
         })
         .catch(error => {
+          console.log(error);
           reject(error);
         });
     });
@@ -180,7 +183,18 @@ export class UserProvider {
       });
   }
 
-  // addUser() {}
+  addUser(user: User): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.db.collection(this.USER_COLLECTION)
+        .add(user)
+        .then(docRef => {
+          resolve(docRef.id);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  }
 
   // deactivateUser() {}
 
@@ -258,7 +272,6 @@ export class UserProvider {
     userObj: any,
     fullUserInfo: boolean = false
   ) {
-
     const user: User = {
       id: userObj.id,
       dateJoined: this.dateProvider.firebaseDateToDate(userObj.dateJoined),

@@ -1,13 +1,15 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Edit User</ion-title>
+    <ion-title>Add New User</ion-title>
     <ion-buttons end>
       <button
         ion-button
         (click)="save()">
           SAVE
       </button>
-      <button ion-button (click)="closeModal()">
+      <button
+        ion-button
+        (click)="closeModal()">
         CANCEL
       </button>
     </ion-buttons>
@@ -16,23 +18,24 @@
 
 
 <ion-content>
-  <form
-    [formGroup]="editUserForm"
+    <form
+    [formGroup]="addUserForm"
     spellcheck="false"
     novalidate>
+
     <!-- ABOUT USER -->
-    <section class="PageModalEditUser-section">
+    <section class="PageModalAddUser-section">
       <ion-grid>
         <ion-row>
           <ion-col
-            class="PageModalEditUser-label"
+            class="PageModalAddUser-label"
             text-center
             padding>
             <ion-icon name="person"></ion-icon>
           </ion-col>
           <ion-col col-8>
             <ion-input
-              class="PageModalEditUser-textInput"
+              class="PageModalAddUser-textInput"
               type="text"
               placeholder="First Name"
               formControlName="firstName"></ion-input>
@@ -47,7 +50,7 @@
           </ion-col>
           <ion-col col-8>
             <ion-input
-              class="PageModalEditUser-textInput"
+              class="PageModalAddUser-textInput"
               type="text"
               placeholder="Last Name"
               formControlName="lastName"></ion-input>
@@ -60,16 +63,16 @@
         <!-- START OF GENDER -->
         <ion-row>
           <ion-col
-            class="PageModalEditUser-label"
+            class="PageModalAddUser-label"
             text-center
             padding>
             <ion-icon name="transgender"></ion-icon>
           </ion-col>
           <ion-col col-8>
-            <div class="PageModalEditUser-selectInput">
+            <div class="PageModalAddUser-selectInput">
               <small-select
               [choices]="GENDER_OPTIONS"
-              [selectedChoice]="user.gender || ''"
+              [selectedChoice]="''"
               (selectAction)="onSelect(gender, $event)">
             </small-select>
           </div>
@@ -82,20 +85,20 @@
         <!-- START OF BIRTHDAY -->
         <ion-row>
           <ion-col
-            class="PageModalEditUser-label"
+            class="PageModalAddUser-label"
             text-center
             padding>
             <ion-icon name="calendar"></ion-icon>
           </ion-col>
           <ion-col col-8>
-              <ion-datetime
-                class="PageModalEditUser-textInput"
-                placeholder="DD MM YYYY"
-                formControlName="dateOfBirth"
-                displayFormat="DD MMMM YYYY"
-                min="1928"
-                max="2000">
-              </ion-datetime>
+            <ion-datetime
+              class="PageModalAddUser-textInput"
+              placeholder="DD MM YYYY"
+              formControlName="dateOfBirth"
+              displayFormat="DD MMMM YYYY"
+              min="1928"
+              max="2000">
+            </ion-datetime>
           </ion-col>
           <ion-col>
             &nbsp;
@@ -104,18 +107,19 @@
         <!-- END OF BIRTHDAY -->
       </ion-grid>
 
+
       <ion-grid>
         <!-- START OF EMAIL -->
         <ion-row>
           <ion-col
-            class="PageModalEditUser-label"
+            class="PageModalAddUser-label"
             text-center
             padding>
             <ion-icon name="mail"></ion-icon>
           </ion-col>
           <ion-col col-8>
             <ion-input
-              class="PageModalEditUser-textInput"
+              class="PageModalAddUser-textInput"
               placeholder="Email"
               type="email"
               formControlName="email"></ion-input>
@@ -132,7 +136,7 @@
             *ngFor="let phone of phoneNumbers.controls;
             let i = index;">
             <ion-col
-              class="PageModalEditUser-label"
+              class="PageModalAddUser-label"
               text-center
               padding>
               <ng-container *ngIf="i > 0">
@@ -145,13 +149,13 @@
             <ion-col col-4>
               <ion-input
                 type="tel"
-                class="PageModalEditUser-textInput"
+                class="PageModalAddUser-textInput"
                 placeholder="Phone Number"
                 formControlName="number">
               </ion-input>
             </ion-col>
             <ion-col col-4>
-              <div class="PageModalEditUser-selectInput">
+              <div class="PageModalAddUser-selectInput">
                 <small-select
                 [choices]="PHONE_TYPES"
                 [selectedChoice]="phoneNumbers.controls[i].controls.type.value || ''"
@@ -169,14 +173,14 @@
       <!-- START OF ADDRESS -->
         <ion-row>
           <ion-col
-            class="PageModalEditUser-label"
+            class="PageModalAddUser-label"
             text-center
             padding>
             <ion-icon name="pin"></ion-icon>
           </ion-col>
           <ion-col col-8>
             <ion-textarea
-              class="PageModalEditUser-textInput"
+              class="PageModalAddUser-textInput"
               type="textarea"
               placeholder="Address"
               formControlName="address">
@@ -191,12 +195,12 @@
     </section>
 
     <!-- IN CASE OF EMERGENCY -->
-    <section class="PageModalEditUser-section">
+    <section class="PageModalAddUser-section">
       <ion-grid>
         <ion-row>
           <ion-col padding-left>
             <div
-              class="PageModalEditUser-section-title"
+              class="PageModalAddUser-section-title"
               padding>
               In Case of Emergency
             </div>
@@ -205,14 +209,14 @@
         <ng-container formGroupName="iceContact">
           <ion-row>
             <ion-col
-              class="PageModalEditUser-label"
+              class="PageModalAddUser-label"
               text-center
               padding>
                 <ion-icon name="person"></ion-icon>
             </ion-col>
             <ion-col col-8>
               <ion-input
-                class="PageModalEditUser-textInput"
+                class="PageModalAddUser-textInput"
                 type="text"
                 placeholder="Name of person to contact"
                 formControlName="name">
@@ -224,14 +228,14 @@
           </ion-row>
           <ion-row>
             <ion-col
-              class="PageModalEditUser-label"
+              class="PageModalAddUser-label"
               text-center
               padding>
                 <ion-icon name="call"></ion-icon>
             </ion-col>
             <ion-col col-8>
               <ion-input
-                class="PageModalEditUser-textInput"
+                class="PageModalAddUser-textInput"
                 type="text"
                 placeholder="Contact number of person to contact"
                 formControlName="phoneNumber">
@@ -246,12 +250,12 @@
     </section>
 
     <!-- OTHER NOTES -->
-    <section class="PageModalEditUser-section">
+    <section class="PageModalAddUser-section">
       <ion-grid>
         <ion-row>
           <ion-col padding-left>
             <div
-              class="PageModalEditUser-section-title"
+              class="PageModalAddUser-section-title"
               padding>
                 Other Remarks
             </div>
@@ -259,14 +263,14 @@
         </ion-row>
         <ion-row>
           <ion-col
-            class="PageModalEditUser-label"
+            class="PageModalAddUser-label"
             text-center
             padding>
               <ion-icon name="list-box"></ion-icon>
           </ion-col>
           <ion-col col-8>
             <ion-textarea
-              class="PageModalEditUser-textInput"
+              class="PageModalAddUser-textInput"
               type="textarea"
               placeholder="Medical conditions, other notes..."
               formControlName="otherRemarks">

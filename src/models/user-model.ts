@@ -7,7 +7,7 @@ export interface User {
     photoUrl ?: string;
 
     // Basic Information
-    id: string; // Document ID in Firebase
+    id ?: string; // Document ID in Firebase
     dateJoined: Date;
     firstName ?: string;
     lastName ?: string;

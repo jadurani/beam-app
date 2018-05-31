@@ -13,6 +13,7 @@ import { SmallSelectComponent } from './../components/small-select/small-select'
 import { HomePage } from '../pages/home/home';
 import { LogInPage } from '../pages/log-in/log-in';
 import { ModalAddBodyInfoPage } from '../pages/modal-add-body-info/modal-add-body-info';
+import { ModalAddUserPage } from '../pages/modal-add-user/modal-add-user';
 import { ModalEditUserPage } from '../pages/modal-edit-user/modal-edit-user';
 import { ModalUserDetailsPage } from '../pages/modal-user-details/modal-user-details';
 import { SignUpPage } from '../pages/sign-up/sign-up';
@@ -38,6 +39,7 @@ import { firebaseConfig } from '../environments/environment';
     HomePage,
     LogInPage,
     ModalAddBodyInfoPage,
+    ModalAddUserPage,
     ModalEditUserPage,
     ModalUserDetailsPage,
     SignUpPage,
@@ -55,6 +57,7 @@ import { firebaseConfig } from '../environments/environment';
     HomePage,
     LogInPage,
     ModalAddBodyInfoPage,
+    ModalAddUserPage,
     ModalEditUserPage,
     ModalUserDetailsPage,
     SignUpPage,

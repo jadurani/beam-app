@@ -64,16 +64,16 @@ export class ModalEditUserPage {
     return this.editUserForm.get('phoneNumbers') as FormArray;
   }
 
+  get PHONE_TYPES(): Array<string> {
+    return ['Home', 'Mobile', 'Work', 'Other'];
+  }
+
   get gender(): AbstractControl {
     return this.editUserForm.get('gender');
   }
 
   get GENDER_OPTIONS(): Array<string> {
     return ['Male', 'Female', 'Unspecified'];
-  }
-
-  get PHONE_TYPES(): Array<string> {
-    return ['Home', 'Mobile', 'Work', 'Other'];
   }
 
   onSelect(control: FormControl, value: string) {
@@ -99,6 +99,7 @@ export class ModalEditUserPage {
       .catch(error => {
         toast.dismiss();
 
+        console.log(error);
         toast = this.toastCtrl.create({
           message: error.message || 'Server Error. Try again later',
           position: 'bottom',
@@ -144,15 +145,16 @@ export class ModalEditUserPage {
     this.user.lastName = formModel.lastName;
     this.user.gender = formModel.gender;
     this.user.dateOfBirth = this.dateProvider.stringToDate(formModel.dateOfBirth);
-
     this.user.email = formModel.email;
-    this.user.phoneNumbers = formModel.phoneNumbers;
     this.user.address = formModel.address;
+    this.user.otherRemarks = formModel.otherRemarks;
 
-    if (!formModel.iceContact.name && !formModel.iceContact.phoneNumber) {
+    this.user.phoneNumbers = formModel.phoneNumbers.map(
+      (phone: PhoneNumber) => Object.assign({}, phone),
+    );
+
+    if (formModel.iceContact.name && formModel.iceContact.phoneNumber) {
       this.user.iceContact = Object.assign({}, formModel.iceContact);
     }
-
-    this.user.otherRemarks = formModel.otherRemarks;
   }
 }
