@@ -4,7 +4,9 @@
     <ion-buttons end>
       <button
         ion-button
-        (click)="save()">
+        (click)="save()"
+        [disabled]="editUserForm.pristine ||
+          editUserForm.invalid">
           SAVE
       </button>
       <button ion-button (click)="closeModal()">

@@ -4,7 +4,9 @@
     <ion-buttons end>
       <button
         ion-button
-        (click)="save()">
+        (click)="save()"
+        [disabled]="addUserForm.pristine ||
+          addUserForm.invalid">
           SAVE
       </button>
       <button
@@ -71,6 +73,7 @@
           <ion-col col-8>
             <div class="PageModalAddUser-selectInput">
               <small-select
+              [placeholder]="'Gender'"
               [choices]="GENDER_OPTIONS"
               [selectedChoice]="''"
               (selectAction)="onSelect(gender, $event)">
@@ -157,9 +160,10 @@
             <ion-col col-4>
               <div class="PageModalAddUser-selectInput">
                 <small-select
-                [choices]="PHONE_TYPES"
-                [selectedChoice]="phoneNumbers.controls[i].controls.type.value || ''"
-                (selectAction)="onSelect(phoneNumbers.controls[i].controls.type, $event)">
+                  [placeholder]="'Label'"
+                  [choices]="PHONE_TYPES"
+                  [selectedChoice]="phoneNumbers.controls[i].controls.type.value || ''"
+                  (selectAction)="onSelect(phoneNumbers.controls[i].controls.type, $event)">
               </small-select>
             </div>
 
