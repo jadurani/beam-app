@@ -29,7 +29,7 @@
       <button ion-item *ngFor="let user of users" (click)="showUserDetails(user)">
         <!-- replace icon with image if exists -->
         <ion-icon name="person" item-start></ion-icon>
-          {{ user.displayName }}
+          {{ user.displayName || user.firstName }}
         <div class="item-note" item-end>
           {{user.dateJoined | date:'d MMM yyyy'}}
         </div>
