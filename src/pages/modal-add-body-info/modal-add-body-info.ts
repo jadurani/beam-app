@@ -11,6 +11,7 @@ import {
   Validators
 } from '@angular/forms';
 
+import { DateProvider } from './../../providers/date/date';
 import { User, UserBodyInfo } from './../../models/user-model';
 
 import { UserProvider } from '../../providers/user/user';
@@ -29,6 +30,7 @@ export class ModalAddBodyInfoPage {
     private formBuilder: FormBuilder,
     private toastCtrl: ToastController,
     private navParams: NavParams,
+    private dateProvider: DateProvider,
     private userProvider: UserProvider,
     private viewCtrl: ViewController,
   ) {
@@ -37,10 +39,10 @@ export class ModalAddBodyInfoPage {
   }
 
   createForm(user: User) {
-    const dateToday = new Date();
+    const dateToday = this.dateProvider.dateNow();
     this.addBodyInfoForm = this.formBuilder.group({
       dateTaken: [dateToday.toISOString(), Validators.required],
-      trueAge: [dateToday.getFullYear() - this.user.dateOfBirth.getFullYear(), Validators.required],
+      trueAge: [this.dateProvider.getAgeToday(this.user.dateOfBirth), Validators.required],
       weight: [null, Validators.required],
       height: [null, Validators.required],
       percBodyFat: [null, Validators.required],
@@ -95,21 +97,20 @@ export class ModalAddBodyInfoPage {
 
   _prepareBodyInfo () {
     const formModel = this.addBodyInfoForm.value;
-
-    const newUserBodyInfo = new UserBodyInfo(
-      this.user.id,
-      formModel.dateTaken,
-      formModel.trueAge,
-      formModel.weight,
-      formModel.height,
-      formModel.percBodyFat,
-      formModel.visceralFatRating,
-      formModel.restingMetabolism,
-      formModel.bodyAge,
-      formModel.bmi,
-      Object.assign({}, formModel.subcutaneousMeasurements),
-      Object.assign({}, formModel.skeletalMeasurements)
-    );
-    this.user.setFitnessParams(newUserBodyInfo);
+    const newUserBodyInfo: UserBodyInfo = {
+      uid: this.user.id,
+      dateTaken: formModel.dateTaken,
+      trueAge: formModel.trueAge,
+      weight: formModel.weight,
+      height: formModel.height,
+      percBodyFat: formModel.percBodyFat,
+      visceralFatRating: formModel.visceralFatRating,
+      restingMetabolism: formModel.restingMetabolism,
+      bodyAge: formModel.bodyAge,
+      bmi: formModel.bmi,
+      subcutaneousMeasurements: Object.assign({}, formModel.subcutaneousMeasurements),
+      skeletalMeasurements: Object.assign({}, formModel.skeletalMeasurements)
+    };
+    this.user.bodyInfo = newUserBodyInfo;
   }
 }

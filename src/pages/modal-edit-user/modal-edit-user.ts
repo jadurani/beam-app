@@ -14,6 +14,7 @@ import {
   Validators
 } from '@angular/forms';
 
+import { DateProvider } from './../../providers/date/date';
 import { User, ICEContact, PhoneNumber } from './../../models/user-model';
 
 import { UserProvider } from '../../providers/user/user';
@@ -36,6 +37,7 @@ export class ModalEditUserPage {
     private viewCtrl: ViewController,
     private navParams: NavParams,
     private userProvider: UserProvider,
+    private dateProvider: DateProvider,
   ) {
     this.user = this.navParams.get('userToEdit');
     this.createForm(this.user);
@@ -45,7 +47,6 @@ export class ModalEditUserPage {
     this.editUserForm = this.formBuilder.group({
       firstName: [user.firstName, Validators.required],
       lastName: [user.lastName, Validators.required],
-      nickName: user.displayName,
       gender: user.gender,
       dateOfBirth: user.dateOfBirth ? user.dateOfBirth.toISOString() : new Date().toISOString(),
       email: user.email,
@@ -139,22 +140,19 @@ export class ModalEditUserPage {
   private _prepareSaveUser(): void {
     const formModel = this.editUserForm.value;
 
-    this.user.setFirstName(formModel.firstName);
-    this.user.setLastName(formModel.lastName);
-    // this.user.setDisplayName(formModel.displayName);
-    this.user.setGender(formModel.gender);
-    this.user.setDateOfBirth(formModel.dateOfBirth);
+    this.user.firstName = formModel.firstName;
+    this.user.lastName = formModel.lastName;
+    this.user.gender = formModel.gender;
+    this.user.dateOfBirth = this.dateProvider.stringToDate(formModel.dateOfBirth);
 
-    this.user.setEmail(formModel.email);
-    this.user.setPhoneNumbers(formModel.phoneNumbers);
+    this.user.email = formModel.email;
+    this.user.phoneNumbers = formModel.phoneNumbers;
+    this.user.address = formModel.address;
 
-    this.user.setAddress(formModel.address);
     if (!formModel.iceContact.name && !formModel.iceContact.phoneNumber) {
-      this.user.setICE(formModel.iceContact);
+      this.user.iceContact = Object.assign({}, formModel.iceContact);
     }
 
-    this.user.setOtherRemarks(formModel.otherRemarks);
-
-    this.user.setFitnessParams(formModel.bodyInfo);
+    this.user.otherRemarks = formModel.otherRemarks;
   }
 }

@@ -43,6 +43,7 @@ export class ModalUserDetailsPage {
       this.loading = false;
     })
     .catch(error => {
+      console.log(error);
       this.loading = false;
       this.errorMsg = error.message;
     });

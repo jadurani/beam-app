@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { User, UserBodyInfo } from './../../models/user-model';
 
+import { DateProvider } from './../../providers/date/date';
 import { AuthProvider } from './../../providers/auth/auth';
+
 import * as firebase from 'firebase';
 
 
@@ -18,9 +20,11 @@ export class UserProvider {
   usersList : User[];
   USER_COLLECTION: string = 'users';
   BODYINFO_COLLECTION: string = 'userBodyInfo';
-  mockUser:any = MOCK_USER;
 
-  constructor(public authProvider: AuthProvider) {
+  constructor(
+    private dateProvider: DateProvider,
+    private authProvider: AuthProvider,
+  ) {
     this.db = firebase.firestore();
     this.db.settings({
       timestampsInSnapshots: true,
@@ -42,8 +46,7 @@ export class UserProvider {
         let userObj;
 
         querySnapshot.forEach(doc => {
-          userObj = JSON.parse(JSON.stringify(doc.data()))
-          userObj.id = doc.id;
+          userObj = doc.data();
         });
 
         userObj.displayName = authCurrentUser.displayName;
@@ -91,8 +94,7 @@ export class UserProvider {
           let usersArray = [];
 
           querySnapshot.forEach(doc => {
-            var userObj = JSON.parse(JSON.stringify(doc.data()));
-            userObj.id = doc.id;
+            const userObj = doc.data();
             const user = this._getUser(userObj);
             usersArray.push(user);
           });
@@ -120,9 +122,8 @@ export class UserProvider {
       .doc(userId)
       .get()
       .then(doc => {
-        var userObj = JSON.parse(JSON.stringify(doc.data()));
-        userObj.id = doc.id;
-        let user = this._getUser(userObj, true);
+        const userObj = doc.data();
+        const user = this._getUser(userObj, true);
         resolve(user);
       })
       .catch((error: any) => {
@@ -142,11 +143,10 @@ export class UserProvider {
    * @param user {User}
    */
   updateUser(user: User): Promise<any> {
-    const userObj = user.getClassAsObject();
     return new Promise ((resolve, reject) => {
       this.db.collection(this.USER_COLLECTION)
         .doc(user.id)
-        .update(userObj)
+        .update(user)
         .then(() => {
           resolve(user);
         })
@@ -165,9 +165,8 @@ export class UserProvider {
 
       this.updateUser(user)
         .then(updatedUser => {
-          const bodyInfoObj = user.bodyInfo.getClassAsObject();
           this.db.collection(this.BODYINFO_COLLECTION)
-            .add(bodyInfoObj)
+            .add(user.bodyInfo)
             .then(() => {
               resolve(updatedUser);
             })
@@ -191,115 +190,125 @@ export class UserProvider {
 
   // private log(message: string) {}
 
+  /**
+   * @property mockUser
+   * Mock user object used on staging
+   */
+  get mockUser(): User {
+    return {
+      "id": "HUn9yDkhmltrSoTe5hqq",
+      "dateJoined": this.dateProvider.stringToDate("2018-05-24T16:00:00.000Z"),
+      "roles": {
+        "owner": true
+      },
+      "authId": "ZIqnDC1OAEUJG9gAohIV47VfwZq2",
+      "displayName": "Juan",
+      "email": "juan@dc.ph",
+      "phoneNumber": "+639171717171",
+      "firstName": "Juan Tiburcio Consolas",
+      "lastName": "Old Romanova",
+      "suffix": "Jr.",
+      "gender": "Male",
+      "dateOfBirth": this.dateProvider.stringToDate("1993-03-04T16:00:00.000Z"),
+      "phoneNumbers": [
+        {
+          "number": "+639179171991",
+          "type": "Home"
+        },
+        {
+          "number": "+639121212121",
+          "type": "Mobile"
+        }
+      ],
+      "address": "Luneta Park, Manila, National Capital Region, Philippines",
+      "bodyInfo": {
+        "uid": "HUn9yDkhmltrSoTe5hqq",
+        "dateTaken": this.dateProvider.stringToDate("2018-05-30T15:34:47.654Z"),
+        "trueAge": 25,
+        "weight": 1,
+        "height": 1,
+        "percBodyFat": 1,
+        "visceralFatRating": 1,
+        "restingMetabolism": 1,
+        "bodyAge": 1,
+        "bmi": 1,
+        "subcutaneousMeasurements": {
+          "arms": 1,
+          "legs": 1,
+          "total": 1,
+          "trunk": 1
+        },
+        "skeletalMeasurements": {
+          "arms": 1,
+          "legs": 1,
+          "total": 1,
+          "trunk": 1
+        }
+      },
+      "iceContact": {
+        "name": "Pilar Pilapil",
+        "phoneNumber": "+639178080808"
+      },
+      "otherRemarks": "Allergy to meat; History of high blood pressure"
+    };
+
+  }
+
   private _getUser(
     userObj: any,
     fullUserInfo: boolean = false
   ) {
-    const user = new User(userObj.id, userObj.dateJoined, userObj.roles);
 
-    user.setFirebaseAuthInfo(
-      userObj.authId ? userObj.authId : null,
-      userObj.displayName ? userObj.displayName : null,
-      userObj.email ? userObj.email : null,
-      userObj.phoneNumber ? userObj.phoneNumber : null,
-      userObj.photoUrl ? userObj.photoUrl : null
-    );
+    const user: User = {
+      id: userObj.id,
+      dateJoined: this.dateProvider.firebaseDateToDate(userObj.dateJoined),
+      roles: Object.assign({}, userObj.roles),
+    };
 
-    user.setBasicInfo(
-      userObj.firstName ? userObj.firstName : null,
-      userObj.lastName ? userObj.lastName : null,
-      userObj.suffix ? userObj.suffix : null,
-      userObj.gender ? userObj.gender : null,
-      userObj.dateOfBirth ? userObj.dateOfBirth : null,
-      userObj.phoneNumbers ? userObj.phoneNumbers : null,
-      userObj.address ? userObj.address : null,
-    );
+    // AuthInfo
+    if (userObj.authId) user.authId = userObj.authId;
+    if (userObj.displayName) user.displayName = userObj.displayName;
+    if (userObj.email) user.email = userObj.email;
+    if (userObj.phoneNumber) user.phoneNumber = userObj.phoneNumber;
+    if (userObj.photoUrl) user.photoUrl = userObj.photoUrl;
+
+    // BasicInfo
+    if (userObj.firstName) user.firstName = userObj.firstName;
+    if (userObj.lastName) user.lastName = userObj.lastName;
+    if (userObj.suffix) user.suffix = userObj.suffix;
+    if (userObj.gender) user.gender = userObj.gender;
+    if (userObj.dateOfBirth)
+      user.dateOfBirth = this.dateProvider.firebaseDateToDate(userObj.dateOfBirth);
+    if (userObj.phoneNumbers) user.phoneNumbers = userObj.phoneNumbers;
+    if (userObj.address) user.address = userObj.address;
 
     if (fullUserInfo) {
       if (userObj.bodyInfo) {
-        const userBodyInfo = new UserBodyInfo(
-          userObj.id,
-          userObj.bodyInfo.dateTaken,
-          userObj.bodyInfo.trueAge,
-          userObj.bodyInfo.weight,
-          userObj.bodyInfo.height,
-          userObj.bodyInfo.percBodyFat,
-          userObj.bodyInfo.visceralFatRating,
-          userObj.bodyInfo.restingMetabolism,
-          userObj.bodyInfo.bodyAge,
-          userObj.bodyInfo.bmi,
-          Object.assign({}, userObj.bodyInfo.subcutaneousMeasurements),
-          Object.assign({}, userObj.bodyInfo.skeletalMeasurements)
-        );
-        user.setFitnessParams(userBodyInfo);
+        const userBodyInfo : UserBodyInfo = {
+          uid: userObj.id,
+          dateTaken: this.dateProvider.firebaseDateToDate(userObj.bodyInfo.dateTaken),
+          trueAge: userObj.bodyInfo.trueAge,
+          weight: userObj.bodyInfo.weight,
+          height: userObj.bodyInfo.height,
+          percBodyFat: userObj.bodyInfo.percBodyFat,
+          visceralFatRating: userObj.bodyInfo.visceralFatRating,
+          restingMetabolism: userObj.bodyInfo.restingMetabolism,
+          bodyAge: userObj.bodyInfo.bodyAge,
+          bmi: userObj.bodyInfo.bmi,
+          subcutaneousMeasurements: Object.assign({}, userObj.bodyInfo.subcutaneousMeasurements),
+          skeletalMeasurements: Object.assign({}, userObj.bodyInfo.skeletalMeasurements)
+        };
+        user.bodyInfo = userBodyInfo;
       }
 
-      if (userObj.iceContact) user.setICE(userObj.iceContact);
+      if (userObj.iceContact)
+        user.iceContact = Object.assign({}, userObj.iceContact);
 
-      if (userObj.otherRemarks) user.setOtherRemarks(userObj.otherRemarks);
+      if (userObj.otherRemarks)
+        user.otherRemarks = userObj.otherRemarks;
     }
+
     return user;
   }
-}
 
-/**
- * @constant MOCK_USER
- * Mock user object used on staging
- */
-const MOCK_USER = {
-  "id": "HUn9yDkhmltrSoTe5hqq",
-  "dateJoined": new Date("2018-05-24T16:00:00.000Z"),
-  "roles": {
-    "owner": true
-  },
-  "authId": "ZIqnDC1OAEUJG9gAohIV47VfwZq2",
-  "displayName": "Juan",
-  "email": "juan@dc.ph",
-  "phoneNumber": "+639171717171",
-  "photoUrl": null,
-  "firstName": "Juan Tiburcio Consolas",
-  "lastName": "Old Romano",
-  "suffix": "Jr.",
-  "gender": "Male",
-  "dateOfBirth": new Date("1993-03-04T16:00:00.000Z"),
-  "phoneNumbers": [
-    {
-      "number": "+639179171991",
-      "type": "Home"
-    },
-    {
-      "number": "+639121212121",
-      "type": "Mobile"
-    }
-  ],
-  "address": "Luneta Park, Manila, National Capital Region, Philippines",
-  "bodyInfo": {
-    "uid": "HUn9yDkhmltrSoTe5hqq",
-    "dateTaken": new Date("2018-03-19T16:00:00.000Z"),
-    "trueAge": 23,
-    "weight": 54.9,
-    "height": 162.56,
-    "percBodyFat": 22.7,
-    "visceralFatRating": 2,
-    "restingMetabolism": 1227,
-    "bmi": 20.1,
-    "bodyAge": 23,
-    "subcutaneousMeasurements": {
-      "arms": 33.6,
-      "legs": 30.6,
-      "total": 20.8,
-      "trunk": 16.8
-    },
-    "skeletalMeasurements": {
-      "arms": 32.9,
-      "legs": 42.4,
-      "total": 29.4,
-      "trunk": 24.1
-    }
-  },
-  "iceContact": {
-    "name": "Pilar Pilapil",
-    "phoneNumber": "+639178080808"
-  },
-  "otherRemarks": "Allergy to peanuts; Family history of high blood pressues"
-};
+}

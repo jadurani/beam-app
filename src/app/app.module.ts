@@ -11,20 +11,21 @@ import { SmallSelectComponent } from './../components/small-select/small-select'
 
 // Pages
 import { HomePage } from '../pages/home/home';
-import { UserListPage } from '../pages/user-list/user-list';
-import { ModalUserDetailsPage } from '../pages/modal-user-details/modal-user-details';
-import { ModalEditUserPage } from '../pages/modal-edit-user/modal-edit-user';
-import { ModalAddBodyInfoPage } from '../pages/modal-add-body-info/modal-add-body-info';
-import { SignUpPage } from '../pages/sign-up/sign-up';
 import { LogInPage } from '../pages/log-in/log-in';
+import { ModalAddBodyInfoPage } from '../pages/modal-add-body-info/modal-add-body-info';
+import { ModalEditUserPage } from '../pages/modal-edit-user/modal-edit-user';
+import { ModalUserDetailsPage } from '../pages/modal-user-details/modal-user-details';
+import { SignUpPage } from '../pages/sign-up/sign-up';
+import { UserListPage } from '../pages/user-list/user-list';
 
 // Native Imports
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 // Services / Providers
-import { UserProvider } from '../providers/user/user';
 import { AuthProvider } from '../providers/auth/auth';
+import { DateProvider } from '../providers/date/date';
+import { UserProvider } from '../providers/user/user';
 
 // Backend Config
 import * as firebase from 'firebase';
@@ -35,12 +36,12 @@ import { firebaseConfig } from '../environments/environment';
     MyApp,
     SmallSelectComponent,
     HomePage,
-    UserListPage,
-    ModalUserDetailsPage,
-    ModalEditUserPage,
+    LogInPage,
     ModalAddBodyInfoPage,
+    ModalEditUserPage,
+    ModalUserDetailsPage,
     SignUpPage,
-    LogInPage
+    UserListPage,
   ],
   imports: [
     BrowserModule,
@@ -52,19 +53,20 @@ import { firebaseConfig } from '../environments/environment';
   entryComponents: [
     MyApp,
     HomePage,
-    UserListPage,
-    ModalUserDetailsPage,
-    ModalEditUserPage,
+    LogInPage,
     ModalAddBodyInfoPage,
+    ModalEditUserPage,
+    ModalUserDetailsPage,
     SignUpPage,
-    LogInPage
+    UserListPage,
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     UserProvider,
-    AuthProvider
+    AuthProvider,
+    DateProvider
   ]
 })
 export class AppModule {
