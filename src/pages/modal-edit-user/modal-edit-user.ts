@@ -115,6 +115,7 @@ export class ModalEditUserPage {
 
     return null;
   }
+
   get iceContactNameError() {
     const ICENameControl = this.iceContact.get('name');
     if (
@@ -181,19 +182,24 @@ export class ModalEditUserPage {
   }
 
   private _buildICE(contact: ICEContact | null): void {
+    let iceContactFG;
     if (!contact) {
-      contact = {
-        name: [null, Validators.required],
-        phoneNumber: [null, Validators.required],
-      };
+      iceContactFG = this.formBuilder.group({
+        name: ['', Validators.required],
+        phoneNumber: ['', Validators.required],
+      });
+    } else {
+      iceContactFG = this.formBuilder.group({
+        name: [contact.name, Validators.required],
+        phoneNumber: [contact.phoneNumber, Validators.required],
+      });
     }
 
-    const iceContactFG = this.formBuilder.group(contact);
     this.editUserForm.setControl('iceContact', iceContactFG);
   }
 
   private _buildPhoneNumbersList(phoneNumbers: PhoneNumber[]) {
-    if (!phoneNumbers) {
+    if (!phoneNumbers || phoneNumbers.length == 0) {
       phoneNumbers = [{
         number: '',
         type: '',

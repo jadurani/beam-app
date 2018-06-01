@@ -62,20 +62,26 @@
             {{ user.email }}
           </div>
         </div>
-        <div *ngIf="user.phoneNumbers"
+        <div *ngIf="user.phoneNumbers.length > 0"
           class="PageModalUserDetails-section-content-row">
           <div>
             <ion-icon name="call"></ion-icon>
           </div>
           <div>
-             {{ user.phoneNumbers[0].number }} • {{ user.phoneNumbers[0].type }}
+             {{ user.phoneNumbers[0].number }}
+             <ng-container *ngIf="user.phoneNumbers[0].type">
+                • {{ user.phoneNumbers[0].type }}
+             </ng-container>
           </div>
         </div>
         <div class="PageModalUserDetails-section-content-row"
            *ngFor="let phone of user.phoneNumbers | slice: 1">
           <div>&nbsp;</div>
           <div>
-            {{ phone.number }} • {{ phone.type }}
+            {{ phone.number }}
+            <ng-container *ngIf="phone.type">
+              • {{ phone.type }}
+            </ng-container>
           </div>
         </div>
         <div *ngIf="user.address"

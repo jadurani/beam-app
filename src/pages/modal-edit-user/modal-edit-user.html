@@ -79,9 +79,10 @@
           <ion-col col-8>
             <div class="PageModalEditUser-selectInput">
               <small-select
-              [choices]="GENDER_OPTIONS"
-              [selectedChoice]="user.gender || ''"
-              (selectAction)="onSelect(gender, $event)">
+                [placeholder]="'Gender'"
+                [choices]="GENDER_OPTIONS"
+                [selectedChoice]="user.gender || ''"
+                (selectAction)="onSelect(gender, $event)">
             </small-select>
           </div>
           </ion-col>
@@ -168,9 +169,10 @@
             <ion-col col-4>
               <div class="PageModalEditUser-selectInput">
                 <small-select
-                [choices]="PHONE_TYPES"
-                [selectedChoice]="phoneNumbers.controls[i].controls.type.value || ''"
-                (selectAction)="onSelect(phoneNumbers.controls[i].controls.type, $event)">
+                  [placeholder]="'Label'"
+                  [choices]="PHONE_TYPES"
+                  [selectedChoice]="phoneNumbers.controls[i].controls.type.value || ''"
+                  (selectAction)="onSelect(phoneNumbers.controls[i].controls.type, $event)">
               </small-select>
             </div>
 

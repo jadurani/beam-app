@@ -14,7 +14,7 @@ import {
 } from '@angular/forms';
 
 import { DateProvider } from './../../providers/date/date';
-import { User, PhoneNumber, ICEContact } from './../../models/user-model';
+import { User, PhoneNumber } from './../../models/user-model';
 
 import { UserProvider } from '../../providers/user/user';
 
@@ -226,7 +226,9 @@ export class ModalAddUserPage {
       newUser.otherRemarks = formModel.otherRemarks;
 
     const newNumbers = formModel.phoneNumbers.map(
-      (phone: PhoneNumber) => Object.assign({}, phone),
+      (phone: PhoneNumber) => {
+        if (phone.number) Object.assign({}, phone);
+      },
     );
 
     if (newNumbers)
