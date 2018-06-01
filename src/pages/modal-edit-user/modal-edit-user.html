@@ -28,6 +28,7 @@
         <ion-row>
           <ion-col
             class="PageModalEditUser-label"
+            [ngClass]="{'PageModalEditUser-label-hasError': firstNameError || lastNameError}"
             text-center
             padding>
             <ion-icon name="person"></ion-icon>
@@ -35,9 +36,13 @@
           <ion-col col-8>
             <ion-input
               class="PageModalEditUser-textInput"
+              [ngClass]="{'PageModalEditUser-textInput-hasError': firstNameError}"
               type="text"
-              placeholder="First Name"
+              placeholder="*First Name"
               formControlName="firstName"></ion-input>
+            <div class="PageModalEditUser-errorMessage"
+              [innerHTML]="firstNameError">
+            </div>
           </ion-col>
           <ion-col>
             &nbsp;
@@ -50,9 +55,13 @@
           <ion-col col-8>
             <ion-input
               class="PageModalEditUser-textInput"
+              [ngClass]="{'PageModalEditUser-textInput-hasError': lastNameError}"
               type="text"
-              placeholder="Last Name"
+              placeholder="*Last Name"
               formControlName="lastName"></ion-input>
+            <div class="PageModalEditUser-errorMessage"
+              [innerHTML]="lastNameError">
+            </div>
           </ion-col>
           <ion-col>
             &nbsp;
@@ -118,9 +127,13 @@
           <ion-col col-8>
             <ion-input
               class="PageModalEditUser-textInput"
-              placeholder="Email"
+              [ngClass]="{'PageModalEditUser-label-hasError': emailError}"
+              placeholder="*Email"
               type="email"
-              formControlName="email"></ion-input>
+              formControlName="email"
+              email></ion-input>
+            <div class="PageModalEditUser-errorMessage"
+              [innerHTML]="emailError"></div>
           </ion-col>
           <ion-col>
             &nbsp;
@@ -208,6 +221,7 @@
           <ion-row>
             <ion-col
               class="PageModalEditUser-label"
+              [ngClass]="{'PageModalEditUser-label-hasError': iceContactNameError}"
               text-center
               padding>
                 <ion-icon name="person"></ion-icon>
@@ -215,10 +229,13 @@
             <ion-col col-8>
               <ion-input
                 class="PageModalEditUser-textInput"
+                [ngClass]="{'PageModalEditUser-textInput-hasError': iceContactNameError}"
                 type="text"
-                placeholder="Name of person to contact"
+                placeholder="*Name"
                 formControlName="name">
               </ion-input>
+              <div class="PageModalEditUser-errorMessage"
+                [innerHTML]="iceContactNameError"></div>
             </ion-col>
             <ion-col>
               &nbsp;
@@ -227,6 +244,7 @@
           <ion-row>
             <ion-col
               class="PageModalEditUser-label"
+              [ngClass]="{'PageModalEditUser-label-hasError': iceContactNumberError}"
               text-center
               padding>
                 <ion-icon name="call"></ion-icon>
@@ -234,10 +252,13 @@
             <ion-col col-8>
               <ion-input
                 class="PageModalEditUser-textInput"
+                [ngClass]="{'PageModalEditUser-textInput-hasError': iceContactNumberError}"
                 type="text"
-                placeholder="Contact number of person to contact"
+                placeholder="*Contact number"
                 formControlName="phoneNumber">
               </ion-input>
+              <div class="PageModalEditUser-errorMessage"
+                [innerHTML]="iceContactNumberError"></div>
             </ion-col>
             <ion-col>
               &nbsp;

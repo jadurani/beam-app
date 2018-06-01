@@ -49,7 +49,7 @@ export class ModalEditUserPage {
       lastName: [user.lastName, Validators.required],
       gender: user.gender,
       dateOfBirth: user.dateOfBirth ? user.dateOfBirth.toISOString() : new Date().toISOString(),
-      email: user.email,
+      email: [user.email, Validators.required],
       phoneNumbers: this.formBuilder.array([]),
       address: user.address,
       iceContact: this.formBuilder.control(null),
@@ -74,6 +74,73 @@ export class ModalEditUserPage {
 
   get GENDER_OPTIONS(): Array<string> {
     return ['Male', 'Female', 'Unspecified'];
+  }
+
+  get iceContact(): AbstractControl {
+    return this.editUserForm.get('iceContact');
+  }
+
+  get firstNameError(): string | null {
+    const firstNameControl = this.editUserForm.get('firstName');
+    if (!(firstNameControl.invalid && firstNameControl.dirty))
+      return null;
+
+    if (firstNameControl.errors.required)
+      return 'Required';
+
+    return null;
+  }
+
+  get lastNameError(): string | null {
+    const lastNameControl = this.editUserForm.get('lastName');
+    if (!(lastNameControl.invalid && lastNameControl.dirty))
+      return null;
+
+    if (lastNameControl.errors.required)
+      return 'Required';
+
+    return null;
+  }
+
+  get emailError() {
+    const emailControl = this.editUserForm.get('email');
+    if (!(emailControl.invalid && emailControl.dirty))
+      return null;
+
+    if (emailControl.errors.required)
+      return 'Required';
+
+    if (emailControl.errors.email)
+      return 'Email format should be <i>juan@delacruz.com</i>.';
+
+    return null;
+  }
+  get iceContactNameError() {
+    const ICENameControl = this.iceContact.get('name');
+    if (
+      !ICENameControl.invalid ||
+      !ICENameControl.dirty
+    )
+      return null;
+
+    if (ICENameControl.errors.required)
+      return 'Required';
+
+    return null;
+  }
+
+  get iceContactNumberError() {
+    const ICEPhoneNumberControl = this.iceContact.get('phoneNumber');
+    if (
+      !ICEPhoneNumberControl.invalid ||
+      !ICEPhoneNumberControl.dirty
+    )
+      return null;
+
+    if (ICEPhoneNumberControl.errors.required)
+      return 'Required';
+
+    return null;
   }
 
   onSelect(control: FormControl, value: string) {
@@ -116,8 +183,8 @@ export class ModalEditUserPage {
   private _buildICE(contact: ICEContact | null): void {
     if (!contact) {
       contact = {
-        name: null,
-        phoneNumber: null,
+        name: [null, Validators.required],
+        phoneNumber: [null, Validators.required],
       };
     }
 
