@@ -33,14 +33,20 @@
             class="PageModalAddUser-label"
             text-center
             padding>
-            <ion-icon name="person"></ion-icon>
+            <ion-icon name="person"
+              [ngClass]="{'PageModalAddUser-label-hasError': firstNameError || lastNameError }">
+            </ion-icon>
           </ion-col>
           <ion-col col-8>
             <ion-input
               class="PageModalAddUser-textInput"
+              [ngClass]="{'PageModalAddUser-textInput-hasError': firstNameError}"
               type="text"
-              placeholder="First Name"
+              placeholder="*First Name"
               formControlName="firstName"></ion-input>
+            <div class="PageModalAddUser-errorMessage"
+              [innerHTML]="firstNameError">
+            </div>
           </ion-col>
           <ion-col>
             &nbsp;
@@ -53,9 +59,13 @@
           <ion-col col-8>
             <ion-input
               class="PageModalAddUser-textInput"
+              [ngClass]="{'PageModalAddUser-textInput-hasError': lastNameError}"
               type="text"
-              placeholder="Last Name"
+              placeholder="*Last Name"
               formControlName="lastName"></ion-input>
+            <div class="PageModalAddUser-errorMessage"
+              [innerHTML]="lastNameError">
+            </div>
           </ion-col>
           <ion-col>
             &nbsp;
@@ -116,16 +126,21 @@
         <ion-row>
           <ion-col
             class="PageModalAddUser-label"
+            [ngClass]="{'PageModalAddUser-label-hasError': emailError}"
             text-center
             padding>
             <ion-icon name="mail"></ion-icon>
           </ion-col>
           <ion-col col-8>
             <ion-input
+              [ngClass]="{'PageModalAddUser-textInput-hasError': emailError}"
               class="PageModalAddUser-textInput"
-              placeholder="Email"
+              placeholder="*Email"
               type="email"
-              formControlName="email"></ion-input>
+              formControlName="email"
+              email></ion-input>
+            <div class="PageModalAddUser-errorMessage"
+              [innerHTML]="emailError"></div>
           </ion-col>
           <ion-col>
             &nbsp;
@@ -214,6 +229,7 @@
           <ion-row>
             <ion-col
               class="PageModalAddUser-label"
+              [ngClass]="{'PageModalAddUser-label-hasError': iceContactNameError}"
               text-center
               padding>
                 <ion-icon name="person"></ion-icon>
@@ -221,10 +237,13 @@
             <ion-col col-8>
               <ion-input
                 class="PageModalAddUser-textInput"
+                [ngClass]="{'PageModalAddUser-textInput-hasError': iceContactNameError}"
                 type="text"
-                placeholder="Name of person to contact"
+                placeholder="*Name"
                 formControlName="name">
               </ion-input>
+              <div class="PageModalAddUser-errorMessage"
+                [innerHTML]="iceContactNameError"></div>
             </ion-col>
             <ion-col>
               &nbsp;
@@ -233,6 +252,7 @@
           <ion-row>
             <ion-col
               class="PageModalAddUser-label"
+              [ngClass]="{'PageModalAddUser-label-hasError': iceContactNumberError}"
               text-center
               padding>
                 <ion-icon name="call"></ion-icon>
@@ -240,10 +260,13 @@
             <ion-col col-8>
               <ion-input
                 class="PageModalAddUser-textInput"
+                [ngClass]="{'PageModalAddUser-textInput-hasError': iceContactNumberError}"
                 type="text"
-                placeholder="Contact number of person to contact"
+                placeholder="*Contact number"
                 formControlName="phoneNumber">
               </ion-input>
+              <div class="PageModalAddUser-errorMessage"
+                [innerHTML]="iceContactNumberError"></div>
             </ion-col>
             <ion-col>
               &nbsp;

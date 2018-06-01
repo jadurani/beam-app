@@ -4,6 +4,10 @@ page-modal-add-user {
             color: #777;
             text-align: center;
             width: 12%;
+
+            &-hasError {
+                color: #ff0000;
+            }
         }
 
         &-textInput {
@@ -16,9 +20,20 @@ page-modal-add-user {
                 border-bottom: 2px solid #2a56c6;
             }
 
+            &-hasError {
+                border-bottom: 2px solid #ff0000;
+            }
+
             input {
                 padding-left: 8px;
             }
+        }
+
+        &-errorMessage {
+            color: #f00;
+            font-size: 12px;
+            padding-left: 14px;
+            padding-top: 4px;
         }
 
         &-selectInput {

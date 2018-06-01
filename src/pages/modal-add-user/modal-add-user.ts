@@ -14,7 +14,7 @@ import {
 } from '@angular/forms';
 
 import { DateProvider } from './../../providers/date/date';
-import { User, PhoneNumber } from './../../models/user-model';
+import { User, PhoneNumber, ICEContact } from './../../models/user-model';
 
 import { UserProvider } from '../../providers/user/user';
 
@@ -40,23 +40,6 @@ export class ModalAddUserPage {
     this.createForm();
   }
 
-  createForm(): void {
-    this.addUserForm = this.formBuilder.group({
-      firstName: [null, Validators.required],
-      lastName: [null, Validators.required],
-      gender: [null, Validators.required],
-      dateOfBirth: [null, Validators.required],
-      email: [null, Validators.required],
-      phoneNumbers: this.formBuilder.array([]),
-      address: [null, Validators.required],
-      iceContact: this.formBuilder.control(null),
-      otherRemarks: null,
-    });
-
-    this._initPhoneNumbersList();
-    this._initICE();
-  }
-
   get phoneNumbers(): FormArray {
     return this.addUserForm.get('phoneNumbers') as FormArray;
   }
@@ -73,24 +56,89 @@ export class ModalAddUserPage {
     return ['Male', 'Female', 'Unspecified'];
   }
 
-  private _initPhoneNumbersList(): void {
-    const phoneNumbers = [{
-      number: '',
-      type: '',
-    }];
-
-    const phoneFGs = phoneNumbers.map(phone => this.formBuilder.group(phone));
-    const phoneFormArray = this.formBuilder.array(phoneFGs);
-    this.addUserForm.setControl('phoneNumbers', phoneFormArray);
+  get iceContact(): AbstractControl {
+    return this.addUserForm.get('iceContact');
   }
 
-  private _initICE(): void {
-    const iceContactFG = this.formBuilder.group({
-      name: [null, Validators.required],
-      phoneNumber: [null, Validators.required],
+  get firstNameError(): string | null {
+    const firstNameControl = this.addUserForm.get('firstName');
+    if (!(firstNameControl.invalid && firstNameControl.dirty))
+      return null;
+
+    if (firstNameControl.errors.required)
+      return 'Required';
+
+    return null;
+  }
+
+  get lastNameError(): string | null {
+    const lastNameControl = this.addUserForm.get('lastName');
+    if (!(lastNameControl.invalid && lastNameControl.dirty))
+      return null;
+
+    if (lastNameControl.errors.required)
+      return 'Required';
+
+    return null;
+  }
+
+  get emailError() {
+    const emailControl = this.addUserForm.get('email');
+    if (!(emailControl.invalid && emailControl.dirty))
+      return null;
+
+    if (emailControl.errors.required)
+      return 'Required';
+
+    if (emailControl.errors.email)
+      return 'Email format should be <i>juan@delacruz.com</i>.';
+
+    return null;
+  }
+
+  get iceContactNameError() {
+    const ICENameControl = this.iceContact.get('name');
+    if (
+      !ICENameControl.invalid ||
+      !ICENameControl.dirty
+    )
+      return null;
+
+    if (ICENameControl.errors.required)
+      return 'Required';
+
+    return null;
+  }
+
+  get iceContactNumberError() {
+    const ICEPhoneNumberControl = this.iceContact.get('phoneNumber');
+    if (
+      !ICEPhoneNumberControl.invalid ||
+      !ICEPhoneNumberControl.dirty
+    )
+      return null;
+
+    if (ICEPhoneNumberControl.errors.required)
+      return 'Required';
+
+    return null;
+  }
+
+  createForm(): void {
+    this.addUserForm = this.formBuilder.group({
+      firstName: [null, Validators.required],
+      lastName: [null, Validators.required],
+      gender: null,
+      dateOfBirth: null,
+      email: [null, Validators.required],
+      phoneNumbers: this.formBuilder.array([]),
+      address: null,
+      iceContact: this.formBuilder.control(null),
+      otherRemarks: null,
     });
 
-    this.addUserForm.setControl('iceContact', iceContactFG);
+    this._initPhoneNumbersList();
+    this._initICE();
   }
 
   onSelect(control: FormControl, value: string) {
@@ -129,6 +177,26 @@ export class ModalAddUserPage {
 
   closeModal() {
     this.viewCtrl.dismiss();
+  }
+
+  private _initPhoneNumbersList(): void {
+    const phoneNumbers = [{
+      number: '',
+      type: '',
+    }];
+
+    const phoneFGs = phoneNumbers.map(phone => this.formBuilder.group(phone));
+    const phoneFormArray = this.formBuilder.array(phoneFGs);
+    this.addUserForm.setControl('phoneNumbers', phoneFormArray);
+  }
+
+  private _initICE(): void {
+    const iceContactFG = this.formBuilder.group({
+      name: [null, Validators.required],
+      phoneNumber: [null, Validators.required],
+    });
+
+    this.addUserForm.setControl('iceContact', iceContactFG);
   }
 
   private _prepareSaveUser(): User {
