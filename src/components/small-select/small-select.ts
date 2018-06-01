@@ -6,7 +6,6 @@ import {
   Input,
   Output
 } from '@angular/core';
-import { Placeholder } from '@angular/compiler/src/i18n/i18n_ast';
 
 /**
  * SmallSelectComponent
