@@ -20,7 +20,7 @@ page-modal-edit-user {
                 border-bottom: 2px solid #2a56c6;
             }
 
-            &-hasError {
+            &-hasError:focus-within, &-hasError {
                 border-bottom: 2px solid #ff0000;
             }
 
