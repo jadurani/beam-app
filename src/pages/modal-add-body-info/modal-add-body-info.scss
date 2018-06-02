@@ -18,15 +18,30 @@ page-modal-add-body-info {
                 border-bottom: 2px solid #2a56c6;
             }
 
+            &-hasError:focus-within, &-hasError {
+                border-bottom: 2px solid #ff0000;
+            }
+
             input {
                 padding-left: 8px;
             }
+        }
+
+        &-errorMessage {
+            color: #f00;
+            font-size: 12px;
+            padding-left: 14px;
+            padding-top: 4px;
         }
 
         &-bodyInfo {
             &-label {
                 color: #444;
                 padding-left: 6%;
+
+                &-hasError {
+                    color: #ff0000;
+                }
             }
 
             &-sublabel {

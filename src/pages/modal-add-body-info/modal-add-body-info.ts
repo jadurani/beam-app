@@ -42,7 +42,11 @@ export class ModalAddBodyInfoPage {
     const dateToday = this.dateProvider.dateNow();
     this.addBodyInfoForm = this.formBuilder.group({
       dateTaken: [dateToday.toISOString(), Validators.required],
-      trueAge: [this.dateProvider.getAgeToday(this.user.dateOfBirth), Validators.required],
+      trueAge: [
+        (this.user.dateOfBirth ?
+          this.dateProvider.getAgeToday(this.user.dateOfBirth) :
+          null),
+        Validators.required],
       weight: [null, Validators.required],
       height: [null, Validators.required],
       percBodyFat: [null, Validators.required],
@@ -91,11 +95,208 @@ export class ModalAddBodyInfoPage {
         toast.present();
       });
   }
+
   closeModal() {
     this.viewCtrl.dismiss();
   }
 
-  _prepareBodyInfo () {
+  get dateTakenError() {
+    const formControl = this.addBodyInfoForm.get('dateTaken');
+    if (!(formControl.invalid && formControl.dirty))
+      return null;
+
+    if (formControl.errors.required)
+      return 'Required';
+
+    return null;
+  }
+
+  get trueAgeError() {
+    const formControl = this.addBodyInfoForm.get('trueAge');
+    if (!(formControl.invalid && formControl.dirty))
+      return null;
+
+    if (formControl.errors.required)
+      return 'Required';
+
+    return null;
+  }
+
+  get weightError() {
+    const formControl = this.addBodyInfoForm.get('weight');
+    if (!(formControl.invalid && formControl.dirty))
+      return null;
+
+    if (formControl.errors.required)
+      return 'Required';
+
+    return null;
+  }
+
+  get heightError() {
+    const formControl = this.addBodyInfoForm.get('height');
+    if (!(formControl.invalid && formControl.dirty))
+      return null;
+
+    if (formControl.errors.required)
+      return 'Required';
+
+    return null;
+  }
+
+  get percBodyFatError() {
+    const formControl = this.addBodyInfoForm.get('percBodyFat');
+    if (!(formControl.invalid && formControl.dirty))
+      return null;
+
+    if (formControl.errors.required)
+      return 'Required';
+
+    return null;
+  }
+
+  get visceralFatRatingError() {
+    const formControl = this.addBodyInfoForm.get('visceralFatRating');
+    if (!(formControl.invalid && formControl.dirty))
+      return null;
+
+    if (formControl.errors.required)
+      return 'Required';
+
+    return null;
+  }
+
+  get restingMetabolismError() {
+    const formControl = this.addBodyInfoForm.get('restingMetabolism');
+    if (!(formControl.invalid && formControl.dirty))
+      return null;
+
+    if (formControl.errors.required)
+      return 'Required';
+
+    return null;
+  }
+
+  get bodyAgeError() {
+    const formControl = this.addBodyInfoForm.get('bodyAge');
+    if (!(formControl.invalid && formControl.dirty))
+      return null;
+
+    if (formControl.errors.required)
+      return 'Required';
+
+    return null;
+  }
+
+  get bmiError() {
+    const formControl = this.addBodyInfoForm.get('bmi');
+    if (!(formControl.invalid && formControl.dirty))
+      return null;
+
+    if (formControl.errors.required) {
+      return 'Required';
+    }
+
+    return null;
+  }
+
+  get subCutTotalError() {
+    const formControl =
+      this.addBodyInfoForm.get('subcutaneousMeasurements').get('total');
+    if (!(formControl.invalid && formControl.dirty))
+      return null;
+
+    if (formControl.errors.required)
+      return 'Required';
+
+    return null;
+  }
+
+  get subCutTrunkError() {
+    const formControl =
+      this.addBodyInfoForm.get('subcutaneousMeasurements').get('trunk');
+    if (!(formControl.invalid && formControl.dirty))
+      return null;
+
+    if (formControl.errors.required)
+      return 'Required';
+
+    return null;
+  }
+
+  get subCutArmsError() {
+    const formControl =
+      this.addBodyInfoForm.get('subcutaneousMeasurements').get('arms');
+    if (!(formControl.invalid && formControl.dirty))
+      return null;
+
+    if (formControl.errors.required)
+      return 'Required';
+
+    return null;
+  }
+
+  get subCutLegsError() {
+    const formControl =
+      this.addBodyInfoForm.get('subcutaneousMeasurements').get('legs');
+    if (!(formControl.invalid && formControl.dirty))
+      return null;
+
+    if (formControl.errors.required)
+      return 'Required';
+
+    return null;
+  }
+
+  get skeleTotalError() {
+    const formControl =
+      this.addBodyInfoForm.get('skeletalMeasurements').get('total');
+    if (!(formControl.invalid && formControl.dirty))
+      return null;
+
+    if (formControl.errors.required)
+      return 'Required';
+
+    return null;
+  }
+
+  get skeleTrunkError() {
+    const formControl =
+      this.addBodyInfoForm.get('skeletalMeasurements').get('trunk');
+    if (!(formControl.invalid && formControl.dirty))
+      return null;
+
+    if (formControl.errors.required)
+      return 'Required';
+
+    return null;
+  }
+
+  get skeleArmsError() {
+    const formControl =
+      this.addBodyInfoForm.get('skeletalMeasurements').get('arms');
+    if (!(formControl.invalid && formControl.dirty))
+      return null;
+
+    if (formControl.errors.required)
+      return 'Required';
+
+    return null;
+  }
+
+  get skeleLegsError() {
+    const formControl =
+      this.addBodyInfoForm.get('skeletalMeasurements').get('legs');
+    if (!(formControl.invalid && formControl.dirty))
+      return null;
+
+    if (formControl.errors.required)
+      return 'Required';
+
+    return null;
+  }
+
+  private _prepareBodyInfo () {
     const formModel = this.addBodyInfoForm.value;
     const newUserBodyInfo: UserBodyInfo = {
       uid: this.user.id,
