@@ -225,11 +225,13 @@ export class ModalAddUserPage {
     if (formModel.otherRemarks)
       newUser.otherRemarks = formModel.otherRemarks;
 
-    const newNumbers = formModel.phoneNumbers.map(
-      (phone: PhoneNumber) => {
-        if (phone.number) Object.assign({}, phone);
-      },
-    );
+    const newNumbers = formModel.phoneNumbers
+      .filter(
+        (phone: PhoneNumber) => phone.number,
+      )
+      .map(
+        (phone: PhoneNumber) => Object.assign({}, phone),
+      );
 
     if (newNumbers)
       newUser.phoneNumbers = newNumbers;

@@ -62,7 +62,7 @@
             {{ user.email }}
           </div>
         </div>
-        <div *ngIf="user.phoneNumbers.length > 0"
+        <div *ngIf="user.phoneNumbers && user.phoneNumbers.length > 0"
           class="PageModalUserDetails-section-content-row">
           <div>
             <ion-icon name="call"></ion-icon>

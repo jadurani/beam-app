@@ -222,9 +222,15 @@ export class ModalEditUserPage {
     this.user.address = formModel.address;
     this.user.otherRemarks = formModel.otherRemarks;
 
-    this.user.phoneNumbers = formModel.phoneNumbers.map(
-      (phone: PhoneNumber) => Object.assign({}, phone),
-    );
+    const newPhoneNumbers = formModel.phoneNumbers
+      .filter(
+        (phone: PhoneNumber) => phone.number,
+      ).map(
+        (phone: PhoneNumber) => Object.assign({}, phone),
+      );
+
+    if (newPhoneNumbers)
+      this.user.phoneNumbers = newPhoneNumbers;
 
     if (formModel.iceContact.name && formModel.iceContact.phoneNumber) {
       this.user.iceContact = Object.assign({}, formModel.iceContact);
