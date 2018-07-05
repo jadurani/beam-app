@@ -1,5 +1,57 @@
 page-log-in {
-    .danger {
-        color: red;
+    ::-webkit-scrollbar {
+        display: none;
+    }
+
+    .wrapper {
+        background: color($colors, primary);
+        height: 100%;
+        position: relative;
+        width: 100%;
+
+        .container {
+            background: #fff;
+            box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.2);
+            height: 100%;
+
+            .content {
+                padding: 40% 8% 0% 8%;;
+
+                .header {
+                    img {
+                        display: block;
+                        margin: auto;
+                    }
+
+                    padding-bottom: 8%;
+                }
+
+                .error-message {
+                    color: #ff0000;
+                    font-size:12px;
+
+                    &.field-error {
+                        padding-left: 16px;
+                        padding-top: 8px;
+                    }
+                }
+            }
+
+            // For phablets above, center the container
+            @media (min-width: 576px) {
+                & {
+                    max-width: 500px;
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+            }
+
+            // For small devices, take on full width
+            @media (max-width: 575px) {
+                & {
+                    width: 100%;
+                }
+            }
+        }
     }
 }

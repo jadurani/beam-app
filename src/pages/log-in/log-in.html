@@ -1,39 +1,43 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>Log in</ion-title>
-  </ion-navbar>
-</ion-header>
-
 <ion-content>
-  <form [formGroup]="logInForm" (ngSubmit)="onSubmit()">
-    <ion-list>
-      <ion-item>
-        <ion-label floating>Email</ion-label>
-        <ion-input type="email" formControlName="email" email></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label floating>Password</ion-label>
-        <ion-input type="password" formControlName="password"></ion-input>
-      </ion-item>
-    </ion-list>
+  <div class="wrapper">
+    <div class="container">
+      <div class="content">
+        <div class="header">
+          <img src="assets/imgs/inspire-fitness-logo-title.png">
+        </div>
+        <form [formGroup]="logInForm" (ngSubmit)="onSubmit()">
+          <ion-list padding>
+            <ion-item>
+              <ion-label floating>Email</ion-label>
+              <ion-input type="email" formControlName="email" email></ion-input>
+            </ion-item>
+            <div *ngIf="email.invalid && email.dirty" class="error-message field-error">
+              <div *ngIf="email.errors.required">Email is required.</div>
+              <div *ngIf="!email.errors.required && email.errors.email">Email format should be
+                <i>juan@delacruz.com</i>.</div>
+            </div>
+            <ion-item>
+              <ion-label floating>Password</ion-label>
+              <ion-input no-padding [type]="showPasswordText ? 'text' : 'password'" formControlName="password"></ion-input>
+              <button ion-button color="dark" icon-only clear no-padding type="button" item-right (click)="showPasswordText = !showPasswordText">
+                <ion-icon [name]="showPasswordText ? 'eye-off' : 'eye'"></ion-icon>
+              </button>
+            </ion-item>
+            <ion-item>&nbsp;</ion-item>
+          </ion-list>
 
-    <div *ngIf="email.invalid && email.dirty" class="danger">
-      <div *ngIf="email.errors.required">Email is required.</div>
-      <div *ngIf="!email.errors.required && email.errors.email">Email format should be
-        <i>juan@delacruz.com</i>.</div>
-    </div>
+          <div text-center *ngIf="logInForm.invalid && logInForm.dirty" class="error-message">
+            <div *ngIf="logInForm.errors && logInForm.errors.serverMessage">
+              {{ logInForm.errors.serverMessage }}
+            </div>
+          </div>
 
-    <div *ngIf="logInForm.invalid && logInForm.dirty" class="danger">
-      <div *ngIf="logInForm.errors && logInForm.errors.serverMessage">
-        {{ logInForm.errors.serverMessage }}
+          <div padding-left margin-left padding-right>
+            <button ion-button type="submit" color="primary" [disabled]="!logInForm.valid" block>LOG IN</button>
+          </div>
+        </form>
       </div>
     </div>
-
-    <div padding>
-      <button ion-button type="submit" color="primary" [disabled]="!logInForm.valid" block>LOG IN</button>
-    </div>
-    <div padding-left padding-right>
-      <button ion-button type="button" (click)="showSignUpForm()" outline block>CREATE AN ACCOUNT</button>
-    </div>
-  </form>
+  </div>
 </ion-content>
+
