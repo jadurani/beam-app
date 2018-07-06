@@ -50,8 +50,8 @@ export class MyApp {
     });
 
     firebase.auth().onAuthStateChanged(user => {
+      this.userProvider.setCurrentUser();
       if (user) {
-        this.userProvider.setCurrentUser();
         // this.rootPage = HomePage;
         this.rootPage = UserListPage;
       } else {
@@ -64,6 +64,10 @@ export class MyApp {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
+  }
+
+  isLoggedIn() {
+    return this.userProvider.getCurrentUser();
   }
 
   signOut() {

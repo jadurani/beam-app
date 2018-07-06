@@ -1,20 +1,30 @@
-<ion-menu [content]="content">
-  <ion-header>
-    <ion-toolbar>
-      <ion-title>Menu</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-split-pane>
+  <!-- our side menu -->
+  <ion-menu [content]="content" *ngIf="isLoggedIn()">
+    <ion-header no-border>
+      <ion-toolbar>
+        <ion-title>
+          <img src="assets/imgs/inspire-fitness-logo-title.png">
+        </ion-title>
+      </ion-toolbar>
+    </ion-header>
 
-  <ion-content>
-    <ion-list>
-      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-        {{p.title}}
-      </button>
-      <button menuClose ion-item (click)="signOut()">SIGN OUT</button>
-    </ion-list>
-  </ion-content>
+    <ion-content>
+      <ion-list no-lines>
+        <button
+          menuClose
+          ion-item
+          *ngFor="let p of pages" (click)="openPage(p)"
+          [ngClass]="{'active': rootPage.name === p.component.name}">
+          {{p.title}}
+        </button>
+        <button menuClose ion-item (click)="signOut()">SIGN OUT</button>
+      </ion-list>
+    </ion-content>
 
-</ion-menu>
+  </ion-menu>
 
-<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
-<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>
+  <!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+  <!-- the main content -->
+  <ion-nav main [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>
+</ion-split-pane>

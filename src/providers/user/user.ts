@@ -39,6 +39,12 @@ export class UserProvider {
    */
   setCurrentUser() {
     let authCurrentUser = this.authProvider.getCurrentUser();
+    console.log(authCurrentUser);
+    if (authCurrentUser === null) {
+      this.currentUser = null;
+      return;
+    }
+
     this.db.collection(this.USER_COLLECTION)
       .where('authId', '==', authCurrentUser.uid)
       .get()

@@ -1,0 +1,47 @@
+// split side pane menu
+ion-menu.split-pane-side {
+  @media (min-width: 768px) {
+    & {
+      max-width: 300px!important;
+    }
+  }
+
+  .toolbar-background {
+    background-color: color($colors, primary);
+  }
+
+  ion-header {
+    border-bottom: 1px solid #E0CE34!important;
+
+    @media (min-width: 768px) {
+      & {
+        min-height: 64px!important;
+      }
+
+      ion-title {
+        padding-top: 8px;
+      }
+    }
+
+  }
+
+  ion-content {
+    background-color: color($colors, primary);
+    ::-webkit-scrollbar {
+      display: none;
+    }
+
+    button.item-md {
+      background-color: color($colors, primary);
+      border-bottom: 1px solid #E0CE34!important;
+
+      &:hover, &.active:hover {
+        background-color: #fbc02d;
+      }
+
+      &.active {
+        background-color: #fdd835;
+      }
+    }
+  }
+}
