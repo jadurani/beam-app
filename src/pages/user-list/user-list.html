@@ -4,12 +4,16 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>
-        <ion-icon name="ios-people"></ion-icon>
         Users
     </ion-title>
+    <ion-buttons start>
+      <button icon-only ion-button padding-right>
+        <ion-icon name="notifications"></ion-icon>
+      </button>
+    </ion-buttons>
     <ion-buttons end>
-      <button ion-button (click)="showAddUser()">
-        ADD USER
+      <button icon-only ion-button padding-right>
+        <ion-icon name="settings"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -24,19 +28,5 @@
       <ion-spinner></ion-spinner>
     </div>
   </ng-container>
-  <ng-container *ngIf="!loading && users && users.length > 0">
-    <ion-list>
-      <button ion-item *ngFor="let user of users" (click)="showUserDetails(user)">
-        <!-- replace icon with image if exists -->
-        <ion-icon name="person" item-start></ion-icon>
-          {{ user.displayName || user.firstName }}
-        <div class="item-note" item-end>
-          {{user.dateJoined | date:'d MMM yyyy'}}
-        </div>
-      </button>
-    </ion-list>
-  </ng-container>
-  <ng-container *ngIf="!loading && users && users.length === 0">
-    Seems like you don't have any user yet! Add one now!
-  </ng-container>
+
 </ion-content>

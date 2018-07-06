@@ -22,7 +22,6 @@ ion-menu.split-pane-side {
         padding-top: 8px;
       }
     }
-
   }
 
   ion-content {
@@ -42,6 +41,41 @@ ion-menu.split-pane-side {
       &.active {
         background-color: #fdd835;
       }
+    }
+  }
+}
+
+// split pane nav content
+ion-nav.split-pane-main {
+  ion-header {
+    ion-navbar {
+      @media screen and (min-width: 768px) {
+        & {
+          height: 64px!important;
+        }
+
+        ion-title {
+          padding-top: 8px;
+        }
+
+        button.bar-button-menutoggle {
+          display: none;
+        }
+      }
+
+      .toolbar-background {
+        background-color: #fff!important;
+      }
+    }
+  }
+
+  ion-content {
+    ::-webkit-scrollbar {
+        display: none;
+    }
+
+    &.content-md {
+      background-color: #efefef;
     }
   }
 }
