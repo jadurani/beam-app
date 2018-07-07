@@ -14,6 +14,14 @@ page-user-list {
 
 
     ion-card {
+        @media (min-width: 768px) {
+            &.card{
+                margin-left: 10%;
+                width: 80%;
+                margin-right: 10%;
+            }
+        }
+
         ion-searchbar {
             .searchbar-input-container {
                 border-bottom: 1px solid #dddddd!important;
@@ -24,24 +32,74 @@ page-user-list {
             }
         }
 
-        ion-item {
-            border-bottom: 1px solid #dddddd!important;
-
-            &.header {
-                background-color: #f8f8f8!important;
-                border-top: 1px solid #dddddd!important;
+        ion-list.user-list {
+            ion-item, button.user-list-item {
                 border-bottom: 1px solid #dddddd!important;
-                font-size: 14px;
-                font-weight: bold;
-                letter-spacing: .02em;
-            }
+
+                &.header {
+                    background-color: #f8f8f8!important;
+                    border-top: 1px solid #dddddd!important;
+                    border-bottom: 1px solid #dddddd!important;
+                    font-size: 14px;
+                    font-weight: bold;
+                    letter-spacing: .02em;
+                }
 
 
-            ion-label {
-                display: flex;
+                ion-label {
+                    display: flex;
+                    span {
+                        overflow: hidden;
+                        padding-left: 16px;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
 
-                span.list-col {
-                    width: 33.33%;
+                    div.info-message {
+                        font-style: italic;
+                        color: rgba(0, 0, 0, 0.5);
+                        margin: auto;
+                    }
+
+                    // xs
+                    @media (max-width: 576px) {
+                        span.col-xs-12 {
+                            width: 100%;
+                        }
+
+                        span.hide-xs {
+                            display: none;
+                        }
+                    }
+
+                    // sm
+                    @media (min-width: 576px) and  (max-width: 767px) {
+                        span.col-sm-6 {
+                            width: 50%;
+                        }
+
+                        span.hide-sm {
+                            display: none;
+                        }
+                    }
+
+                    // md
+                    @media (min-width: 768px) and (max-width: 991px) {
+                        span.col-md-6 {
+                            width: 50%;
+                        }
+
+                        span.hide-md {
+                            display: none;
+                        }
+                    }
+
+                    // lg above
+                    @media (min-width: 992px) {
+                        span.col-lg-4 {
+                            width: 33.33%;
+                        }
+                    }
                 }
             }
         }

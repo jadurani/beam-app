@@ -19,45 +19,42 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content>
-  <!-- <ng-container *ngIf="!loading && users && users.length > 0"> -->
-  <ng-container>
-    <ion-card>
-      <ion-searchbar no-padding placeholder=
-      "Search by name, role, or subscription"></ion-searchbar>
-      <ion-list>
+<ion-content *ngIf="!loading">
+  <ion-card>
+    <ion-searchbar no-padding placeholder=
+    "Search"></ion-searchbar>
+    <ion-list class="user-list">
+      <ng-container *ngIf="users && users.length > 0">
         <ion-item class="header">
-          <span class="list-col">Name</span>
-          <span class="list-col">Contact Number</span>
-          <span class="list-col">Next Payment Date <ion-icon small name="arrow-down"></ion-icon></span>
+          <span class="col-lg-4 col-md-6 col-sm-6 col-xs-12">Name</span>
+          <span class="col-lg-4 hide-md hide-sm hide-xs">Contact Number</span>
+          <span class="col-lg-4 col-md-6 col-sm-6 hide-xs">Next Payment Date <ion-icon small name="arrow-down"></ion-icon></span>
         </ion-item>
-        <ion-item>
-          <span class="list-col">Perry Ramos</span>
-          <span class="list-col">+63 999 999 9999</span>
-          <span class="list-col">1 July 2020</span>
-        </ion-item>
-        <ion-item>
-          <span class="list-col">Perry Ramos</span>
-          <span class="list-col">+63 999 999 9999</span>
-          <span class="list-col">1 July 2020</span>
-        </ion-item>
-        <ion-item>
-          <span class="list-col">Perry Ramos</span>
-          <span class="list-col">+63 999 999 9999</span>
-          <span class="list-col">1 July 2020</span>
-        </ion-item>
-      </ion-list>
-    </ion-card>
-  </ng-container>
-  <!-- <ng-container *ngIf="!loading && users && users.length === 0">
-    Seems like you don't have any user yet! Add one now!
-  </ng-container> -->
+        <button ion-item class="user-list-item" *ngFor="let user of users" (click)="showUserDetails(user)">
+          <span class="col-lg-4 col-md-6 col-sm-6 col-xs-12">{{user.firstName}} {{user.lastName}}</span>
+          <span class="col-lg-4 hide-md hide-sm hide-xs">{{user.phoneNumber}}</span>
+          <span class="col-lg-4 col-md-6 col-sm-6 hide-xs">{{user.dateJoined | date:'d MMM yyyy'}}</span>
+        </button>
+      </ng-container>
+      <ion-item *ngIf="users && users.length === 0">
+        <div class="info-message">
+          No users available. Add one now.
+        </div>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+
+  <ion-fab padding right bottom>
+    <button ion-fab color="primary">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>
 
-<!-- <ion-content>
+<ion-content>
   <ng-container *ngIf="loading">
     <div class="spinner">
       <ion-spinner></ion-spinner>
     </div>
   </ng-container>
-</ion-content> -->
+</ion-content>

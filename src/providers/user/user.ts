@@ -39,7 +39,6 @@ export class UserProvider {
    */
   setCurrentUser() {
     let authCurrentUser = this.authProvider.getCurrentUser();
-    console.log(authCurrentUser);
     if (authCurrentUser === null) {
       this.currentUser = null;
       return;

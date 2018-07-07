@@ -30,7 +30,7 @@ export class UserListPage {
     public navParams: NavParams,
     public userProvider: UserProvider
   ) {
-    // this.getUsers();
+    this.getUsers();
   }
 
   /**

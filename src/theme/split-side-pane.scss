@@ -34,6 +34,10 @@ ion-menu.split-pane-side {
       background-color: color($colors, primary);
       border-bottom: 1px solid #E0CE34!important;
 
+      font-size: 14px;
+      font-weight: bold;
+      letter-spacing: .02em;
+
       &:hover, &.active:hover {
         background-color: #fbc02d;
       }
