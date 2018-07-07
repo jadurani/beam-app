@@ -11,4 +11,39 @@ page-user-list {
         bottom: 0;
         right: 0;
     }
+
+
+    ion-card {
+        ion-searchbar {
+            .searchbar-input-container {
+                border-bottom: 1px solid #dddddd!important;
+
+                .searchbar-input {
+                    background-color: #f8f8f8!important;
+                }
+            }
+        }
+
+        ion-item {
+            border-bottom: 1px solid #dddddd!important;
+
+            &.header {
+                background-color: #f8f8f8!important;
+                border-top: 1px solid #dddddd!important;
+                border-bottom: 1px solid #dddddd!important;
+                font-size: 14px;
+                font-weight: bold;
+                letter-spacing: .02em;
+            }
+
+
+            ion-label {
+                display: flex;
+
+                span.list-col {
+                    width: 33.33%;
+                }
+            }
+        }
+    }
 }

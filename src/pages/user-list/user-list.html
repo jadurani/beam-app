@@ -19,14 +19,45 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-
-</ion-content>
 <ion-content>
+  <!-- <ng-container *ngIf="!loading && users && users.length > 0"> -->
+  <ng-container>
+    <ion-card>
+      <ion-searchbar no-padding placeholder=
+      "Search by name, role, or subscription"></ion-searchbar>
+      <ion-list>
+        <ion-item class="header">
+          <span class="list-col">Name</span>
+          <span class="list-col">Contact Number</span>
+          <span class="list-col">Next Payment Date <ion-icon small name="arrow-down"></ion-icon></span>
+        </ion-item>
+        <ion-item>
+          <span class="list-col">Perry Ramos</span>
+          <span class="list-col">+63 999 999 9999</span>
+          <span class="list-col">1 July 2020</span>
+        </ion-item>
+        <ion-item>
+          <span class="list-col">Perry Ramos</span>
+          <span class="list-col">+63 999 999 9999</span>
+          <span class="list-col">1 July 2020</span>
+        </ion-item>
+        <ion-item>
+          <span class="list-col">Perry Ramos</span>
+          <span class="list-col">+63 999 999 9999</span>
+          <span class="list-col">1 July 2020</span>
+        </ion-item>
+      </ion-list>
+    </ion-card>
+  </ng-container>
+  <!-- <ng-container *ngIf="!loading && users && users.length === 0">
+    Seems like you don't have any user yet! Add one now!
+  </ng-container> -->
+</ion-content>
+
+<!-- <ion-content>
   <ng-container *ngIf="loading">
     <div class="spinner">
       <ion-spinner></ion-spinner>
     </div>
   </ng-container>
-
-</ion-content>
+</ion-content> -->
