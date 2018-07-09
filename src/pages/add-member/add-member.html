@@ -1,0 +1,141 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>New Member</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <!-- <form [formGroup]="logInForm" (ngSubmit)="onSubmit()"> -->
+  <form class="container" novalidate margin-bottom>
+    <div class="header">Personal Information</div>
+    <ion-card padding-horizontal padding-bottom margin-bottom>
+      <ion-list no-lines>
+
+        <ion-row>
+          <ion-item ion-col>
+            <ion-label floating no-lines>Nickname</ion-label>
+            <ion-input type="text"></ion-input>
+          </ion-item>
+        </ion-row>
+
+        <ion-row>
+          <ion-item ion-col col-2>
+            <ion-label floating>Prefix</ion-label>
+            <ion-input type="text"></ion-input>
+          </ion-item>
+          <ion-item ion-col col-10>
+            <ion-label floating>Full Name</ion-label>
+            <ion-input type="text"></ion-input>
+          </ion-item>
+        </ion-row>
+
+        <ion-row>
+          <ion-item ion-col col-12 col-sm-12 col-md-12 col-lg-6>
+            <ion-label floating>Sex (on birth)</ion-label>
+            <ion-input type="text"></ion-input>
+          </ion-item>
+          <ion-item ion-col col-12 col-sm-12 col-md-12 col-lg-6>
+            <ion-label floating>Birthday</ion-label>
+            <ion-datetime displayFormat="MM/DD/YYYY" max="2000"></ion-datetime>
+          </ion-item>
+        </ion-row>
+
+        <ion-row>
+          <ion-item ion-col>
+            <ion-label floating>Street Address</ion-label>
+            <ion-input type="text"></ion-input>
+          </ion-item>
+        </ion-row>
+
+        <ion-row>
+          <ion-item ion-col col-12 col-sm-12 col-md-12 col-lg-6>
+            <ion-label floating>Barangay</ion-label>
+            <ion-input type="text"></ion-input>
+          </ion-item>
+          <ion-item ion-col col-12 col-sm-12 col-md-12 col-lg-6>
+            <ion-label floating>City</ion-label>
+            <ion-input type="text"></ion-input>
+          </ion-item>
+        </ion-row>
+
+        <ion-row>
+          <ion-item ion-col col-12 col-sm-12 col-md-12 col-lg-6>
+            <ion-label floating>Home Phone</ion-label>
+            <ion-input type="text"></ion-input>
+          </ion-item>
+          <ion-item ion-col col-12 col-sm-12 col-md-12 col-lg-6>
+            <ion-label floating>Mobile Phone</ion-label>
+            <ion-input type="text"></ion-input>
+          </ion-item>
+        </ion-row>
+
+        <ion-row>
+          <ion-item ion-col>
+            <ion-label floating>Active Email / Social Media</ion-label>
+            <ion-input type="text"></ion-input>
+          </ion-item>
+        </ion-row>
+
+        <ion-row>
+          <ion-item ion-col>
+            <ion-label floating>Medical Condition(s)</ion-label>
+            <ion-input type="text"></ion-input>
+          </ion-item>
+        </ion-row>
+
+      </ion-list>
+    </ion-card>
+
+    <div class="header">In Case of Emergency</div>
+    <ion-card padding-horizontal padding-bottom margin-bottom>
+      <ion-list no-lines>
+
+        <ion-row>
+          <ion-item ion-col>
+            <ion-label floating no-lines>Full Name</ion-label>
+            <ion-input type="text"></ion-input>
+          </ion-item>
+        </ion-row>
+
+        <ion-row>
+          <ion-item ion-col col-12 col-sm-12 col-md-12 col-lg-6>
+            <ion-label floating>Relationship</ion-label>
+            <ion-input type="text"></ion-input>
+          </ion-item>
+          <ion-item ion-col col-12 col-sm-12 col-md-12 col-lg-6>
+            <ion-label floating>Contact Number</ion-label>
+            <ion-input type="text"></ion-input>
+          </ion-item>
+        </ion-row>
+
+        <ion-row>
+          <ion-item ion-col>
+            <ion-label floating no-lines>Active Email/Social Media</ion-label>
+            <ion-input type="text"></ion-input>
+          </ion-item>
+        </ion-row>
+      </ion-list>
+    </ion-card>
+
+    <div class="header">Member Assumption of Risk and Release</div>
+    <ion-card padding margin-bottom>
+      <ion-row padding class="text-marr">
+        <ion-col col-1>
+          <ion-checkbox></ion-checkbox>
+        </ion-col>
+        <ion-col col-11 text-justify>
+          I have read the <a href="#">Release of Liability and Assumptions of Risk Agreement</a>, fully understand its terms, and sign it freely and voluntarily without any inducement.
+        </ion-col>
+      </ion-row>
+    </ion-card>
+
+    <ion-row class="action-button">
+      <button ion-button block text-uppercase>
+        Add New Member
+      </button>
+    </ion-row>
+  </form>
+</ion-content>

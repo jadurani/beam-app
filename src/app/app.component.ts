@@ -5,6 +5,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 // Components
+import { AddMemberPage } from '../pages/add-member/add-member';
 import { HomePage } from '../pages/home/home';
 import { UserListPage } from '../pages/user-list/user-list';
 import { LogInPage } from '../pages/log-in/log-in';

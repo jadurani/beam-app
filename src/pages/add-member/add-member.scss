@@ -1,0 +1,57 @@
+page-add-member {
+
+    form {
+        @media (min-width: 768px) {
+            &.container {
+                margin-left: 10%;
+                width: 80%;
+                margin-right: 10%;
+            }
+        }
+
+        .header {
+            color: rgb(85, 85, 85);
+            margin: 16px 0px 8px 16px;
+            font-size: 1.8rem;
+            font-weight: 500;
+        }
+
+        ion-card {
+            ion-item {
+                .input-wrapper {
+                    border-bottom: 1px solid #dedede;
+                }
+
+                &.input-has-focus {
+                    .input-wrapper {
+                        border-bottom: 2px solid #ffeb3b;
+                    }
+                }
+            }
+
+            .text-marr {
+                font-size: 16px;
+            }
+        }
+
+
+        // Remove all unnecessary grey lines
+        .list-md .item-input:last-child {
+            border-style: none;
+        }
+
+        // Remove all unnecessary yellow lines
+        .list-md .item-input.item-input-has-focus,
+        .list-md .item-input.input-has-focus,
+        .item-md.item-input.item-input-has-focus .item-inner,
+        .item-md.item-input.input-has-focus .item-inner {
+            border-style: none!important;
+            box-shadow: none!important;
+        }
+
+        .action-button {
+            margin-left: 8px;
+            margin-right: 8px;
+        }
+    }
+}
