@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, ModalController } from 'ionic-angular';
+import { ModalRiskReleasePage } from '../modal-risk-release/modal-risk-release';
 
 /**
  * Generated class for the AddMemberPage page.
@@ -15,11 +16,12 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class AddMemberPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public modalCtrl: ModalController) {
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad AddMemberPage');
-  }
 
+  openModalRiskRelease() {
+    const riskReleaseModal = this.modalCtrl.create(ModalRiskReleasePage);
+    riskReleaseModal.present();
+  }
 }

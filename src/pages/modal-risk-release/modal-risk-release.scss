@@ -1,0 +1,24 @@
+page-modal-risk-release {
+    .header {
+        font-size: 18px;
+        font-weight: 500;
+    }
+
+    .content {
+        font-size: 16px;
+        ion-row {
+            ion-col {
+                line-height: 24px;
+
+                &:not(.header) {
+                    font-weight: 300px;
+                    letter-spacing: .02em;
+                }
+            }
+        }
+    }
+
+    ::-webkit-scrollbar {
+        display: none;
+    }
+}
