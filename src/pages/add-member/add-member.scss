@@ -4,16 +4,37 @@ page-add-member {
         @media (min-width: 768px) {
             &.container {
                 margin-left: 10%;
-                width: 80%;
                 margin-right: 10%;
+                width: 80%;
             }
         }
 
         .header {
             color: rgb(85, 85, 85);
-            margin: 16px 0px 8px 16px;
             font-size: 1.8rem;
             font-weight: 500;
+            margin: 16px 0px 8px 16px;
+        }
+
+        .profile-image-container {
+            height: 50px;
+            margin: auto;
+            position: relative;
+            width: 50px;
+
+            .profile-image {
+                box-shadow: 0 0 2px grey;
+                border-radius: 50%;
+                position: absolute;
+                top: 12px;
+                z-index: 1;
+            }
+
+            .profile-image:hover {
+                cursor: pointer;
+                content: url('../assets/imgs/cam_upload_hover.png');
+                position: absolute;
+            }
         }
 
         ion-card {

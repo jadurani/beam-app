@@ -53,8 +53,7 @@ export class MyApp {
     firebase.auth().onAuthStateChanged(user => {
       this.userProvider.setCurrentUser();
       if (user) {
-        // this.rootPage = HomePage;
-        this.rootPage = UserListPage;
+        this.rootPage = AddMemberPage;
       } else {
         this.rootPage = LogInPage;
       }

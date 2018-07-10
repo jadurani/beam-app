@@ -10,23 +10,28 @@
 <ion-content>
   <!-- <form [formGroup]="logInForm" (ngSubmit)="onSubmit()"> -->
   <form class="container" novalidate margin-bottom>
+
     <div class="header">Personal Information</div>
     <ion-card padding-horizontal padding-bottom margin-bottom>
       <ion-list no-lines>
-
         <ion-row>
-          <ion-item ion-col>
+          <ion-col col-3 col-sm-2 col-md-3 col-lg-2 padding-top>
+            <div class="profile-image-container">
+              <img class="profile-image" src="assets/imgs/unknown_person.png">
+            </div>
+          </ion-col>
+          <ion-item ion-col col-9 col-sm-10 col-md-9 col-lg-10>
             <ion-label floating no-lines>Nickname</ion-label>
             <ion-input type="text"></ion-input>
           </ion-item>
         </ion-row>
 
         <ion-row>
-          <ion-item ion-col col-2>
+          <ion-item ion-col col-3 col-sm-2 col-md-3 col-lg-2>
             <ion-label floating>Prefix</ion-label>
             <ion-input type="text"></ion-input>
           </ion-item>
-          <ion-item ion-col col-10>
+          <ion-item ion-col col-9 col-sm-10 col-md-9 col-lg-10>
             <ion-label floating>Full Name</ion-label>
             <ion-input type="text"></ion-input>
           </ion-item>
