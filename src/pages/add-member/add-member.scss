@@ -54,10 +54,36 @@ page-add-member {
                             border-bottom: 2px solid #ffeb3b;
                         }
                     }
+
+                    &.has-error {
+                        ion-label {
+                            color: #f00 !important;
+                        }
+
+                        .input-wrapper {
+                            border-bottom: 2px solid #f00;
+                        }
+
+                        .select-icon-inner {
+                            color: #f00;
+                        }
+                    }
+
+                    // remove excess padding around ion-datetime
+                    .datetime-md {
+                        padding-bottom: 4px;
+                    }
                 }
 
                 .text-marr {
                     font-size: 16px;
+                }
+
+                .input-error {
+                    color: #f00;
+                    display: none;
+                    font-size: 12px;
+                    margin-top: 8px;
                 }
             }
 
