@@ -1,21 +1,29 @@
 export interface User {
     // Firebase Auth Info
     authId ?: string; // uid from Firebase Auth
-    displayName ?: string;
+    displayName ?: string; //nickName
     email ?: string;
     phoneNumber ?: string;
     photoUrl ?: string;
 
     // Basic Information
     id ?: string; // Document ID in Firebase
+    prefix ?: string;
+    fullName ?: string;
     dateJoined: Date;
+    sex ?: string;
+    dateOfBirth ?: Date;
+    address ?: Address;
+    // address ?: string;
+
+    // TO DO: REMOVE
+    gender ?: string;
     firstName ?: string;
     lastName ?: string;
     suffix ?: string;
-    gender ?: string;
-    dateOfBirth ?: Date;
+
     phoneNumbers ?: Array<PhoneNumber>;
-    address ?: string;
+    socialMedia ?: string;
 
     // Permission roles
     roles: UserPermissions;
@@ -58,8 +66,10 @@ export interface UserBodyInfo {
 }
 
 export interface PhoneNumber {
+    number : string;
+    label ?: string;
+
     type: string;
-    number: string;
 };
 
 export interface FirebaseDate {
@@ -75,6 +85,17 @@ interface UserPermissions {
 };
 
 export interface ICEContact {
-    name: string;
-    phoneNumber: string;
+    name : string;
+    relationship : string;
+    contactNumber : string;
+    email ?: string;
+    socialMedia ?: string;
+
+    phoneNumber : string;
+}
+
+export interface Address {
+    street ?: string;
+    barangay ?: string;
+    city : string;
 }

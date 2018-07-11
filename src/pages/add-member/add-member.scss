@@ -32,7 +32,7 @@ page-add-member {
                     box-shadow: 0 0 2px grey;
                     border-radius: 50%;
                     position: absolute;
-                    top: 8px;
+                    top: 16px;
                     z-index: 1;
                 }
 
@@ -81,7 +81,6 @@ page-add-member {
 
                 .input-error {
                     color: #f00;
-                    display: none;
                     font-size: 12px;
                     margin-top: 8px;
                 }
@@ -100,6 +99,21 @@ page-add-member {
             .item-md.item-input.input-has-focus .item-inner {
                 border-style: none!important;
                 box-shadow: none!important;
+            }
+
+            // Remove all unncessary green lines
+            .list-md .item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus):last-child,
+            .list-md .item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus):last-child
+            .item-md.item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner,
+            .item-md.item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner {
+                border-style: none;
+                box-shadow: none;
+            }
+
+            .list-md .item-input.ng-invalid.ng-touched:not(.input-has-focus):not(.item-input-has-focus):last-child,
+            .item-md.item-input.ng-invalid.ng-touched:not(.input-has-focus):not(.item-input-has-focus) .item-inner {
+                border-style: none;
+                box-shadow: none;
             }
 
             .action-button {
