@@ -44,6 +44,25 @@ page-add-member {
             }
 
             ion-card {
+                .risk-release {
+                    cursor: pointer;
+
+                    &-text {
+                        font-size: 16px;
+                    }
+
+                    &-checkbox {
+                        margin: auto;
+                        opacity: 1;
+
+                        &.has-error {
+                            div.checkbox-icon {
+                                border-color: #ff0000!important;
+                            }
+                        }
+                    }
+                }
+
                 ion-item {
                     .input-wrapper {
                         border-bottom: 1px solid #dedede;
@@ -75,17 +94,12 @@ page-add-member {
                     }
                 }
 
-                .text-marr {
-                    font-size: 16px;
-                }
-
                 .input-error {
                     color: #f00;
                     font-size: 12px;
                     margin-top: 8px;
                 }
             }
-
 
             // Remove all unnecessary grey lines
             .list-md .item-input:last-child {

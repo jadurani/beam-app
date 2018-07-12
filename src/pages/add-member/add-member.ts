@@ -1,14 +1,21 @@
-import { Component } from '@angular/core';
 import {
+  Component,
+  ViewChild,
+} from '@angular/core';
+import {
+  Content,
   IonicPage,
   ToastController,
-  ModalController
+  NavController,
+  ModalController,
 } from 'ionic-angular';
 import {
+  AbstractControl,
   FormArray,
   FormBuilder,
+  FormControl,
   FormGroup,
-  Validators
+  Validators,
 } from '@angular/forms';
 
 import { DateProvider } from './../../providers/date/date';
@@ -24,17 +31,23 @@ import {
 } from '../modal-risk-release/modal-risk-release';
 
 
+/**
+ * Sign up form for new members.
+ */
+
 @IonicPage()
 @Component({
   selector: 'page-add-member',
   templateUrl: 'add-member.html',
 })
 export class AddMemberPage {
+  @ViewChild(Content) content: Content;
   addMemberForm: FormGroup;
 
   constructor(
     private dateProvider: DateProvider,
     private formBuilder: FormBuilder,
+    private navCtrl: NavController,
     private modalCtrl: ModalController,
     private toastCtrl: ToastController,
     private userProvider: UserProvider
@@ -42,6 +55,9 @@ export class AddMemberPage {
     this.createAddMemberForm();
   }
 
+  /**
+   * Initializes `addMemberForm`.
+   */
   createAddMemberForm() {
     this.addMemberForm = this.formBuilder.group({
       address: this.formBuilder.control(null),
@@ -58,12 +74,15 @@ export class AddMemberPage {
       socialMedia: null,
     });
 
-    this._buildAddressFormControl();
-    this._buildICEContactFormControl();
+    this._buildAddressFormGroup();
+    this._buildICEContactFormGroup();
     this._buildPhoneNumbersFormArray();
   }
 
-  private _buildAddressFormControl() {
+  /**
+   * Initializes the Address FormGroup
+   */
+  private _buildAddressFormGroup() {
     const addressFormGroup = this.formBuilder.group({
       street: null,
       barangay: null,
@@ -73,7 +92,10 @@ export class AddMemberPage {
     this.addMemberForm.setControl('address', addressFormGroup);
   }
 
-  private _buildICEContactFormControl() {
+  /**
+   * Initializes the ICEContact FormGroup
+   */
+  private _buildICEContactFormGroup() {
     const iceContactFormGroup = this.formBuilder.group({
       name: [null, Validators.required],
       relationship: [null, Validators.required],
@@ -85,10 +107,13 @@ export class AddMemberPage {
     this.addMemberForm.setControl('iceContact', iceContactFormGroup);
   }
 
+  /**
+   * Initializes the PhoneNumbers PhoneArray
+   */
   private _buildPhoneNumbersFormArray() {
     const phoneNumbers = [{
-      number: null,
-      label: null,
+      number: new FormControl(null, Validators.required),
+      label: new FormControl(),
     }];
 
     const phoneNumbersFormGroup = phoneNumbers.map(
@@ -99,6 +124,11 @@ export class AddMemberPage {
     this.addMemberForm.setControl('phoneNumbers', phoneNumbersFormArray);
   }
 
+  /**
+   * Initializes a User object with the values from `addMemberForm`.
+   *
+   * @returns The User object ready to be passed onto the database
+   */
   private _prepareNewMember(): User {
     const formModel = this.addMemberForm.value;
 
@@ -138,8 +168,57 @@ export class AddMemberPage {
     return newUser;
   }
 
+  /**
+   * Scrolls to the top of the page. Called after an attempt
+   * to save with invalid details.
+   */
+  private _scrollToTop() {
+    this.content.scrollToTop();
+  }
+
+  /**
+   * Marks all form fields as touched.
+   * Called recursively for FormGroups and FormArrays.
+   * Called whenever user attempts to save.
+   *
+   * @param control
+   */
+  private _validateAllFormFields(control: AbstractControl) {
+    if (control instanceof FormControl)
+      control.markAsTouched();
+    else if (control instanceof FormGroup) {
+      Object.keys(control.controls).forEach((field: string) => {
+        const formGroupControl = control.get(field);
+        this._validateAllFormFields(formGroupControl);
+      });
+    } else if (control instanceof FormArray) {
+      const controlAsFormArray = control as FormArray;
+      controlAsFormArray.controls.forEach(
+        (arrayControl: AbstractControl) => this._validateAllFormFields(arrayControl)
+      );
+    }
+  }
+
+  /**
+   * Validates the form.
+   * If the form is valid, a toaster is presented at the bottom
+   * informing the user that the request to add a new member is
+   * currently being processed and they need to chill.
+   *
+   * If an error occurs on this attempt, they'd be informed of
+   * such error.  However if the save attempt's a success, they'd
+   * be taken back to the UserList page.
+   *
+   * TO DO: On successful save, instead of taking the user back to
+   * the UserList page, take them to the profile page of the
+   * newly-created user.
+   */
   save() {
-    if (this.addMemberForm.invalid) return null;
+    if (this.addMemberForm.invalid) {
+      this._validateAllFormFields(this.addMemberForm);
+      this._scrollToTop();
+      return null;
+    }
 
     const newUser = this._prepareNewMember();
 
@@ -153,6 +232,7 @@ export class AddMemberPage {
       .then(userId => {
         toast.dismiss();
         newUser.id = userId;
+        this.navCtrl.pop();
       })
       .catch(error => {
         toast.dismiss();
@@ -166,32 +246,81 @@ export class AddMemberPage {
       });
   }
 
+  /**
+   * Clicking the Risk Release card in the form opens this
+   * modal containing the terms and conditions that the user
+   * must first agree on.
+   *
+   * User can't directly mark the checkbox on `addMemberForm`
+   * (`addMemberForm.signedRelease`) but ticking the checkbox
+   * in `modalRiskRelease` would tick also the one in
+   * `addMemberForm`. In other words, the value of
+   * `addMemberForm.signedRelease` depends on
+   * `modalRiskRelease`'s checkbox value (`signed`).
+   */
   openModalRiskRelease() {
-    const riskReleaseModal = this.modalCtrl.create(ModalRiskReleasePage);
+    const riskReleaseModal = this.modalCtrl.create(
+      ModalRiskReleasePage,
+      {'signedRelease': this.signedRelease.value}
+    );
+
+    riskReleaseModal.onDidDismiss((signed: boolean) => {
+      this.addMemberForm.get('signedRelease').setValue(signed);
+    });
+
     riskReleaseModal.present();
   }
 
-  getInputError(formControlName: string, formGroupName?: string): string | null {
+  /**
+   * Called in the templates to check for input field errors.
+   *
+   * If the input item is purely a `FormControl` on its own,
+   * `formGroupName` and `index` should be null.
+   *
+   * If the input item belongs to a `FormGroup`, only `index`
+   * should be null.
+   *
+   * If the input item belongs to a `FormGroup` in a
+   * `FormArray`, none of the parameters should be left blank.
+   *
+   * @param formControlName
+   * @param formGroupName
+   * @param index
+   */
+  getInputError(
+    formControlName: string,
+    formGroupName?: string,
+    index ?: number): string | null
+  {
     if (!formControlName)
       return null;
 
     let formControl;
     if (formGroupName) {
-      formControl = this.addMemberForm.get(formGroupName).get(formControlName);
+      if (index !== null && index !== undefined) {
+        const formArray = this.addMemberForm.get(formGroupName) as FormArray;
+        formControl = formArray.controls[index].get(formControlName);
+      } else {
+        formControl = this.addMemberForm.get(formGroupName).get(formControlName);
+      }
     } else {
       formControl = this.addMemberForm.get(formControlName);
     }
 
-    if (!(formControl.invalid && formControl.dirty))
+    if (!(formControl.invalid && formControl.touched))
       return null;
 
-    if (formControl.errors.required)
-      return 'Required';
+    if (formControl.errors && formControl.errors.required)
+      return '*Required';
 
     return null;
   }
 
   get phoneNumbers(): FormArray {
     return this.addMemberForm.get('phoneNumbers') as FormArray;
+  }
+
+  get signedRelease(): AbstractControl {
+    return this.addMemberForm.get('signedRelease');
   }
 }

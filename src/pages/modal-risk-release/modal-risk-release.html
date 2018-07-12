@@ -3,7 +3,8 @@
     <ion-title>Terms of Service</ion-title>
     <ion-buttons padding-right end>
       <button ion-button (click)="closeModal()">
-        <ion-icon name="close"></ion-icon>
+        <ion-icon *ngIf="!signed" name="close" large></ion-icon>
+        <ion-icon *ngIf="signed" name="checkmark" large></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -17,25 +18,53 @@
   </ion-row>
   <ion-row padding-bottom padding-horizontal text-justify>
     <ion-col>
-      I understand the risk of injury from gym activities and using any gym equipment is significant, including the potential for permanent paralysis and death.  I recognize that such risk may be due to not only my own actions but also the action, inaction, or negligence of others, the conditions of the premises, or of any of the equipments used.
+      I understand the risk of injury from gym activities and using any gym
+      equipment is significant, including the potential for permanent paralysis
+      and death.  I recognize that such risk may be due to not only my own actions
+      but also the action, inaction, or negligence of others, the conditions of
+      he premises, or of any of the equipments used.
     </ion-col>
   </ion-row>
   <ion-row padding-bottom padding-horizontal text-justify>
     <ion-col>
-      I KNOWINGLY AND FREELY ASSUME ALL SUCH RISKS, both known and unknown and I assume all risks associated with using exercise equipment and exercising alone without the aid of club staff.  I agree to inspect the facilities, equipment, and activities prior to participation.  I will immediately inform any staff of the facility if I believe that anything is unsafe or beyond my capacity and refuse to participate.  I certify that I am in good physical condition and have no disease, injury, or other condition that would impair my performance or physical and mental well-being.
+      I KNOWINGLY AND FREELY ASSUME ALL SUCH RISKS, both known and unknown and I
+      assume all risks associated with using exercise equipment and exercising
+      alone without the aid of club staff.  I agree to inspect the facilities,
+      equipment, and activities prior to participation.  I will immediately inform
+      any staff of the facility if I believe that anything is unsafe or beyond my
+      capacity and refuse to participate.  I certify that I am in good physical
+      condition and have no disease, injury, or other condition that would impair
+      my performance or physical and mental well-being.
     </ion-col>
   </ion-row>
   <ion-row padding-bottom padding-horizontal text-justify>
     <ion-col>
-      I HEREBY RELEASE, INDEMNIFY, AND HOLD HARMLESS Kaizen Inspire Fitness Inc., its owners, supervisors, coaches, sponsoring organizations or their agents, and the owners and lessors of the premises from any and all liability undersigned FOR ANY AND ALL CLAIMS, INJURY, DISABILITY, DEATH, LOSS, OR DAMAGE to person or property that may arise out of or in connection with my use of any of the equipment or facility, or any incident that occurs while using such facilities, or otherwise related to my membership.  I expressly agree that this release is intended to be as broad and inclusive as permitted by applicale law and if a portion of this release is held invalid, the balance shall remain in full force and effect.  This release shall apply to my heirs, assigns, personal representatives, and any other next of kin.
+      I HEREBY RELEASE, INDEMNIFY, AND HOLD HARMLESS Kaizen Inspire Fitness Inc.,
+      its owners, supervisors, coaches, sponsoring organizations or their agents,
+      and the owners and lessors of the premises from any and all liability
+      undersigned FOR ANY AND ALL CLAIMS, INJURY, DISABILITY, DEATH, LOSS, OR
+      DAMAGE to person or property that may arise out of or in connection with my
+      use of any of the equipment or facility, or any incident that occurs while
+      using such facilities, or otherwise related to my membership.  I expressly
+      agree that this release is intended to be as broad and inclusive as
+      permitted by applicale law and if a portion of this release is held invalid,
+      the balance shall remain in full force and effect.  This release shall apply
+      to my heirs, assigns, personal representatives, and any other next of kin.
     </ion-col>
   </ion-row>
-  <ion-row padding-bottom padding-horizontal text-justify>
-    <ion-col col-1>
-      <ion-checkbox></ion-checkbox>
+  <ion-row
+    padding-bottom
+    padding-horizontal
+    text-justify
+    class="sign-agreement"
+    (click)="toggleCheckMark()">
+    <ion-col col-xs-2 col-sm-1>
+      <ion-checkbox [(ngModel)]="signed"></ion-checkbox>
     </ion-col>
-    <ion-col col-11>
-      I HAVE READ THE RELEASE OF LIABILITY AND ASSUMPTIONS OF RISK AGREEMENT, FULLY UNDERSTAND ITS TERMS, AND SIGN IT FREELY AND VOLUNTARILY WITHOUT INDUCEMENT.
+    <ion-col col-xs-10 col-sm-11>
+      I have read the release of liability and assumptions of risk agreement,
+      fully understand its terms, and sign it freely and voluntarily without
+      inducement.
     </ion-col>
   </ion-row>
 </ion-content>
