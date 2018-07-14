@@ -31,7 +31,11 @@
             <span class="col-lg-4 hide-md hide-sm hide-xs">Contact Number</span>
             <span class="col-lg-4 col-md-6 col-sm-6 hide-xs">Next Payment Date <ion-icon small name="arrow-down"></ion-icon></span>
           </ion-item>
-          <button ion-item class="user-list-item" *ngFor="let user of users" (click)="showUserDetails(user)">
+          <!-- <button ion-item class="user-list-item" *ngFor="let user of users" (click)="showUserDetails(user)"> -->
+          <button ion-item class="user-list-item"
+            *ngFor="let user of users"
+            [navPush]="addMemberPage"
+            [navParams]="{'isEdit': true, 'user': user}">
             <span class="col-lg-4 col-md-6 col-sm-6 col-xs-12">{{user.firstName}} {{user.lastName}}</span>
             <span class="col-lg-4 hide-md hide-sm hide-xs">{{user.phoneNumber}}</span>
             <span class="col-lg-4 col-md-6 col-sm-6 hide-xs">{{user.dateJoined | date:'d MMM yyyy'}}</span>

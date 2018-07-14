@@ -8,6 +8,7 @@ import {
   ToastController,
   NavController,
   ModalController,
+  NavParams,
 } from 'ionic-angular';
 import {
   AbstractControl,
@@ -43,15 +44,23 @@ import {
 export class AddMemberPage {
   @ViewChild(Content) content: Content;
   addMemberForm: FormGroup;
+  isEdit: boolean;
+  pendingUser: User;
 
   constructor(
     private dateProvider: DateProvider,
     private formBuilder: FormBuilder,
     private navCtrl: NavController,
+    private navParams: NavParams,
     private modalCtrl: ModalController,
     private toastCtrl: ToastController,
     private userProvider: UserProvider
   ) {
+    this.isEdit = this.navParams.get('isEdit');
+    if (this.isEdit)
+      this.pendingUser = this.navParams.get('user');
+
+    console.log(this.pendingUser);
     this.createAddMemberForm();
   }
 
@@ -74,6 +83,19 @@ export class AddMemberPage {
       socialMedia: null,
     });
 
+    if (this.isEdit && this.pendingUser) {
+      this.addMemberForm.removeControl('signedRelease');
+      this.addMemberForm.get('address').setValue(this.pendingUser.address);
+      this.addMemberForm.get('dateOfBirth').setValue(this.pendingUser.dateOfBirth);
+      this.addMemberForm.get('email').setValue(this.pendingUser.email);
+      this.addMemberForm.get('fullName').setValue(this.pendingUser.fullName);
+      this.addMemberForm.get('nickname').setValue(this.pendingUser.displayName);
+      this.addMemberForm.get('otherRemarks').setValue(this.pendingUser.otherRemarks);
+      this.addMemberForm.get('prefix').setValue(this.pendingUser.prefix);
+      this.addMemberForm.get('sex').setValue(this.pendingUser.sex);
+      this.addMemberForm.get('socialMedia').setValue(this.pendingUser.socialMedia);
+    }
+
     this._buildAddressFormGroup();
     this._buildICEContactFormGroup();
     this._buildPhoneNumbersFormArray();
@@ -88,6 +110,12 @@ export class AddMemberPage {
       barangay: null,
       city: [null, Validators.required],
     });
+
+    if (this.isEdit && this.pendingUser && this.pendingUser.address) {
+      addressFormGroup.get('street').setValue(this.pendingUser.address.street);
+      addressFormGroup.get('barangay').setValue(this.pendingUser.address.barangay);
+      addressFormGroup.get('city').setValue(this.pendingUser.address.city);
+    }
 
     this.addMemberForm.setControl('address', addressFormGroup);
   }
@@ -104,6 +132,14 @@ export class AddMemberPage {
       socialMedia: null,
     });
 
+    if (this.isEdit && this.pendingUser && this.pendingUser.iceContact) {
+      iceContactFormGroup.get('name').setValue(this.pendingUser.iceContact.name);
+      iceContactFormGroup.get('relationship').setValue(this.pendingUser.iceContact.relationship);
+      iceContactFormGroup.get('contactNumber').setValue(this.pendingUser.iceContact.contactNumber);
+      iceContactFormGroup.get('email').setValue(this.pendingUser.iceContact.email);
+      iceContactFormGroup.get('socialMedia').setValue(this.pendingUser.iceContact.socialMedia);
+    }
+
     this.addMemberForm.setControl('iceContact', iceContactFormGroup);
   }
 
@@ -111,14 +147,25 @@ export class AddMemberPage {
    * Initializes the PhoneNumbers PhoneArray
    */
   private _buildPhoneNumbersFormArray() {
-    const phoneNumbers = [{
-      number: new FormControl(null, Validators.required),
-      label: new FormControl(),
-    }];
+    let phoneNumbers = [];
+    if (this.isEdit && this.pendingUser) {
+      this.pendingUser.phoneNumbers.forEach(phoneNumber => {
+        phoneNumbers.push({
+          number: new FormControl(phoneNumber.number, Validators.required),
+          label: new FormControl(phoneNumber.label),
+        });
+      });
+    } else {
+      phoneNumbers.push({
+        number: new FormControl(null, Validators.required),
+        label: new FormControl(),
+      });
+    }
 
     const phoneNumbersFormGroup = phoneNumbers.map(
       phone => this.formBuilder.group(phone)
     );
+
     const phoneNumbersFormArray =
       this.formBuilder.array(phoneNumbersFormGroup);
     this.addMemberForm.setControl('phoneNumbers', phoneNumbersFormArray);
@@ -214,13 +261,15 @@ export class AddMemberPage {
    * newly-created user.
    */
   save() {
+    console.log(this.addMemberForm);
     if (this.addMemberForm.invalid) {
       this._validateAllFormFields(this.addMemberForm);
       this._scrollToTop();
       return null;
     }
 
-    const newUser = this._prepareNewMember();
+    const userToSave = this._prepareNewMember();
+    console.log(userToSave);
 
     let toast = this.toastCtrl.create({
       message: 'Adding new user...',
@@ -228,22 +277,43 @@ export class AddMemberPage {
     });
     toast.present();
 
-    this.userProvider.addUser(newUser)
-      .then(userId => {
-        toast.dismiss();
-        newUser.id = userId;
-        this.navCtrl.pop();
-      })
-      .catch(error => {
-        toast.dismiss();
+    if (this.isEdit) {
+      userToSave.id = this.pendingUser.id;
 
-        toast = this.toastCtrl.create({
-          message: error.message || 'Server Error. Try again later',
-          position: 'bottom',
-          duration: 3000,
+      this.userProvider.updateUser(userToSave)
+        .then(updatedUser => {
+          toast.dismiss();
+          this.navCtrl.pop(updatedUser);
+        })
+        .catch(error => {
+          toast.dismiss();
+
+          console.log(error.message);
+          toast = this.toastCtrl.create({
+            message: error.message || 'Server Error. Try again later',
+            position: 'bottom',
+            duration: 3000,
+          });
+          toast.present();
         });
-        toast.present();
-      });
+    } else {
+      this.userProvider.addUser(userToSave)
+        .then(userId => {
+          toast.dismiss();
+          userToSave.id = userId;
+          this.navCtrl.pop();
+        })
+        .catch(error => {
+          toast.dismiss();
+
+          toast = this.toastCtrl.create({
+            message: error.message || 'Server Error. Try again later',
+            position: 'bottom',
+            duration: 3000,
+          });
+          toast.present();
+        });
+    }
   }
 
   /**

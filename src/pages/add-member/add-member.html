@@ -1,7 +1,12 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>New Member</ion-title>
+    <ion-title *ngIf="!isEdit">
+      New Member
+    </ion-title>
+    <ion-title *ngIf="isEdit && pendingUser">
+      Edit {{ pendingUser.displayName }}'s Details
+    </ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -225,32 +230,39 @@
         </ion-list>
       </ion-card>
 
-      <div class="header">Member Assumption of Risk and Release</div>
-      <ion-card padding margin-bottom>
-        <ion-row class="risk-release" (click)="openModalRiskRelease()">
-          <ion-col col-1>
-            <ion-checkbox
-              class="risk-release-checkbox"
-              [ngClass]="{'has-error': getInputError('signedRelease')}"
-              [disabled]="true"
-              formControlName="signedRelease"></ion-checkbox>
-          </ion-col>
-          <ion-col col-11 text-justify>
-            <div class="risk-release-text">
-              I have read the <a>
-              Release of Liability and Assumptions of Risk Agreement</a>,
-              fully understand its terms, and sign it freely and
-              voluntarily without any inducement.
-            </div>
-            <div class="input-error"
-              [innerHTML]="getInputError('signedRelease')"></div>
-          </ion-col>
-        </ion-row>
-      </ion-card>
+      <ng-container *ngIf="!isEdit">
+        <div class="header">Member Assumption of Risk and Release</div>
+        <ion-card padding margin-bottom>
+          <ion-row class="risk-release" (click)="openModalRiskRelease()">
+            <ion-col col-1>
+              <ion-checkbox
+                class="risk-release-checkbox"
+                [ngClass]="{'has-error': getInputError('signedRelease')}"
+                [disabled]="true"
+                formControlName="signedRelease"></ion-checkbox>
+            </ion-col>
+            <ion-col col-11 text-justify>
+              <div class="risk-release-text">
+                I have read the <a>
+                Release of Liability and Assumptions of Risk Agreement</a>,
+                fully understand its terms, and sign it freely and
+                voluntarily without any inducement.
+              </div>
+              <div class="input-error"
+                [innerHTML]="getInputError('signedRelease')"></div>
+            </ion-col>
+          </ion-row>
+        </ion-card>
+      </ng-container>
 
       <ion-row class="action-button">
         <button ion-button block text-uppercase (click)="save()">
-          Add New Member
+          <ng-container *ngIf="!isEdit">
+            Add New Member
+          </ng-container>
+          <ng-container *ngIf="isEdit">
+            Save Changes
+          </ng-container>
         </button>
       </ion-row>
     </form>
