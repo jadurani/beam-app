@@ -44,7 +44,8 @@ import {
 export class AddMemberPage {
   @ViewChild(Content) content: Content;
   addMemberForm: FormGroup;
-  isEdit: boolean;
+  isEdit: boolean = false;
+  partToEdit: string;
   pendingUser: User;
 
   constructor(
@@ -57,11 +58,21 @@ export class AddMemberPage {
     private userProvider: UserProvider
   ) {
     this.isEdit = this.navParams.get('isEdit');
-    if (this.isEdit)
+    this.partToEdit = this.navParams.get('partToEdit') || '';
+    if (this.isEdit) {
       this.pendingUser = this.navParams.get('user');
+      switch (this.partToEdit) {
+        case 'basicInfo':
+          this.editBasicInfoFormInit();
+          break;
 
-    console.log(this.pendingUser);
-    this.createAddMemberForm();
+        case 'iceContact':
+          this.editICEContactFormInit();
+          break;
+      }
+    } else {
+      this.createAddMemberForm();
+    }
   }
 
   /**
@@ -83,22 +94,36 @@ export class AddMemberPage {
       socialMedia: null,
     });
 
-    if (this.isEdit && this.pendingUser) {
-      this.addMemberForm.removeControl('signedRelease');
-      this.addMemberForm.get('address').setValue(this.pendingUser.address);
-      this.addMemberForm.get('dateOfBirth').setValue(this.pendingUser.dateOfBirth);
-      this.addMemberForm.get('email').setValue(this.pendingUser.email);
-      this.addMemberForm.get('fullName').setValue(this.pendingUser.fullName);
-      this.addMemberForm.get('nickname').setValue(this.pendingUser.displayName);
-      this.addMemberForm.get('otherRemarks').setValue(this.pendingUser.otherRemarks);
-      this.addMemberForm.get('prefix').setValue(this.pendingUser.prefix);
-      this.addMemberForm.get('sex').setValue(this.pendingUser.sex);
-      this.addMemberForm.get('socialMedia').setValue(this.pendingUser.socialMedia);
-    }
-
     this._buildAddressFormGroup();
     this._buildICEContactFormGroup();
     this._buildPhoneNumbersFormArray();
+  }
+
+  editBasicInfoFormInit() {
+    this.addMemberForm = this.formBuilder.group({
+      address: this.formBuilder.control(null),
+      dateOfBirth: [this.pendingUser.dateOfBirth, Validators.required],
+      email: [this.pendingUser.email, Validators.required],
+      fullName: [this.pendingUser.fullName, Validators.required],
+      iceContact: this.formBuilder.control(null),
+      nickname: [this.pendingUser.displayName, Validators.required],
+      otherRemarks: this.pendingUser.otherRemarks,
+      phoneNumbers: this.formBuilder.array([]),
+      prefix: [this.pendingUser.prefix, Validators.required],
+      sex: [this.pendingUser.sex, Validators.required],
+      socialMedia: this.pendingUser.socialMedia,
+    });
+
+    this._buildAddressFormGroup();
+    this._buildPhoneNumbersFormArray();
+  }
+
+  editICEContactFormInit() {
+    this.addMemberForm = this.formBuilder.group({
+      iceContact: this.formBuilder.control(null),
+    });
+
+    this._buildICEContactFormGroup();
   }
 
   /**
@@ -176,29 +201,30 @@ export class AddMemberPage {
    *
    * @returns The User object ready to be passed onto the database
    */
-  private _prepareNewMember(): User {
+  private _prepareUserInfo(): User {
     const formModel = this.addMemberForm.value;
+    let userObj: User;
 
-    const newUser: User = {
-      dateJoined: this.dateProvider.dateNow(),
-      roles: {client: true},
-    };
+    if (!this.isEdit) {
+      userObj.dateJoined = this.dateProvider.dateNow();
+      userObj.roles = {client: true};
+    }
 
-    newUser.displayName = formModel.nickname;
-    newUser.email = formModel.email;
-    newUser.fullName = formModel.fullName;
-    newUser.prefix = formModel.prefix;
-    newUser.sex = formModel.sex;
-    newUser.dateOfBirth =
+    if (!this.isEdit || (this.isEdit && this.partToEdit === 'basicInfo')) {
+      userObj.displayName = formModel.nickname;
+      userObj.email = formModel.email;
+      userObj.fullName = formModel.fullName;
+      userObj.prefix = formModel.prefix;
+      userObj.sex = formModel.sex;
+      userObj.dateOfBirth =
       this.dateProvider.stringToDate(formModel.dateOfBirth);
 
+      if (formModel.socialMedia)
+      userObj.socialMedia = formModel.socialMedia;
+      if (formModel.otherRemarks)
+      userObj.otherRemarks = formModel.otherRemarks;
 
-    if (formModel.socialMedia)
-      newUser.socialMedia = formModel.socialMedia;
-    if (formModel.otherRemarks)
-      newUser.otherRemarks = formModel.otherRemarks;
-
-    const newNumbers = formModel.phoneNumbers
+      const newNumbers = formModel.phoneNumbers
       .filter(
         (phone: PhoneNumber) => phone.number,
       )
@@ -206,13 +232,17 @@ export class AddMemberPage {
         (phone: PhoneNumber) => Object.assign({}, phone),
       );
 
-    if (newNumbers)
-      newUser.phoneNumbers = newNumbers;
+      if (newNumbers)
+        userObj.phoneNumbers = newNumbers;
 
-    newUser.iceContact = Object.assign({}, formModel.iceContact);
-    newUser.address = Object.assign({}, formModel.address);
+      userObj.address = Object.assign({}, formModel.address);
+    }
 
-    return newUser;
+    if (!this.isEdit || (this.isEdit && this.partToEdit === 'iceContact')) {
+      userObj.iceContact = Object.assign({}, formModel.iceContact);
+    }
+
+    return userObj;
   }
 
   /**
@@ -268,7 +298,7 @@ export class AddMemberPage {
       return null;
     }
 
-    const userToSave = this._prepareNewMember();
+    const userToSave = this._prepareUserInfo();
     console.log(userToSave);
 
     let toast = this.toastCtrl.create({

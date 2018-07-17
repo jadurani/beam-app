@@ -19,216 +19,220 @@
       novalidate
       [formGroup]="addMemberForm">
 
-      <div class="header">Personal Information</div>
-      <ion-card padding-horizontal padding-bottom margin-bottom>
-        <ion-list no-lines>
-          <ion-row>
-            <ion-col col-3 col-sm-2 col-md-3 col-lg-2 padding-top>
-              <div class="profile-image-container">
-                <img class="profile-image" src="assets/imgs/unknown_person.png">
-              </div>
-            </ion-col>
-            <ion-col col-9 col-sm-10 col-md-9 col-lg-10>
-              <ion-item [ngClass]="{'has-error': getInputError('nickname')}">
-                <ion-label floating no-lines>
-                  Nickname*
-                </ion-label>
-                <ion-input type="text" formControlName="nickname"></ion-input>
-              </ion-item>
-              <div padding-left class="input-error"
-                [innerHTML]="getInputError('nickname')"></div>
-            </ion-col>
-          </ion-row>
+      <ng-container *ngIf="!isEdit || (isEdit && partToEdit === 'basicInfo')">
+        <div class="header">Personal Information</div>
+        <ion-card padding-horizontal padding-bottom margin-bottom>
+          <ion-list no-lines>
+            <ion-row>
+              <ion-col col-3 col-sm-2 col-md-3 col-lg-2 padding-top>
+                <div class="profile-image-container">
+                  <img class="profile-image" src="assets/imgs/unknown_person.png">
+                </div>
+              </ion-col>
+              <ion-col col-9 col-sm-10 col-md-9 col-lg-10>
+                <ion-item [ngClass]="{'has-error': getInputError('nickname')}">
+                  <ion-label floating no-lines>
+                    Nickname*
+                  </ion-label>
+                  <ion-input type="text" formControlName="nickname"></ion-input>
+                </ion-item>
+                <div padding-left class="input-error"
+                  [innerHTML]="getInputError('nickname')"></div>
+              </ion-col>
+            </ion-row>
 
-          <ion-row>
-            <ion-col col-12 col-md-4 col-lg-3>
-              <ion-item [ngClass]="{'has-error': getInputError('prefix')}">
-                <ion-label floating>Prefix*</ion-label>
-                <ion-select formControlName="prefix">
-                  <ion-option value="Ms.">Ms.</ion-option>
-                  <ion-option value="Mr.">Mr.</ion-option>
-                </ion-select>
-              </ion-item>
-              <div padding-left class="input-error"
-                [innerHTML]="getInputError('prefix')"></div>
-            </ion-col>
+            <ion-row>
+              <ion-col col-12 col-md-4 col-lg-3>
+                <ion-item [ngClass]="{'has-error': getInputError('prefix')}">
+                  <ion-label floating>Prefix*</ion-label>
+                  <ion-select formControlName="prefix">
+                    <ion-option value="Ms.">Ms.</ion-option>
+                    <ion-option value="Mr.">Mr.</ion-option>
+                  </ion-select>
+                </ion-item>
+                <div padding-left class="input-error"
+                  [innerHTML]="getInputError('prefix')"></div>
+              </ion-col>
 
-            <ion-col col-12 col-md-8 col-lg-9>
-              <ion-item [ngClass]="{'has-error': getInputError('fullName')}">
-                <ion-label floating>Full Name*</ion-label>
-                <ion-input type="text" formControlName="fullName"></ion-input>
-              </ion-item>
-              <div padding-left class="input-error"
-                [innerHTML]="getInputError('fullName')"></div>
-            </ion-col>
-          </ion-row>
+              <ion-col col-12 col-md-8 col-lg-9>
+                <ion-item [ngClass]="{'has-error': getInputError('fullName')}">
+                  <ion-label floating>Full Name*</ion-label>
+                  <ion-input type="text" formControlName="fullName"></ion-input>
+                </ion-item>
+                <div padding-left class="input-error"
+                  [innerHTML]="getInputError('fullName')"></div>
+              </ion-col>
+            </ion-row>
 
-          <ion-row>
-            <ion-col col-12 col-sm-12 col-md-12 col-lg-6>
-              <ion-item [ngClass]="{'has-error': getInputError('sex')}">
-                <ion-label floating>Sex*</ion-label>
-                <ion-select formControlName="sex" [selectOptions]="{title:'Sex', subTitle: '(on birth)'}">
-                  <ion-option value="F">Female</ion-option>
-                  <ion-option value="M">Male</ion-option>
-                </ion-select>
-              </ion-item>
-              <div padding-left class="input-error"
-                [innerHTML]="getInputError('sex')"></div>
-            </ion-col>
-            <ion-col col-12 col-sm-12 col-md-12 col-lg-6>
-              <ion-item [ngClass]="{'has-error': getInputError('dateOfBirth')}">
-                <ion-label floating>Birthday*</ion-label>
-                <ion-datetime displayFormat="MM/DD/YYYY" max="2000" formControlName="dateOfBirth"></ion-datetime>
-              </ion-item>
-              <div padding-left class="input-error"
-                [innerHTML]="getInputError('dateOfBirth')"></div>
-            </ion-col>
-          </ion-row>
+            <ion-row>
+              <ion-col col-12 col-sm-12 col-md-12 col-lg-6>
+                <ion-item [ngClass]="{'has-error': getInputError('sex')}">
+                  <ion-label floating>Sex*</ion-label>
+                  <ion-select formControlName="sex" [selectOptions]="{title:'Sex', subTitle: '(on birth)'}">
+                    <ion-option value="F">Female</ion-option>
+                    <ion-option value="M">Male</ion-option>
+                  </ion-select>
+                </ion-item>
+                <div padding-left class="input-error"
+                  [innerHTML]="getInputError('sex')"></div>
+              </ion-col>
+              <ion-col col-12 col-sm-12 col-md-12 col-lg-6>
+                <ion-item [ngClass]="{'has-error': getInputError('dateOfBirth')}">
+                  <ion-label floating>Birthday*</ion-label>
+                  <ion-datetime displayFormat="MM/DD/YYYY" max="2000" formControlName="dateOfBirth"></ion-datetime>
+                </ion-item>
+                <div padding-left class="input-error"
+                  [innerHTML]="getInputError('dateOfBirth')"></div>
+              </ion-col>
+            </ion-row>
 
-          <ng-container formGroupName="address">
+            <ng-container formGroupName="address">
+              <ion-row>
+                <ion-col>
+                  <ion-item>
+                    <ion-label floating>Street Address</ion-label>
+                    <ion-input type="text" formControlName="street"></ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col col-12 col-sm-12 col-md-12 col-lg-6>
+                  <ion-item>
+                    <ion-label floating>Barangay</ion-label>
+                    <ion-input type="text" formControlName="barangay"></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col col-12 col-sm-12 col-md-12 col-lg-6>
+                  <ion-item [ngClass]="{'has-error': getInputError('city', 'address')}">
+                    <ion-label floating>City*</ion-label>
+                    <ion-input type="text" formControlName="city"></ion-input>
+                  </ion-item>
+                  <div padding-left class="input-error"
+                    [innerHTML]="getInputError('city', 'address')"></div>
+                </ion-col>
+              </ion-row>
+            </ng-container>
+
+            <ng-container formArrayName="phoneNumbers">
+              <ion-row [formGroupName]="i"
+                *ngFor="let phone of phoneNumbers.controls; let i = index;">
+                <ion-col col-12 col-sm-12 col-md-12 col-lg-6>
+                  <ion-item [ngClass]="{'has-error': getInputError('number', 'phoneNumbers', i)}">
+                    <ion-label floating>Phone*</ion-label>
+                    <ion-input type="text" formControlName="number"></ion-input>
+                  </ion-item>
+                  <div padding-left class="input-error"
+                    [innerHTML]="getInputError('number', 'phoneNumbers', i)"></div>
+                </ion-col>
+                <ion-col col-12 col-sm-12 col-md-12 col-lg-6>
+                  <ion-item>
+                    <ion-label floating>Phone Label</ion-label>
+                    <ion-select formControlName="label">
+                      <ion-option value="Home">Home</ion-option>
+                      <ion-option value="Work">Work</ion-option>
+                      <ion-option value="Other">Other</ion-option>
+                      <ion-option value="Mobile">Mobile</ion-option>
+                      <ion-option value="Main">Main</ion-option>
+                    </ion-select>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ng-container>
+
+            <ion-row>
+              <ion-col>
+                <ion-item [ngClass]="{'has-error': getInputError('email')}">
+                  <ion-label floating no-lines>Email*</ion-label>
+                  <ion-input type="text" formControlName="email"></ion-input>
+                </ion-item>
+                <div padding-left class="input-error"
+                  [innerHTML]="getInputError('email')"></div>
+              </ion-col>
+            </ion-row>
+
             <ion-row>
               <ion-col>
                 <ion-item>
-                  <ion-label floating>Street Address</ion-label>
-                  <ion-input type="text" formControlName="street"></ion-input>
+                  <ion-label floating no-lines>Other Social Media</ion-label>
+                  <ion-input type="text" formControlName="socialMedia"></ion-input>
                 </ion-item>
               </ion-col>
             </ion-row>
 
             <ion-row>
-              <ion-col col-12 col-sm-12 col-md-12 col-lg-6>
+              <ion-col>
                 <ion-item>
-                  <ion-label floating>Barangay</ion-label>
-                  <ion-input type="text" formControlName="barangay"></ion-input>
+                  <ion-label floating>Medical Condition(s)</ion-label>
+                  <ion-input type="text" formControlName="otherRemarks"></ion-input>
                 </ion-item>
-              </ion-col>
-              <ion-col col-12 col-sm-12 col-md-12 col-lg-6>
-                <ion-item [ngClass]="{'has-error': getInputError('city', 'address')}">
-                  <ion-label floating>City*</ion-label>
-                  <ion-input type="text" formControlName="city"></ion-input>
-                </ion-item>
-                <div padding-left class="input-error"
-                  [innerHTML]="getInputError('city', 'address')"></div>
               </ion-col>
             </ion-row>
-          </ng-container>
 
-          <ng-container formArrayName="phoneNumbers">
-            <ion-row [formGroupName]="i"
-              *ngFor="let phone of phoneNumbers.controls; let i = index;">
-              <ion-col col-12 col-sm-12 col-md-12 col-lg-6>
-                <ion-item [ngClass]="{'has-error': getInputError('number', 'phoneNumbers', i)}">
-                  <ion-label floating>Phone*</ion-label>
-                  <ion-input type="text" formControlName="number"></ion-input>
+          </ion-list>
+        </ion-card>
+      </ng-container>
+
+      <ng-container *ngIf="!isEdit || (isEdit && partToEdit === 'iceContact')">
+        <div class="header">In Case of Emergency</div>
+        <ion-card padding-horizontal padding-bottom margin-bottom formGroupName="iceContact">
+          <ion-list no-lines>
+
+            <ion-row>
+              <ion-col>
+                <ion-item [ngClass]="{'has-error': getInputError('name', 'iceContact')}">
+                  <ion-label floating no-lines>Name*</ion-label>
+                  <ion-input type="text" formControlName="name"></ion-input>
                 </ion-item>
                 <div padding-left class="input-error"
-                  [innerHTML]="getInputError('number', 'phoneNumbers', i)"></div>
+                  [innerHTML]="getInputError('name', 'iceContact')"></div>
               </ion-col>
+            </ion-row>
+
+            <ion-row>
               <ion-col col-12 col-sm-12 col-md-12 col-lg-6>
-                <ion-item>
-                  <ion-label floating>Phone Label</ion-label>
-                  <ion-select formControlName="label">
-                    <ion-option value="Home">Home</ion-option>
-                    <ion-option value="Work">Work</ion-option>
-                    <ion-option value="Other">Other</ion-option>
-                    <ion-option value="Mobile">Mobile</ion-option>
-                    <ion-option value="Main">Main</ion-option>
+                <ion-item [ngClass]="{'has-error': getInputError('relationship', 'iceContact')}">
+                  <ion-label floating>Relationship*</ion-label>
+                  <ion-select formControlName="relationship">
+                    <ion-option value="parent">Parent</ion-option>
+                    <ion-option value="sibling">Sibling</ion-option>
+                    <ion-option value="child">Child</ion-option>
+                    <ion-option value="friend">Friend</ion-option>
                   </ion-select>
                 </ion-item>
+                <div padding-left class="input-error"
+                  [innerHTML]="getInputError('relationship', 'iceContact')"></div>
+              </ion-col>
+              <ion-col col-12 col-sm-12 col-md-12 col-lg-6>
+                <ion-item [ngClass]="{'has-error': getInputError('contactNumber', 'iceContact')}">
+                  <ion-label floating>Contact Number*</ion-label>
+                  <ion-input type="text" formControlName="contactNumber"></ion-input>
+                </ion-item>
+                <div padding-left class="input-error"
+                  [innerHTML]="getInputError('contactNumber', 'iceContact')"></div>
               </ion-col>
             </ion-row>
-          </ng-container>
 
-          <ion-row>
-            <ion-col>
-              <ion-item [ngClass]="{'has-error': getInputError('email')}">
-                <ion-label floating no-lines>Email*</ion-label>
-                <ion-input type="text" formControlName="email"></ion-input>
-              </ion-item>
-              <div padding-left class="input-error"
-                [innerHTML]="getInputError('email')"></div>
-            </ion-col>
-          </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-item>
+                  <ion-label floating no-lines>Email</ion-label>
+                  <ion-input type="text" formControlName="email"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
 
-          <ion-row>
-            <ion-col>
-              <ion-item>
-                <ion-label floating no-lines>Other Social Media</ion-label>
-                <ion-input type="text" formControlName="socialMedia"></ion-input>
-              </ion-item>
-            </ion-col>
-          </ion-row>
-
-          <ion-row>
-            <ion-col>
-              <ion-item>
-                <ion-label floating>Medical Condition(s)</ion-label>
-                <ion-input type="text" formControlName="otherRemarks"></ion-input>
-              </ion-item>
-            </ion-col>
-          </ion-row>
-
-        </ion-list>
-      </ion-card>
-
-      <div class="header">In Case of Emergency</div>
-      <ion-card padding-horizontal padding-bottom margin-bottom formGroupName="iceContact">
-        <ion-list no-lines>
-
-          <ion-row>
-            <ion-col>
-              <ion-item [ngClass]="{'has-error': getInputError('name', 'iceContact')}">
-                <ion-label floating no-lines>Name*</ion-label>
-                <ion-input type="text" formControlName="name"></ion-input>
-              </ion-item>
-              <div padding-left class="input-error"
-                [innerHTML]="getInputError('name', 'iceContact')"></div>
-            </ion-col>
-          </ion-row>
-
-          <ion-row>
-            <ion-col col-12 col-sm-12 col-md-12 col-lg-6>
-              <ion-item [ngClass]="{'has-error': getInputError('relationship', 'iceContact')}">
-                <ion-label floating>Relationship*</ion-label>
-                <ion-select formControlName="relationship">
-                  <ion-option value="parent">Parent</ion-option>
-                  <ion-option value="sibling">Sibling</ion-option>
-                  <ion-option value="child">Child</ion-option>
-                  <ion-option value="friend">Friend</ion-option>
-                </ion-select>
-              </ion-item>
-              <div padding-left class="input-error"
-                [innerHTML]="getInputError('relationship', 'iceContact')"></div>
-            </ion-col>
-            <ion-col col-12 col-sm-12 col-md-12 col-lg-6>
-              <ion-item [ngClass]="{'has-error': getInputError('contactNumber', 'iceContact')}">
-                <ion-label floating>Contact Number*</ion-label>
-                <ion-input type="text" formControlName="contactNumber"></ion-input>
-              </ion-item>
-              <div padding-left class="input-error"
-                [innerHTML]="getInputError('contactNumber', 'iceContact')"></div>
-            </ion-col>
-          </ion-row>
-
-          <ion-row>
-            <ion-col>
-              <ion-item>
-                <ion-label floating no-lines>Email</ion-label>
-                <ion-input type="text" formControlName="email"></ion-input>
-              </ion-item>
-            </ion-col>
-          </ion-row>
-
-          <ion-row>
-            <ion-col>
-              <ion-item>
-                <ion-label floating no-lines>Other Social Media</ion-label>
-                <ion-input type="text" formControlName="socialMedia"></ion-input>
-              </ion-item>
-            </ion-col>
-          </ion-row>
-        </ion-list>
-      </ion-card>
+            <ion-row>
+              <ion-col>
+                <ion-item>
+                  <ion-label floating no-lines>Other Social Media</ion-label>
+                  <ion-input type="text" formControlName="socialMedia"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-list>
+        </ion-card>
+      </ng-container>
 
       <ng-container *ngIf="!isEdit">
         <div class="header">Member Assumption of Risk and Release</div>
