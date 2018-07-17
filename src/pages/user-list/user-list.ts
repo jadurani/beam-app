@@ -5,6 +5,7 @@ import { User } from './../../models/user-model';
 import { UserProvider } from '../../providers/user/user';
 
 import { AddMemberPage } from '../add-member/add-member';
+import { ViewMemberPage } from '../view-member/view-member';
 import { ModalUserDetailsPage } from '../modal-user-details/modal-user-details';
 import { ModalEditUserPage } from '../modal-edit-user/modal-edit-user';
 import { ModalAddBodyInfoPage } from '../modal-add-body-info/modal-add-body-info';
@@ -21,12 +22,13 @@ import { ModalAddUserPage } from '../modal-add-user/modal-add-user';
 @Component({
   selector: 'page-user-list',
   templateUrl: 'user-list.html',
-  entryComponents: [AddMemberPage],
+    entryComponents: [AddMemberPage, ViewMemberPage],
 })
 export class UserListPage {
   users: User[];
   loading: boolean = true;
   addMemberPage: any;
+  viewMemberPage: any;
 
   constructor(
     public modalCtrl: ModalController,
@@ -34,6 +36,7 @@ export class UserListPage {
     public userProvider: UserProvider
   ) {
     this.addMemberPage = AddMemberPage;
+    this.viewMemberPage = ViewMemberPage;
     this.getUsers();
   }
 
@@ -43,7 +46,7 @@ export class UserListPage {
   getUsers(): void {
     this.userProvider.getUsers()
       .then(users => {
-        this.users = users
+        this.users = users;
         this.loading = false;
       })
       .catch((error) => {

@@ -227,6 +227,8 @@ export class UserProvider {
     if (userObj.photoUrl) user.photoUrl = userObj.photoUrl;
 
     // BasicInfo
+    if (userObj.fullName) user.fullName = userObj.fullName;
+    if (userObj.firstName && userObj.lastName) user.fullName = `${userObj.firstName} ${userObj.lastName}`;
     if (userObj.firstName) user.firstName = userObj.firstName;
     if (userObj.lastName) user.lastName = userObj.lastName;
     if (userObj.suffix) user.suffix = userObj.suffix;

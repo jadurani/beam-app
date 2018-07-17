@@ -20,6 +20,7 @@ import { ModalRiskReleasePage } from '../pages/modal-risk-release/modal-risk-rel
 import { ModalUserDetailsPage } from '../pages/modal-user-details/modal-user-details';
 import { SignUpPage } from '../pages/sign-up/sign-up';
 import { UserListPage } from '../pages/user-list/user-list';
+import { ViewMemberPage } from '../pages/view-member/view-member';
 
 // Native Imports
 import { StatusBar } from '@ionic-native/status-bar';
@@ -48,6 +49,7 @@ import { firebaseConfig } from '../environments/environment';
     ModalUserDetailsPage,
     SignUpPage,
     UserListPage,
+    ViewMemberPage,
   ],
   imports: [
     BrowserModule,
@@ -68,6 +70,7 @@ import { firebaseConfig } from '../environments/environment';
     ModalUserDetailsPage,
     SignUpPage,
     UserListPage,
+    ViewMemberPage,
   ],
   providers: [
     StatusBar,

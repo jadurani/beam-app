@@ -36,6 +36,9 @@ export interface User {
 
     // Medical history, other preferences
     otherRemarks ?: string;
+
+    // Profession / Occupation
+    workDetails ?: WorkDetails;
 }
 
 export interface UserBodyInfo {
@@ -69,7 +72,7 @@ export interface PhoneNumber {
     number : string;
     label ?: string;
 
-    type: string;
+    type ?: string;
 };
 
 export interface FirebaseDate {
@@ -91,11 +94,16 @@ export interface ICEContact {
     email ?: string;
     socialMedia ?: string;
 
-    phoneNumber : string;
+    phoneNumber ?: string;
 }
 
 export interface Address {
     street ?: string;
     barangay ?: string;
     city : string;
+}
+
+export interface WorkDetails {
+    title : string;
+    company ?: string;
 }
