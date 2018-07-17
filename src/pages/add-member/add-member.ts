@@ -92,6 +92,10 @@ export class AddMemberPage {
       sex: [null, Validators.required],
       signedRelease: [false, Validators.requiredTrue],
       socialMedia: null,
+      workDetails: this.formBuilder.group({
+        title: null,
+        company: null,
+      }),
     });
 
     this._buildAddressFormGroup();
@@ -102,7 +106,7 @@ export class AddMemberPage {
   editBasicInfoFormInit() {
     this.addMemberForm = this.formBuilder.group({
       address: this.formBuilder.control(null),
-      dateOfBirth: [this.pendingUser.dateOfBirth, Validators.required],
+      dateOfBirth: [this.pendingUser.dateOfBirth.toISOString(), Validators.required],
       email: [this.pendingUser.email, Validators.required],
       fullName: [this.pendingUser.fullName, Validators.required],
       iceContact: this.formBuilder.control(null),
@@ -112,7 +116,18 @@ export class AddMemberPage {
       prefix: [this.pendingUser.prefix, Validators.required],
       sex: [this.pendingUser.sex, Validators.required],
       socialMedia: this.pendingUser.socialMedia,
+      workDetails: this.formBuilder.group({
+        title: null,
+        company: null,
+      }),
     });
+
+    if (this.pendingUser.workDetails) {
+      this.addMemberForm.setControl('workDetails', this.formBuilder.group({
+        title: this.pendingUser.workDetails.title,
+        company: this.pendingUser.workDetails.company,
+      }));
+    }
 
     this._buildAddressFormGroup();
     this._buildPhoneNumbersFormArray();
@@ -206,8 +221,15 @@ export class AddMemberPage {
     let userObj: User;
 
     if (!this.isEdit) {
-      userObj.dateJoined = this.dateProvider.dateNow();
-      userObj.roles = {client: true};
+      userObj = {
+        dateJoined: this.dateProvider.dateNow(),
+        roles: {client: true},
+      };
+    } else {
+      userObj = {
+        dateJoined: this.pendingUser.dateJoined,
+        roles: this.pendingUser.roles,
+      };
     }
 
     if (!this.isEdit || (this.isEdit && this.partToEdit === 'basicInfo')) {
@@ -291,7 +313,6 @@ export class AddMemberPage {
    * newly-created user.
    */
   save() {
-    console.log(this.addMemberForm);
     if (this.addMemberForm.invalid) {
       this._validateAllFormFields(this.addMemberForm);
       this._scrollToTop();
@@ -299,10 +320,11 @@ export class AddMemberPage {
     }
 
     const userToSave = this._prepareUserInfo();
-    console.log(userToSave);
+
+    let toastMsg = this.isEdit ? 'Saving changes...' : 'Adding new user...';
 
     let toast = this.toastCtrl.create({
-      message: 'Adding new user...',
+      message: toastMsg,
       position: 'bottom',
     });
     toast.present();

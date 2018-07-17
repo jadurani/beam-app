@@ -16,7 +16,6 @@ import { UserProvider } from './../providers/user/user';
 // Backend
 import * as firebase from 'firebase';
 
-import { ViewMemberPage } from '../pages/view-member/view-member';
 
 @Component({
   templateUrl: 'app.html'
@@ -54,8 +53,7 @@ export class MyApp {
     firebase.auth().onAuthStateChanged(user => {
       this.userProvider.setCurrentUser();
       if (user) {
-        this.rootPage = ViewMemberPage;
-        // this.rootPage = UserListPage;
+        this.rootPage = UserListPage;
       } else {
         this.rootPage = LogInPage;
       }

@@ -23,10 +23,11 @@ export class ViewMemberPage {
     private userProvider: UserProvider
   ) {
     this.user = this.navParams.get('user');
-    // to delete
-    this.loading = false;
-    this.user = MOCK_USER;
-    // this.loadUser(this.user);
+  }
+
+  ionViewWillEnter() {
+    this.loading = true;
+    this.loadUser(this.user);
   }
 
   loadUser(user: User) {
@@ -36,7 +37,6 @@ export class ViewMemberPage {
         this.loading = false;
       })
       .catch(error => {
-        console.log(error);
         this.loading = false;
       });
   }

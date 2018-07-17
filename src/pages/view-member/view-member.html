@@ -12,6 +12,7 @@
     <ion-row>
       <!-- profile part -->
       <ion-col col-12 col-md-5>
+
         <!-- profile -->
         <ion-card>
           <ion-item text-right>
@@ -69,15 +70,20 @@
                 </ion-item>
               </ion-col>
               <ion-col col-9>
-                <ion-item text-left>
-                  {{ user.address.city }}
+                <ion-item text-left text-wrap>
+                  <span *ngIf="profileExpanded">
+                    {{ user.address.street }} {{ user.address.barangay }}
+                  </span>
+                  <span>
+                    {{ user.address.city }}
+                  </span>
                 </ion-item>
               </ion-col>
             </ion-row>
 
             <ion-item-group class="collapsible-details"
-              [ngClass]="{'expanded':profileExpanded}">
-              <ion-row>
+              [ngClass]="{'expanded': profileExpanded}">
+              <ion-row *ngIf="user.workDetails">
                 <ion-col col-3>
                   <ion-item text-right>
                     <ion-icon name="alert"></ion-icon>
@@ -103,7 +109,7 @@
                 </ion-col>
               </ion-row>
 
-              <ion-row>
+              <ion-row *ngIf="user.otherRemarks">
                 <ion-col col-3>
                   <ion-item text-right>
                     <ion-icon name="list-box"></ion-icon>
@@ -136,12 +142,12 @@
         <!-- ICE -->
         <ion-card>
           <ion-row>
-            <ion-col col-10>
+            <ion-col col-9>
               <ion-card-title padding-left padding-top>
                 In Case of Emergency
               </ion-card-title>
             </ion-col>
-            <ion-col col-2>
+            <ion-col col-3>
               <ion-item text-right>
                 <button ion-button clear
                   color="dark"
