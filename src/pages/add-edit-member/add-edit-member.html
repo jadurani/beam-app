@@ -17,7 +17,7 @@
     <form
       margin-bottom
       novalidate
-      [formGroup]="addMemberForm">
+      [formGroup]="userInfoForm">
 
       <ng-container *ngIf="!isEdit || (isEdit && partToEdit === 'basicInfo')">
         <div class="header">Personal Information</div>

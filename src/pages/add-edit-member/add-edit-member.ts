@@ -33,17 +33,18 @@ import {
 
 
 /**
- * Sign up form for new members.
+ * Page to add a new member or edit details of
+ * existing member.
  */
 
 @IonicPage()
 @Component({
-  selector: 'page-add-member',
-  templateUrl: 'add-member.html',
+  selector: 'page-add-edit-member',
+  templateUrl: 'add-edit-member.html',
 })
-export class AddMemberPage {
+export class AddEditMemberPage {
   @ViewChild(Content) content: Content;
-  addMemberForm: FormGroup;
+  userInfoForm: FormGroup;
   isEdit: boolean = false;
   partToEdit: string;
   pendingUser: User;
@@ -71,15 +72,15 @@ export class AddMemberPage {
           break;
       }
     } else {
-      this.createAddMemberForm();
+      this.createNewUserInfoForm();
     }
   }
 
   /**
-   * Initializes `addMemberForm`.
+   * Initializes `userInfoForm`.
    */
-  createAddMemberForm() {
-    this.addMemberForm = this.formBuilder.group({
+  createNewUserInfoForm() {
+    this.userInfoForm = this.formBuilder.group({
       address: this.formBuilder.control(null),
       dateOfBirth: [null, Validators.required],
       email: [null, Validators.required],
@@ -104,7 +105,7 @@ export class AddMemberPage {
   }
 
   editBasicInfoFormInit() {
-    this.addMemberForm = this.formBuilder.group({
+    this.userInfoForm = this.formBuilder.group({
       address: this.formBuilder.control(null),
       dateOfBirth: [this.pendingUser.dateOfBirth.toISOString(), Validators.required],
       email: [this.pendingUser.email, Validators.required],
@@ -123,7 +124,7 @@ export class AddMemberPage {
     });
 
     if (this.pendingUser.workDetails) {
-      this.addMemberForm.setControl('workDetails', this.formBuilder.group({
+      this.userInfoForm.setControl('workDetails', this.formBuilder.group({
         title: this.pendingUser.workDetails.title,
         company: this.pendingUser.workDetails.company,
       }));
@@ -134,7 +135,7 @@ export class AddMemberPage {
   }
 
   editICEContactFormInit() {
-    this.addMemberForm = this.formBuilder.group({
+    this.userInfoForm = this.formBuilder.group({
       iceContact: this.formBuilder.control(null),
     });
 
@@ -157,7 +158,7 @@ export class AddMemberPage {
       addressFormGroup.get('city').setValue(this.pendingUser.address.city);
     }
 
-    this.addMemberForm.setControl('address', addressFormGroup);
+    this.userInfoForm.setControl('address', addressFormGroup);
   }
 
   /**
@@ -180,7 +181,7 @@ export class AddMemberPage {
       iceContactFormGroup.get('socialMedia').setValue(this.pendingUser.iceContact.socialMedia);
     }
 
-    this.addMemberForm.setControl('iceContact', iceContactFormGroup);
+    this.userInfoForm.setControl('iceContact', iceContactFormGroup);
   }
 
   /**
@@ -208,16 +209,16 @@ export class AddMemberPage {
 
     const phoneNumbersFormArray =
       this.formBuilder.array(phoneNumbersFormGroup);
-    this.addMemberForm.setControl('phoneNumbers', phoneNumbersFormArray);
+    this.userInfoForm.setControl('phoneNumbers', phoneNumbersFormArray);
   }
 
   /**
-   * Initializes a User object with the values from `addMemberForm`.
+   * Initializes a User object with the values from `userInfoForm`.
    *
    * @returns The User object ready to be passed onto the database
    */
   private _prepareUserInfo(): User {
-    const formModel = this.addMemberForm.value;
+    const formModel = this.userInfoForm.value;
     let userObj: User;
 
     if (!this.isEdit) {
@@ -313,8 +314,8 @@ export class AddMemberPage {
    * newly-created user.
    */
   save() {
-    if (this.addMemberForm.invalid) {
-      this._validateAllFormFields(this.addMemberForm);
+    if (this.userInfoForm.invalid) {
+      this._validateAllFormFields(this.userInfoForm);
       this._scrollToTop();
       return null;
     }
@@ -373,11 +374,11 @@ export class AddMemberPage {
    * modal containing the terms and conditions that the user
    * must first agree on.
    *
-   * User can't directly mark the checkbox on `addMemberForm`
-   * (`addMemberForm.signedRelease`) but ticking the checkbox
+   * User can't directly mark the checkbox on `userInfoForm`
+   * (`userInfoForm.signedRelease`) but ticking the checkbox
    * in `modalRiskRelease` would tick also the one in
-   * `addMemberForm`. In other words, the value of
-   * `addMemberForm.signedRelease` depends on
+   * `userInfoForm`. In other words, the value of
+   * `userInfoForm.signedRelease` depends on
    * `modalRiskRelease`'s checkbox value (`signed`).
    */
   openModalRiskRelease() {
@@ -387,7 +388,7 @@ export class AddMemberPage {
     );
 
     riskReleaseModal.onDidDismiss((signed: boolean) => {
-      this.addMemberForm.get('signedRelease').setValue(signed);
+      this.userInfoForm.get('signedRelease').setValue(signed);
     });
 
     riskReleaseModal.present();
@@ -420,13 +421,13 @@ export class AddMemberPage {
     let formControl;
     if (formGroupName) {
       if (index !== null && index !== undefined) {
-        const formArray = this.addMemberForm.get(formGroupName) as FormArray;
+        const formArray = this.userInfoForm.get(formGroupName) as FormArray;
         formControl = formArray.controls[index].get(formControlName);
       } else {
-        formControl = this.addMemberForm.get(formGroupName).get(formControlName);
+        formControl = this.userInfoForm.get(formGroupName).get(formControlName);
       }
     } else {
-      formControl = this.addMemberForm.get(formControlName);
+      formControl = this.userInfoForm.get(formControlName);
     }
 
     if (!(formControl.invalid && formControl.touched))
@@ -439,10 +440,10 @@ export class AddMemberPage {
   }
 
   get phoneNumbers(): FormArray {
-    return this.addMemberForm.get('phoneNumbers') as FormArray;
+    return this.userInfoForm.get('phoneNumbers') as FormArray;
   }
 
   get signedRelease(): AbstractControl {
-    return this.addMemberForm.get('signedRelease');
+    return this.userInfoForm.get('signedRelease');
   }
 }

@@ -10,7 +10,7 @@ import { MyApp } from './app.component';
 import { SmallSelectComponent } from './../components/small-select/small-select';
 
 // Pages
-import { AddMemberPage } from '../pages/add-member/add-member';
+import { AddEditMemberPage } from '../pages/add-edit-member/add-edit-member';
 import { HomePage } from '../pages/home/home';
 import { LogInPage } from '../pages/log-in/log-in';
 import { ModalAddBodyInfoPage } from '../pages/modal-add-body-info/modal-add-body-info';
@@ -39,7 +39,7 @@ import { firebaseConfig } from '../environments/environment';
   declarations: [
     MyApp,
     SmallSelectComponent,
-    AddMemberPage,
+    AddEditMemberPage,
     HomePage,
     LogInPage,
     ModalAddBodyInfoPage,
@@ -60,7 +60,7 @@ import { firebaseConfig } from '../environments/environment';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    AddMemberPage,
+    AddEditMemberPage,
     HomePage,
     LogInPage,
     ModalAddBodyInfoPage,

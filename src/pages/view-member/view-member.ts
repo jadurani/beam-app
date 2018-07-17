@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-import { AddMemberPage } from '../add-member/add-member';
+import { AddEditMemberPage } from '../add-edit-member/add-edit-member';
 import { User } from './../../models/user-model';
 import { UserProvider } from '../../providers/user/user';
 
@@ -14,7 +14,7 @@ import { UserProvider } from '../../providers/user/user';
 export class ViewMemberPage {
   loading: boolean = true;
   profileExpanded: boolean = false;
-  addMemberPage: any = AddMemberPage;
+  addEditMemberPage: any = AddEditMemberPage;
   user: User;
 
   constructor(

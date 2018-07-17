@@ -4,7 +4,7 @@ import { IonicPage, ModalController, NavParams } from 'ionic-angular';
 import { User } from './../../models/user-model';
 import { UserProvider } from '../../providers/user/user';
 
-import { AddMemberPage } from '../add-member/add-member';
+import { AddEditMemberPage } from '../add-edit-member/add-edit-member';
 import { ViewMemberPage } from '../view-member/view-member';
 import { ModalUserDetailsPage } from '../modal-user-details/modal-user-details';
 import { ModalEditUserPage } from '../modal-edit-user/modal-edit-user';
@@ -22,12 +22,12 @@ import { ModalAddUserPage } from '../modal-add-user/modal-add-user';
 @Component({
   selector: 'page-user-list',
   templateUrl: 'user-list.html',
-    entryComponents: [AddMemberPage, ViewMemberPage],
+    entryComponents: [AddEditMemberPage, ViewMemberPage],
 })
 export class UserListPage {
   users: User[];
   loading: boolean = true;
-  addMemberPage: any;
+  addEditMemberPage: any;
   viewMemberPage: any;
 
   constructor(
@@ -35,7 +35,7 @@ export class UserListPage {
     public navParams: NavParams,
     public userProvider: UserProvider
   ) {
-    this.addMemberPage = AddMemberPage;
+    this.addEditMemberPage = AddEditMemberPage;
     this.viewMemberPage = ViewMemberPage;
     this.getUsers();
   }

@@ -18,7 +18,7 @@
           <ion-item text-right>
             <button ion-button clear
               color="dark"
-              [navPush]="addMemberPage"
+              [navPush]="addEditMemberPage"
               [navParams]="{'isEdit':true, 'partToEdit': 'basicInfo', 'user': user}">
               <ion-icon name="create"></ion-icon>
             </button>
@@ -151,7 +151,7 @@
               <ion-item text-right>
                 <button ion-button clear
                   color="dark"
-                  [navPush]="addMemberPage"
+                  [navPush]="addEditMemberPage"
                   [navParams]="{'isEdit': true, 'partToEdit': 'iceContact', 'user': user}">
                     <ion-icon name="create"></ion-icon>
                   </button>
