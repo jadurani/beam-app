@@ -317,10 +317,6 @@ export class AddEditMemberPage {
    * If an error occurs on this attempt, they'd be informed of
    * such error.  However if the save attempt's a success, they'd
    * be taken back to the UserList page.
-   *
-   * TO DO: On successful save, instead of taking the user back to
-   * the UserList page, take them to the profile page of the
-   * newly-created user.
    */
   save() {
     if (this.userInfoForm.invalid) {
@@ -362,6 +358,7 @@ export class AddEditMemberPage {
           toast.dismiss();
           userToSave.id = userId;
           this.navCtrl.pop();
+          this.navCtrl.push(ViewMemberPage, { 'user': userToSave });
         })
         .catch(error => {
           toast.dismiss();
