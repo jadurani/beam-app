@@ -30,6 +30,7 @@ import {
 import {
   ModalRiskReleasePage
 } from '../modal-risk-release/modal-risk-release';
+import { ViewMemberPage } from '../view-member/view-member';
 
 
 /**
@@ -104,6 +105,10 @@ export class AddEditMemberPage {
     this._buildPhoneNumbersFormArray();
   }
 
+  /**
+   * Initializes `userInfoForm` to only contain
+   * fields for Basicinfo.
+   */
   editBasicInfoFormInit() {
     this.userInfoForm = this.formBuilder.group({
       address: this.formBuilder.control(null),
@@ -134,6 +139,10 @@ export class AddEditMemberPage {
     this._buildPhoneNumbersFormArray();
   }
 
+  /**
+   * Initializes `userInfoForm` to only contain fields for
+   * Contact Person In Case of Emergency.
+   */
   editICEContactFormInit() {
     this.userInfoForm = this.formBuilder.group({
       iceContact: this.formBuilder.control(null),
@@ -340,8 +349,6 @@ export class AddEditMemberPage {
         })
         .catch(error => {
           toast.dismiss();
-
-          console.log(error.message);
           toast = this.toastCtrl.create({
             message: error.message || 'Server Error. Try again later',
             position: 'bottom',
@@ -358,7 +365,6 @@ export class AddEditMemberPage {
         })
         .catch(error => {
           toast.dismiss();
-
           toast = this.toastCtrl.create({
             message: error.message || 'Server Error. Try again later',
             position: 'bottom',

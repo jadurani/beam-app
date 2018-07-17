@@ -25,6 +25,11 @@ export class ViewMemberPage {
     this.user = this.navParams.get('user');
   }
 
+  /**
+   * Reload the user object every time this page
+   * is about to load.  Useful when we just updated
+   * the details of the user in the AddEditMemberPage.
+   */
   ionViewWillEnter() {
     this.loading = true;
     this.loadUser(this.user);
@@ -41,6 +46,9 @@ export class ViewMemberPage {
       });
   }
 
+  /**
+   * Expands Basic Profile Info Section when true.
+   */
   profileToggle() {
     this.profileExpanded = !this.profileExpanded;
   }

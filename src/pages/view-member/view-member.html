@@ -10,10 +10,11 @@
 <ion-content padding>
   <ng-container *ngIf="user && !loading">
     <ion-row>
-      <!-- profile part -->
+      <!--
+        Left Column containing Basic Profile Info and ICE Info
+      -->
       <ion-col col-12 col-md-5>
-
-        <!-- profile -->
+        <!-- Basic Profile Info section -->
         <ion-card>
           <ion-item text-right>
             <button ion-button clear
@@ -139,7 +140,7 @@
           </p>
         </ion-card>
 
-        <!-- ICE -->
+        <!-- ICE section -->
         <ion-card>
           <ion-row>
             <ion-col col-9>
@@ -215,7 +216,10 @@
         </ion-card>
       </ion-col>
 
-      <!-- other parts -->
+      <!--
+        TO DO: Right Column to contain
+        Fitness Parameters and Activity Timeline
+      -->
       <ion-col col-12 col-md-7>
       </ion-col>
     </ion-row>
