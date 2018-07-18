@@ -27,10 +27,10 @@ import {
   User
 } from './../../models/user-model';
 
-import {
-  ModalRiskReleasePage
-} from '../modal-risk-release/modal-risk-release';
+import { ModalRiskReleasePage } from '../modal-risk-release/modal-risk-release';
 import { ViewMemberPage } from '../view-member/view-member';
+
+import { minLengthArrayValidator } from '../../validators/min-length-array-validator';
 
 
 /**
@@ -201,13 +201,13 @@ export class AddEditMemberPage {
     if (this.isEdit && this.pendingUser) {
       this.pendingUser.phoneNumbers.forEach(phoneNumber => {
         phoneNumbers.push({
-          number: new FormControl(phoneNumber.number, Validators.required),
+          number: new FormControl(phoneNumber.number),
           label: new FormControl(phoneNumber.label),
         });
       });
     } else {
       phoneNumbers.push({
-        number: new FormControl(null, Validators.required),
+        number: new FormControl(),
         label: new FormControl(),
       });
     }
@@ -218,7 +218,9 @@ export class AddEditMemberPage {
 
     const phoneNumbersFormArray =
       this.formBuilder.array(phoneNumbersFormGroup);
-    this.userInfoForm.setControl('phoneNumbers', phoneNumbersFormArray);
+      this.userInfoForm.setControl('phoneNumbers', phoneNumbersFormArray);
+      this.userInfoForm.get('phoneNumbers')
+        .setValidators(minLengthArrayValidator(1, 'number'));
   }
 
   /**
@@ -257,12 +259,12 @@ export class AddEditMemberPage {
       userObj.otherRemarks = formModel.otherRemarks;
 
       const newNumbers = formModel.phoneNumbers
-      .filter(
-        (phone: PhoneNumber) => phone.number,
-      )
-      .map(
-        (phone: PhoneNumber) => Object.assign({}, phone),
-      );
+        .filter(
+          (phone: PhoneNumber) => phone.number,
+        )
+        .map(
+          (phone: PhoneNumber) => Object.assign({}, phone),
+        );
 
       if (newNumbers)
         userObj.phoneNumbers = newNumbers;
@@ -373,6 +375,22 @@ export class AddEditMemberPage {
   }
 
   /**
+   * Called whenever the user enters a phone number.
+   * A new phone number field is only added when the user
+   * enters a number at the last phone number input field.
+   *
+   * @param index phoneNumber index in phoneNumbers FormArray
+   */
+  addNewPhoneNumber(index: number) {
+    if (index === (this.phoneNumbers.length - 1)) {
+      this.phoneNumbers.push(this.formBuilder.group({
+        number: new FormControl(),
+        label: new FormControl(),
+      }));
+    }
+  }
+
+  /**
    * Clicking the Risk Release card in the form opens this
    * modal containing the terms and conditions that the user
    * must first agree on.
@@ -436,8 +454,13 @@ export class AddEditMemberPage {
     if (!(formControl.invalid && formControl.touched))
       return null;
 
-    if (formControl.errors && formControl.errors.required)
-      return '*Required';
+    if (formControl.errors) {
+      if (formControl.errors.required)
+        return '*Required';
+
+      if (formControl.errors.minLengthError)
+        return formControl.errors.minLengthError.errorMsg;
+    }
 
     return null;
   }

@@ -118,12 +118,12 @@
               <ion-row [formGroupName]="i"
                 *ngFor="let phone of phoneNumbers.controls; let i = index;">
                 <ion-col col-12 col-sm-12 col-md-12 col-lg-6>
-                  <ion-item [ngClass]="{'has-error': getInputError('number', 'phoneNumbers', i)}">
-                    <ion-label floating>Phone*</ion-label>
-                    <ion-input type="text" formControlName="number"></ion-input>
+                  <ion-item [ngClass]="{'has-error': getInputError('phoneNumbers') && i === 0}">
+                    <ion-label floating>Phone<span *ngIf="i === 0">*</span></ion-label>
+                    <ion-input type="text" formControlName="number" (input)="addNewPhoneNumber(i)"></ion-input>
                   </ion-item>
                   <div padding-left class="input-error"
-                    [innerHTML]="getInputError('number', 'phoneNumbers', i)"></div>
+                    [innerHTML]="getInputError('phoneNumbers')" *ngIf="i === 0"></div>
                 </ion-col>
                 <ion-col col-12 col-sm-12 col-md-12 col-lg-6>
                   <ion-item>
