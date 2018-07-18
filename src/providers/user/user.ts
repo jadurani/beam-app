@@ -91,11 +91,17 @@ export class UserProvider {
    */
   getUsers(
     propertyName: string = 'dateJoined',
-    sortOrder: string = 'desc'
+    sortOrder: string = 'desc',
+    searchTerm: string = ''
   ): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.db.collection(this.USER_COLLECTION)
-        .orderBy(propertyName, sortOrder)
+      let userRef = this.db.collection(this.USER_COLLECTION);
+
+      if (searchTerm !== '') {
+        userRef = userRef.where('fullName', '==', searchTerm);
+      }
+
+      userRef.orderBy(propertyName, sortOrder)
         .get()
         .then(querySnapshot => {
           let usersArray = [];

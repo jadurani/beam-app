@@ -21,8 +21,12 @@
 
 <ion-content>
     <ion-card>
-      <ion-searchbar no-padding placeholder=
-      "Search"></ion-searchbar>
+      <ion-searchbar
+        no-padding
+        placeholder="Search by name"
+        [(ngModel)]="searchTerm"
+        [formControl]="searchControl"
+        (ionInput)="loading = true"></ion-searchbar>
 
       <ion-list class="user-list">
         <ion-item class="header">

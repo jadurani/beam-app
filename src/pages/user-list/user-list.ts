@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { IonicPage, ModalController, NavParams } from 'ionic-angular';
+import 'rxjs/add/operator/debounceTime';
 
 import { User } from './../../models/user-model';
 import { UserProvider } from '../../providers/user/user';
@@ -26,11 +28,13 @@ import { ModalAddUserPage } from '../modal-add-user/modal-add-user';
 })
 export class UserListPage {
   users: User[];
-  loading: boolean = true;
+  loading: boolean;
   addEditMemberPage: any;
   viewMemberPage: any;
   propertySortName: string;
   descOrder: boolean;
+  searchControl: FormControl;
+  searchTerm: string;
 
   // TO DO: Change to next payment date
   NEXT_PAYMENT_DATE: string = 'dateJoined';
@@ -44,11 +48,23 @@ export class UserListPage {
   ) {
     this.addEditMemberPage = AddEditMemberPage;
     this.viewMemberPage = ViewMemberPage;
+    this.searchControl = new FormControl();
+    this.searchTerm = '';
 
+    this.loading = true;
     this.descOrder = true;
     this.propertySortName = this.NEXT_PAYMENT_DATE;
+  }
 
+  ionViewDidLoad() {
     this.getUsers();
+
+    this.searchControl
+      .valueChanges
+      .debounceTime(700)
+      .subscribe(search => {
+        this.getUsers();
+      });
   }
 
   /**
@@ -56,15 +72,17 @@ export class UserListPage {
    */
   getUsers(): void {
     let sortOrder = this.descOrder ? this.DESCENDING_ORDER : this.ASCENDING_ORDER;
-    this.userProvider.getUsers(this.propertySortName, sortOrder)
-      .then(users => {
-        this.users = users;
-        this.loading = false;
-      })
-      .catch((error) => {
-        console.log(error);
-        this.loading = false;
-      });
+    this.userProvider.getUsers(
+      this.propertySortName, sortOrder, this.searchTerm
+    )
+    .then(users => {
+      this.users = users;
+      this.loading = false;
+    })
+    .catch((error) => {
+      console.log(error);
+      this.loading = false;
+    });
   }
 
   /**
