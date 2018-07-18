@@ -20,47 +20,56 @@
 </ion-header>
 
 <ion-content>
-  <ng-container *ngIf="!loading">
     <ion-card>
       <ion-searchbar no-padding placeholder=
       "Search"></ion-searchbar>
+
       <ion-list class="user-list">
-        <ng-container *ngIf="users && users.length > 0">
-          <ion-item class="header">
-            <span class="col-lg-4 col-md-6 col-sm-6 col-xs-12">Name</span>
-            <span class="col-lg-4 hide-md hide-sm hide-xs">Contact Number</span>
-            <span class="col-lg-4 col-md-6 col-sm-6 hide-xs">Next Payment Date <ion-icon small name="arrow-down"></ion-icon></span>
-          </ion-item>
-          <!-- <button ion-item class="user-list-item" *ngFor="let user of users" (click)="showUserDetails(user)"> -->
-          <button ion-item class="user-list-item"
-            *ngFor="let user of users"
-            [navPush]="viewMemberPage"
-            [navParams]="{'user': user}">
-            <span class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
-              {{ user.fullName }}
-            </span>
-            <span class="col-lg-4 hide-md hide-sm hide-xs">{{user.phoneNumber}}</span>
-            <span class="col-lg-4 col-md-6 col-sm-6 hide-xs">{{user.dateJoined | date:'d MMM yyyy'}}</span>
-          </button>
-        </ng-container>
-        <ion-item *ngIf="users && users.length === 0">
-          <div class="info-message">
-            No users available. Add one now.
-          </div>
+        <ion-item class="header">
+          <span class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+            Name
+          </span>
+          <span class="col-lg-4 hide-md hide-sm hide-xs">
+            Contact Number
+          </span>
+          <span class="col-lg-4 col-md-6 col-sm-6 hide-xs" (click)="sortBy(NEXT_PAYMENT_DATE)">
+            Next Payment Date
+            <ion-icon small name="arrow-down" *ngIf="descOrder"></ion-icon>
+            <ion-icon small name="arrow-up" *ngIf="!descOrder"></ion-icon>
+          </span>
         </ion-item>
+
+        <ng-container *ngIf="!loading">
+          <ng-container *ngIf="users && users.length > 0">
+            <!-- <button ion-item class="user-list-item" *ngFor="let user of users" (click)="showUserDetails(user)"> -->
+            <button ion-item class="user-list-item"
+              *ngFor="let user of users"
+              [navPush]="viewMemberPage"
+              [navParams]="{'user': user}">
+              <span class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                {{ user.fullName }}
+              </span>
+              <span class="col-lg-4 hide-md hide-sm hide-xs">{{user.phoneNumber}}</span>
+              <span class="col-lg-4 col-md-6 col-sm-6 hide-xs">{{user.dateJoined | date:'d MMM yyyy'}}</span>
+            </button>
+          </ng-container>
+          <ion-item *ngIf="users && users.length === 0">
+            <div class="info-message">
+              No users available. Add one now.
+            </div>
+          </ion-item>
+        </ng-container>
+        <div *ngIf="loading">
+          <div class="spinner">
+            <ion-spinner></ion-spinner>
+          </div>
+        </div>
       </ion-list>
     </ion-card>
 
-    <ion-fab padding right bottom>
-      <button ion-fab color="primary" [navPush]="addEditMemberPage">
-        <ion-icon name="add"></ion-icon>
-      </button>
-    </ion-fab>
-  </ng-container>
-
-  <ng-container *ngIf="loading">
-    <div class="spinner">
-      <ion-spinner></ion-spinner>
-    </div>
-  </ng-container>
+  <ion-fab padding right bottom>
+    <button ion-fab color="primary" [navPush]="addEditMemberPage">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>

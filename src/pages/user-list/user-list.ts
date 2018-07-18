@@ -29,6 +29,13 @@ export class UserListPage {
   loading: boolean = true;
   addEditMemberPage: any;
   viewMemberPage: any;
+  propertySortName: string;
+  descOrder: boolean;
+
+  // TO DO: Change to next payment date
+  NEXT_PAYMENT_DATE: string = 'dateJoined';
+  ASCENDING_ORDER: string = 'asc';
+  DESCENDING_ORDER: string = 'desc';
 
   constructor(
     public modalCtrl: ModalController,
@@ -37,6 +44,10 @@ export class UserListPage {
   ) {
     this.addEditMemberPage = AddEditMemberPage;
     this.viewMemberPage = ViewMemberPage;
+
+    this.descOrder = true;
+    this.propertySortName = this.NEXT_PAYMENT_DATE;
+
     this.getUsers();
   }
 
@@ -44,7 +55,8 @@ export class UserListPage {
    * Load all the users from the database.
    */
   getUsers(): void {
-    this.userProvider.getUsers()
+    let sortOrder = this.descOrder ? this.DESCENDING_ORDER : this.ASCENDING_ORDER;
+    this.userProvider.getUsers(this.propertySortName, sortOrder)
       .then(users => {
         this.users = users;
         this.loading = false;
@@ -140,5 +152,17 @@ export class UserListPage {
     });
 
     userModal.present();
+  }
+
+  /**
+   * Reloads the user list every time the sort function is called.
+   *
+   * @param propertyName The User property we're sorting the user list on
+   */
+  sortBy(propertyName: string) {
+    this.loading = true;
+    this.descOrder = propertyName === this.propertySortName ? !this.descOrder : true;
+    this.propertySortName = propertyName;
+    this.getUsers();
   }
 }

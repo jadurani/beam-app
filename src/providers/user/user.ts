@@ -82,18 +82,20 @@ export class UserProvider {
   /**
    * @method UserProvider.getUsers
    * @description
-   * Query all the users from database if !useCache
+   * Query all the users and order them by `propertyName`
+   * (see schema for `users` document for possible values)
+   * by `sortOrder` (possible values: 'desc', 'asc').
    *
-   * @param useCache {boolean}
+   * @param propertyName {string}
+   * @param sortOrder {string}
    */
-  getUsers(useCache: boolean = true): Promise<any> {
+  getUsers(
+    propertyName: string = 'dateJoined',
+    sortOrder: string = 'desc'
+  ): Promise<any> {
     return new Promise((resolve, reject) => {
-      if (useCache && this.usersList){
-        resolve(this.usersList);
-        return;
-      }
-
       this.db.collection(this.USER_COLLECTION)
+        .orderBy(propertyName, sortOrder)
         .get()
         .then(querySnapshot => {
           let usersArray = [];
