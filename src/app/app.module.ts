@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { MyApp } from './app.component';
 import { SmallSelectComponent } from './../components/small-select/small-select';
 import { PersonalInfoComponent } from './../components/personal-info/personal-info';
+import { ContactIceComponent } from './../components/contact-ice/contact-ice';
 
 // Pages
 import { AddEditMemberPage } from '../pages/add-edit-member/add-edit-member';
@@ -39,6 +40,8 @@ import { firebaseConfig } from '../environments/environment';
 @NgModule({
   declarations: [
     MyApp,
+    ContactIceComponent,
+    PersonalInfoComponent,
     SmallSelectComponent,
     AddEditMemberPage,
     HomePage,
@@ -48,7 +51,6 @@ import { firebaseConfig } from '../environments/environment';
     ModalEditUserPage,
     ModalRiskReleasePage,
     ModalUserDetailsPage,
-    PersonalInfoComponent,
     SignUpPage,
     UserListPage,
     ViewMemberPage,
