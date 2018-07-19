@@ -1,14 +1,4 @@
 page-view-member {
-
-    ion-avatar > img {
-        border-radius: 50%;
-        box-shadow: 0 0 2px grey;
-        margin: auto;
-        width: 150px;
-        height: auto;
-        z-index: 1;
-    }
-
     .horizontal-rule {
         border-bottom: 1px solid #eee;
     }
@@ -16,17 +6,6 @@ page-view-member {
     .ion-icon:before, .ion-icon::before {
         opacity: 0.5;
     }
-
-    .collapsible-details {
-        max-height: 0;
-        overflow: hidden;
-
-        transition: max-height 500ms;
-        &.expanded {
-            max-height: 200px;
-        }
-    }
-
 
     .spinner {
         position: fixed;

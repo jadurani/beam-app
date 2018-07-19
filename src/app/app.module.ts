@@ -8,6 +8,7 @@ import { ReactiveFormsModule } from "@angular/forms";
 // Components
 import { MyApp } from './app.component';
 import { SmallSelectComponent } from './../components/small-select/small-select';
+import { PersonalInfoComponent } from './../components/personal-info/personal-info';
 
 // Pages
 import { AddEditMemberPage } from '../pages/add-edit-member/add-edit-member';
@@ -47,6 +48,7 @@ import { firebaseConfig } from '../environments/environment';
     ModalEditUserPage,
     ModalRiskReleasePage,
     ModalUserDetailsPage,
+    PersonalInfoComponent,
     SignUpPage,
     UserListPage,
     ViewMemberPage,

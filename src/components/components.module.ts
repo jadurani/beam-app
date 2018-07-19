@@ -1,8 +1,11 @@
 import { NgModule } from '@angular/core';
 import { SmallSelectComponent } from './small-select/small-select';
+import { PersonalInfoComponent } from './personal-info/personal-info';
 @NgModule({
-	declarations: [SmallSelectComponent],
+	declarations: [SmallSelectComponent,
+    PersonalInfoComponent],
 	imports: [],
-	exports: [SmallSelectComponent]
+	exports: [SmallSelectComponent,
+    PersonalInfoComponent]
 })
 export class ComponentsModule {}
