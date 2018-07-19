@@ -300,7 +300,7 @@ export class ModalAddBodyInfoPage {
     const formModel = this.addBodyInfoForm.value;
     const newUserBodyInfo: UserBodyInfo = {
       uid: this.user.id,
-      dateTaken: formModel.dateTaken,
+      dateTaken: this.dateProvider.stringToDate(formModel.dateTaken),
       trueAge: formModel.trueAge,
       weight: formModel.weight,
       height: formModel.height,

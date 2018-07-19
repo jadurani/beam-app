@@ -117,6 +117,7 @@ export class UserProvider {
           resolve(this.usersList);
         })
         .catch((error: any) => {
+          console.log(error);
           reject(error);
         });
     });
@@ -247,6 +248,7 @@ export class UserProvider {
 
     if (userObj.dateOfBirth)
       user.dateOfBirth = this.dateProvider.firebaseDateToDate(userObj.dateOfBirth);
+
     if (userObj.phoneNumbers) user.phoneNumbers = userObj.phoneNumbers;
     if (userObj.address) user.address = userObj.address;
 

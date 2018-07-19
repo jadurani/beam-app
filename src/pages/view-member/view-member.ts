@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, ModalController, NavController, NavParams } from 'ionic-angular';
 
 import { AddEditMemberPage } from '../add-edit-member/add-edit-member';
+import { ModalAddBodyInfoPage } from '../modal-add-body-info/modal-add-body-info';
+
 import { User } from './../../models/user-model';
 import { UserProvider } from '../../providers/user/user';
 
@@ -18,6 +20,7 @@ export class ViewMemberPage {
   user: User;
 
   constructor(
+    private modalCtrl: ModalController,
     public navCtrl: NavController,
     public navParams: NavParams,
     private userProvider: UserProvider
@@ -42,6 +45,7 @@ export class ViewMemberPage {
         this.loading = false;
       })
       .catch(error => {
+        console.log(error);
         this.loading = false;
       });
   }
@@ -51,6 +55,19 @@ export class ViewMemberPage {
    */
   profileToggle() {
     this.profileExpanded = !this.profileExpanded;
+  }
+
+  /**
+   * Opens modal to add a new record for
+   * Member's Fitness Parameters
+   *
+   * @param userToEdit {User}
+   */
+  addFitnessParams(userToEdit: User) {
+    const addBodyInfoModal = this.modalCtrl.create(
+      ModalAddBodyInfoPage, { userToEdit }
+    );
+    addBodyInfoModal.present();
   }
 }
 

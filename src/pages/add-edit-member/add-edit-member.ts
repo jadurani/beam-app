@@ -249,7 +249,7 @@ export class AddEditMemberPage {
       userObj.prefix = formModel.prefix;
       userObj.sex = formModel.sex;
       userObj.dateOfBirth =
-      this.dateProvider.stringToDate(formModel.dateOfBirth);
+        this.dateProvider.stringToDate(formModel.dateOfBirth);
 
       if (formModel.socialMedia)
       userObj.socialMedia = formModel.socialMedia;
