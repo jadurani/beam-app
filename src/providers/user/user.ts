@@ -4,7 +4,8 @@ import { User, UserBodyInfo } from './../../models/user-model';
 import { DateProvider } from './../../providers/date/date';
 import { AuthProvider } from './../../providers/auth/auth';
 
-import * as firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/firestore';
 
 
 /**

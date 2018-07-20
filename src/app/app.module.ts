@@ -35,7 +35,7 @@ import { DateProvider } from '../providers/date/date';
 import { UserProvider } from '../providers/user/user';
 
 // Backend Config
-import * as firebase from 'firebase';
+import firebase from 'firebase/app';
 import { firebaseConfig } from '../environments/environment';
 
 @NgModule({
