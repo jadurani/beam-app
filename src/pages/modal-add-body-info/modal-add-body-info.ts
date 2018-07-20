@@ -3,7 +3,7 @@ import {
   IonicPage,
   NavParams,
   ToastController,
-  ViewController
+  ViewController,
 } from 'ionic-angular';
 import {
   FormBuilder,
@@ -15,6 +15,7 @@ import { DateProvider } from './../../providers/date/date';
 import { User, UserBodyInfo } from './../../models/user-model';
 
 import { UserProvider } from '../../providers/user/user';
+import { BodyInfoProvider } from '../../providers/body-info/body-info';
 
 
 @IonicPage()
@@ -30,6 +31,7 @@ export class ModalAddBodyInfoPage {
     private formBuilder: FormBuilder,
     private toastCtrl: ToastController,
     private navParams: NavParams,
+    private bodyInfoProvider: BodyInfoProvider,
     private dateProvider: DateProvider,
     private userProvider: UserProvider,
     private viewCtrl: ViewController,
@@ -69,20 +71,38 @@ export class ModalAddBodyInfoPage {
     });
   }
 
+  /**
+   * First attempt to save newBodyInfo in the `userBodyInfo`
+   * collection before updating the most recent bodyInfo
+   * stored in the individual `user` document.
+   *
+   * @param newUserBodyInfo
+   */
+  async _saveToDatabase(newUserBodyInfo: UserBodyInfo) {
+    await this.bodyInfoProvider.addBodyInfo(newUserBodyInfo);
+
+    // This is to avoid auto-updating the fitness
+    // parameters section even when this modal
+    // hasn't been closed yet.
+    const userCopy = Object.assign({}, this.user);
+    userCopy.bodyInfo = newUserBodyInfo;
+    await this.userProvider.updateUser(userCopy);
+  }
+
   save() {
     if (this.addBodyInfoForm.invalid) return;
 
-    this._prepareBodyInfo();
+    const newUserBodyInfo = this._prepareBodyInfo();
     let toast = this.toastCtrl.create({
       message: 'Recording new fitness parameters...',
       position: 'bottom',
     });
     toast.present();
 
-    this.userProvider.addBodyInfo(this.user)
-      .then(updatedUser => {
+    this._saveToDatabase(newUserBodyInfo)
+      .then(() => {
         toast.dismiss();
-        this.viewCtrl.dismiss(updatedUser);
+        this.viewCtrl.dismiss(newUserBodyInfo);
       })
       .catch(error => {
         toast.dismiss();
@@ -90,7 +110,7 @@ export class ModalAddBodyInfoPage {
         toast = this.toastCtrl.create({
           message: error.message || 'Server Error. Try again later',
           position: 'bottom',
-          duration: 3000,
+          duration: 5000,
         });
         toast.present();
       });
@@ -296,7 +316,7 @@ export class ModalAddBodyInfoPage {
     return null;
   }
 
-  private _prepareBodyInfo () {
+  private _prepareBodyInfo(): UserBodyInfo {
     const formModel = this.addBodyInfoForm.value;
     const newUserBodyInfo: UserBodyInfo = {
       uid: this.user.id,
@@ -312,6 +332,6 @@ export class ModalAddBodyInfoPage {
       subcutaneousMeasurements: Object.assign({}, formModel.subcutaneousMeasurements),
       skeletalMeasurements: Object.assign({}, formModel.skeletalMeasurements)
     };
-    this.user.bodyInfo = newUserBodyInfo;
+    return newUserBodyInfo;
   }
 }

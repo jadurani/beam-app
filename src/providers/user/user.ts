@@ -16,20 +16,21 @@ import 'firebase/firestore';
  */
 @Injectable()
 export class UserProvider {
-  db: any;
+  userRef: any;
   currentUser: User;
   usersList : User[];
   USER_COLLECTION: string = 'users';
-  BODYINFO_COLLECTION: string = 'userBodyInfo';
 
   constructor(
     private dateProvider: DateProvider,
     private authProvider: AuthProvider,
   ) {
-    this.db = firebase.firestore();
-    this.db.settings({
+    const db = firebase.firestore();
+    db.settings({
       timestampsInSnapshots: true,
     });
+
+    this.userRef = db.collection(this.USER_COLLECTION);
   }
 
   /**
@@ -45,7 +46,7 @@ export class UserProvider {
       return;
     }
 
-    this.db.collection(this.USER_COLLECTION)
+    this.userRef
       .where('authId', '==', authCurrentUser.uid)
       .get()
       .then((querySnapshot) => {
@@ -96,7 +97,7 @@ export class UserProvider {
     searchTerm: string = ''
   ): Promise<any> {
     return new Promise((resolve, reject) => {
-      let userRef = this.db.collection(this.USER_COLLECTION);
+      let userRef = this.userRef;
 
       if (searchTerm !== '') {
         userRef = userRef.where('fullName', '==', searchTerm);
@@ -134,7 +135,7 @@ export class UserProvider {
    */
   getUserById(userId: string): Promise<User> {
     return new Promise((resolve, reject) => {
-      this.db.collection(this.USER_COLLECTION)
+      this.userRef
       .doc(userId)
       .get()
       .then(doc => {
@@ -161,7 +162,8 @@ export class UserProvider {
    */
   updateUser(user: User): Promise<any> {
     return new Promise ((resolve, reject) => {
-      this.db.collection(this.USER_COLLECTION)
+
+      this.userRef
         .doc(user.id)
         .update(user)
         .then(() => {
@@ -174,33 +176,9 @@ export class UserProvider {
     });
   }
 
-  addBodyInfo(user: User): Promise<any> {
-    return new Promise((resolve, reject) => {
-      if (!user.bodyInfo) {
-        reject('Enter Fitness Parameters to save!');
-        return;
-      }
-
-      this.updateUser(user)
-        .then(updatedUser => {
-          this.db.collection(this.BODYINFO_COLLECTION)
-            .add(user.bodyInfo)
-            .then(() => {
-              resolve(updatedUser);
-            })
-            .catch(error => {
-              reject(error);
-            });
-        })
-        .catch(error => {
-          reject(error);
-        });
-      });
-  }
-
   addUser(user: User): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.db.collection(this.USER_COLLECTION)
+      this.userRef
         .add(user)
         .then(docRef => {
           resolve(docRef.id);

@@ -31,6 +31,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 // Services / Providers
 import { AuthProvider } from '../providers/auth/auth';
+import { BodyInfoProvider } from '../providers/body-info/body-info';
 import { DateProvider } from '../providers/date/date';
 import { UserProvider } from '../providers/user/user';
 
@@ -84,7 +85,8 @@ import { firebaseConfig } from '../environments/environment';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     UserProvider,
     AuthProvider,
-    DateProvider
+    BodyInfoProvider,
+    DateProvider,
   ]
 })
 export class AppModule {
