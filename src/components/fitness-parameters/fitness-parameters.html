@@ -37,139 +37,151 @@
 
     <div class="horizontal-rule"></div>
 
-    <ng-container *ngIf="viewType === LIST_VIEW">
+    <div *ngIf="viewType === LIST_VIEW" class="body-info-container">
       <!-- Fitness Parameters -->
       <ion-row padding *ngIf="user.bodyInfo">
         <ion-item-group ion-col col-lg-6>
-          <ion-item>
-            <ion-label>Date Taken</ion-label>
-            <ion-label text-center>
-              {{ user.bodyInfo.dateTaken | date: 'd MMM yyyy' }}
-            </ion-label>
-          </ion-item>
+          <div class="info-group">
+            <ion-row>
+              <label class="info-label" ion-col>
+                Date Taken
+              </label>
+              <label ion-col text-center>
+                {{ user.bodyInfo.dateTaken | date: 'd MMM yyyy' }}
+              </label>
+            </ion-row>
+          </div>
 
-          <ion-item>
-            <ion-label>Age</ion-label>
-            <ion-label text-center>
-              {{ user.bodyInfo.trueAge }}
-            </ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label>Body Age</ion-label>
-            <ion-label text-center>
-              {{ user.bodyInfo.bodyAge }}
-            </ion-label>
-          </ion-item>
+          <div class="info-group">
+            <ion-row>
+              <label ion-col class="info-label">Age</label>
+              <label ion-col text-center>
+                {{ user.bodyInfo.trueAge }}
+              </label>
+            </ion-row>
+            <ion-row>
+              <label ion-col class="info-label">Body Age</label>
+              <label ion-col text-center>
+                {{ user.bodyInfo.bodyAge }}
+              </label>
+            </ion-row>
+          </div>
 
-          <ion-item>
-            <ion-label>Height</ion-label>
-            <ion-label text-center>
-              {{ user.bodyInfo.height }}
-            </ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label>Weight</ion-label>
-            <ion-label text-center>
-              {{ user.bodyInfo.weight }}
-            </ion-label>
-          </ion-item>
+          <div class="info-group">
+            <ion-row>
+              <label ion-col class="info-label">Height</label>
+              <label ion-col text-center>
+                {{ user.bodyInfo.height }}
+              </label>
+            </ion-row>
+            <ion-row>
+              <label ion-col class="info-label">Weight</label>
+              <label ion-col text-center>
+                {{ user.bodyInfo.weight }}
+              </label>
+            </ion-row>
+          </div>
 
-          <ion-item>
-            <ion-label>Visceral Fat Rating</ion-label>
-            <ion-label text-center>
-              {{ user.bodyInfo.visceralFatRating }}
-            </ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label>Resting Metabolism</ion-label>
-            <ion-label text-center>
-              {{ user.bodyInfo.restingMetabolism }}
-            </ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label>Body Mass Index</ion-label>
-            <ion-label text-center>
-              {{ user.bodyInfo.bmi }}
-            </ion-label>
-          </ion-item>
+          <div class="info-group">
+            <ion-row>
+              <label ion-col class="info-label">Visceral Fat Rating</label>
+              <label ion-col text-center>
+                {{ user.bodyInfo.visceralFatRating }}
+              </label>
+            </ion-row>
+            <ion-row>
+              <label ion-col class="info-label">Resting Metabolism</label>
+              <label ion-col text-center>
+                {{ user.bodyInfo.restingMetabolism }}
+              </label>
+            </ion-row>
+            <ion-row>
+              <label ion-col class="info-label">Body Mass Index</label>
+              <label ion-col text-center>
+                {{ user.bodyInfo.bmi }}
+              </label>
+            </ion-row>
+          </div>
         </ion-item-group>
         <ion-item-group ion-col col-lg-6>
-          <ion-item>
-            <ion-label>% Body Fat</ion-label>
-            <ion-label text-center>
-              {{ user.bodyInfo.percBodyFat }}
-            </ion-label>
-          </ion-item>
+          <div class="info-group">
+            <ion-row>
+              <label ion-col class="info-label">% Body Fat</label>
+              <label ion-col text-center>
+                {{ user.bodyInfo.percBodyFat }}
+              </label>
+            </ion-row>
+          </div>
 
-          <ion-item-group>
-            <ion-item>
-              <ion-label>% Subcutaneous Fat</ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-label text-center>Total</ion-label>
-              <ion-label text-center>
+          <div class="info-group">
+            <ion-row>
+              <label ion-col class="info-label">% Subcutaneous Fat</label>
+            </ion-row>
+            <ion-row>
+              <label ion-col text-center>Total</label>
+              <label ion-col text-center>
                 {{ user.bodyInfo.subCutFatTotal }}
-              </ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-label text-center>Trunk</ion-label>
-              <ion-label text-center>
+              </label>
+            </ion-row>
+            <ion-row>
+              <label ion-col text-center>Trunk</label>
+              <label ion-col text-center>
                 {{ user.bodyInfo.subCutFatTrunk }}
-              </ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-label text-center>Arms</ion-label>
-              <ion-label text-center>
+              </label>
+            </ion-row>
+            <ion-row>
+              <label ion-col text-center>Arms</label>
+              <label ion-col text-center>
                 {{ user.bodyInfo.subCutFatArms }}
-              </ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-label text-center>Legs</ion-label>
-              <ion-label text-center>
+              </label>
+            </ion-row>
+            <ion-row>
+              <label ion-col text-center>Legs</label>
+              <label ion-col text-center>
                 {{ user.bodyInfo.subCutFatLegs }}
-              </ion-label>
-            </ion-item>
-          </ion-item-group>
+              </label>
+            </ion-row>
+          </div>
 
-          <ion-item-group>
-            <ion-item>
-              <ion-label>% Skeletal Muscle</ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-label text-center>Total</ion-label>
-              <ion-label text-center>
+          <div class="info-group">
+            <ion-row>
+              <label ion-col class="info-label">% Skeletal Muscle</label>
+            </ion-row>
+            <ion-row>
+              <label ion-col text-center>Total</label>
+              <label ion-col text-center>
                 {{ user.bodyInfo.skeletalMuscleTotal }}
-              </ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-label text-center>Trunk</ion-label>
-              <ion-label text-center>
+              </label>
+            </ion-row>
+            <ion-row>
+              <label ion-col text-center>Trunk</label>
+              <label ion-col text-center>
                 {{ user.bodyInfo.skeletalMuscleTrunk }}
-              </ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-label text-center>Arms</ion-label>
-              <ion-label text-center>
+              </label>
+            </ion-row>
+            <ion-row>
+              <label ion-col text-center>Arms</label>
+              <label ion-col text-center>
                 {{ user.bodyInfo.skeletalMuscleArms }}
-              </ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-label text-center>Legs</ion-label>
-              <ion-label text-center>
+              </label>
+            </ion-row>
+            <ion-row>
+              <label ion-col text-center>Legs</label>
+              <label ion-col text-center>
                 {{ user.bodyInfo.skeletalMuscleLegs }}
-              </ion-label>
-            </ion-item>
-          </ion-item-group>
+              </label>
+            </ion-row>
+          </div>
 
         </ion-item-group>
       </ion-row>
 
       <ion-row *ngIf="!user.bodyInfo">
-        <ion-label text-wrap text-center>
+        <label ion-col text-wrap text-center>
           Fitness Parameters tell you how fit you are. Record your fitness parameters now!
-        </ion-label>
+        </label>
       </ion-row>
-    </ng-container>
+    </div>
 
     <ng-container *ngIf="viewType === CHART_VIEW">
       <fitness-parameters-chart-view [user]="user"></fitness-parameters-chart-view>
