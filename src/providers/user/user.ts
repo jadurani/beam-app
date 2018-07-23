@@ -244,8 +244,14 @@ export class UserProvider {
           restingMetabolism: userObj.bodyInfo.restingMetabolism,
           bodyAge: userObj.bodyInfo.bodyAge,
           bmi: userObj.bodyInfo.bmi,
-          subcutaneousMeasurements: Object.assign({}, userObj.bodyInfo.subcutaneousMeasurements),
-          skeletalMeasurements: Object.assign({}, userObj.bodyInfo.skeletalMeasurements)
+          subCutFatArms: userObj.bodyInfo.subCutFatArms,
+          subCutFatLegs: userObj.bodyInfo.subCutFatLegs,
+          subCutFatTotal: userObj.bodyInfo.subCutFatTotal,
+          subCutFatTrunk: userObj.bodyInfo.subCutFatTrunk,
+          skeletalMuscleArms: userObj.bodyInfo.skeletalMuscleArms,
+          skeletalMuscleLegs: userObj.bodyInfo.skeletalMuscleLegs,
+          skeletalMuscleTotal: userObj.bodyInfo.skeletalMuscleTotal,
+          skeletalMuscleTrunk: userObj.bodyInfo.skeletalMuscleTrunk,
         };
         user.bodyInfo = userBodyInfo;
       }

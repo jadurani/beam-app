@@ -94,8 +94,14 @@ export class BodyInfoProvider {
       restingMetabolism: bodyInfoObj.restingMetabolism,
       bodyAge: bodyInfoObj.bodyAge,
       bmi: bodyInfoObj.bmi,
-      subcutaneousMeasurements: Object.assign({}, bodyInfoObj.subcutaneousMeasurements),
-      skeletalMeasurements: Object.assign({}, bodyInfoObj.skeletalMeasurements)
+      subCutFatTotal: bodyInfoObj.subCutFatTotal,
+      subCutFatTrunk: bodyInfoObj.subCutFatTrunk,
+      subCutFatArms: bodyInfoObj.subCutFatArms,
+      subCutFatLegs: bodyInfoObj.subCutFatLegs,
+      skeletalMuscleTotal: bodyInfoObj.skeletalMuscleTotal,
+      skeletalMuscleTrunk: bodyInfoObj.skeletalMuscleTrunk,
+      skeletalMuscleArms: bodyInfoObj.skeletalMuscleArms,
+      skeletalMuscleLegs: bodyInfoObj.skeletalMuscleLegs,
     };
     return bodyInfo;
   }

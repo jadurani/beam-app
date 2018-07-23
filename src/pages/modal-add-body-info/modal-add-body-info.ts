@@ -329,9 +329,16 @@ export class ModalAddBodyInfoPage {
       restingMetabolism: formModel.restingMetabolism,
       bodyAge: formModel.bodyAge,
       bmi: formModel.bmi,
-      subcutaneousMeasurements: Object.assign({}, formModel.subcutaneousMeasurements),
-      skeletalMeasurements: Object.assign({}, formModel.skeletalMeasurements)
+      subCutFatTotal: formModel.subcutaneousMeasurements.total,
+      subCutFatTrunk: formModel.subcutaneousMeasurements.trunk,
+      subCutFatArms: formModel.subcutaneousMeasurements.arms,
+      subCutFatLegs: formModel.subcutaneousMeasurements.legs,
+      skeletalMuscleTotal: formModel.skeletalMeasurements.total,
+      skeletalMuscleTrunk: formModel.skeletalMeasurements.trunk,
+      skeletalMuscleArms: formModel.skeletalMeasurements.arms,
+      skeletalMuscleLegs: formModel.skeletalMeasurements.legs
     };
+
     return newUserBodyInfo;
   }
 }

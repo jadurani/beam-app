@@ -53,19 +53,29 @@ export interface UserBodyInfo {
     bmi: number;
     bodyAge: number;
 
-    subcutaneousMeasurements: {
+    subcutaneousMeasurements?: {
         total: number,
         trunk: number,
         arms: number,
         legs: number
     };
 
-    skeletalMeasurements: {
+    skeletalMeasurements?: {
         total: number,
         trunk: number,
         arms: number,
         legs: number
     };
+
+    subCutFatArms?: number,
+    subCutFatLegs?: number,
+    subCutFatTotal?: number,
+    subCutFatTrunk?: number,
+
+    skeletalMuscleArms?: number,
+    skeletalMuscleLegs?: number,
+    skeletalMuscleTotal?: number,
+    skeletalMuscleTrunk?: number
 }
 
 export interface PhoneNumber {
