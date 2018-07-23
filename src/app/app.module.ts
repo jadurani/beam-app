@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { MyApp } from './app.component';
 import { ContactIceComponent } from './../components/contact-ice/contact-ice';
 import { FitnessParametersComponent } from './../components/fitness-parameters/fitness-parameters';
+import { FitnessParametersChartViewComponent } from './../components/fitness-parameters-chart-view/fitness-parameters-chart-view';
 import { PersonalInfoComponent } from './../components/personal-info/personal-info';
 import { SmallSelectComponent } from './../components/small-select/small-select';
 
@@ -44,6 +45,7 @@ import { firebaseConfig } from '../environments/environment';
     MyApp,
     ContactIceComponent,
     FitnessParametersComponent,
+    FitnessParametersChartViewComponent,
     PersonalInfoComponent,
     SmallSelectComponent,
     AddEditMemberPage,

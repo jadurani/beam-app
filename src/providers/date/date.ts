@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import moment from 'moment';
 
 
 /**
@@ -22,5 +23,9 @@ export class DateProvider {
 
   getAgeToday(dateOfBirth : Date) : number {
     return this.dateNow().getFullYear() - dateOfBirth.getFullYear();
+  }
+
+  getDateChartLabel(date: Date): string {
+    return moment(date).format('D MMM YYYY');
   }
 }

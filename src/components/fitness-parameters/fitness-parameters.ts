@@ -13,12 +13,17 @@ import { ModalAddBodyInfoPage } from '../../pages/modal-add-body-info/modal-add-
 })
 export class FitnessParametersComponent {
   @Input() user: User;
-
+  viewType: string;
+  bodyInfoArray: any;
+  LIST_VIEW: string = 'list';
+  CHART_VIEW: string = 'chart';
 
   constructor(
     private bodyInfoProvider: BodyInfoProvider,
     private modalCtrl: ModalController,
-  ) {}
+  ) {
+    this.viewType = this.LIST_VIEW;
+  }
 
   /**
    * Opens modal to add a new record for
@@ -38,10 +43,18 @@ export class FitnessParametersComponent {
   }
 
   getAllBodyInfoForUser() {
-    let bodyInfoArray;
     this.bodyInfoProvider.getAllBodyInfoForUser(this.user)
       .then(bodyInfoList => {
-        bodyInfoArray = bodyInfoList;
+        this.bodyInfoArray = bodyInfoList;
       });
+  }
+
+  getListView() {
+    this.viewType = this.LIST_VIEW;
+  }
+
+  getChartView() {
+    this.getAllBodyInfoForUser();
+    this.viewType = this.CHART_VIEW;
   }
 }
