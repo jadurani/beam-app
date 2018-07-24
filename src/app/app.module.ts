@@ -39,6 +39,7 @@ import { UserProvider } from '../providers/user/user';
 // Backend Config
 import firebase from 'firebase/app';
 import { firebaseConfig } from '../environments/environment';
+import { FileProvider } from '../providers/file/file';
 
 @NgModule({
   declarations: [
@@ -85,10 +86,11 @@ import { firebaseConfig } from '../environments/environment';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    UserProvider,
     AuthProvider,
     BodyInfoProvider,
     DateProvider,
+    FileProvider,
+    UserProvider,
   ]
 })
 export class AppModule {
