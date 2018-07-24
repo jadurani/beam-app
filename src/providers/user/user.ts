@@ -162,7 +162,6 @@ export class UserProvider {
    */
   updateUser(user: User): Promise<any> {
     return new Promise ((resolve, reject) => {
-
       this.userRef
         .doc(user.id)
         .update(user)

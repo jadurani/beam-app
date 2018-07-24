@@ -25,9 +25,10 @@
           <ion-list no-lines>
             <ion-row>
               <ion-col col-3 col-sm-2 col-md-3 col-lg-2 padding-top>
-                <div class="profile-image-container">
-                  <img class="profile-image" src="assets/imgs/unknown_person.png">
-                </div>
+                <label class="profile-image-container">
+                  <img class="profile-image" [src]="profileImageUrl">
+                  <input type="file" accept="image/*" (change)="imageChanged($event)">
+                </label>
               </ion-col>
               <ion-col col-9 col-sm-10 col-md-9 col-lg-10>
                 <ion-item [ngClass]="{'has-error': getInputError('nickname')}">

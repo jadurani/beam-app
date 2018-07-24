@@ -28,4 +28,8 @@ export class DateProvider {
   getDateChartLabel(date: Date): string {
     return moment(date).format('D MMM YYYY');
   }
+
+  getFileFormattedTimeNow(): string {
+    return moment().format('YYYY-MMM-D_HH_mm_ss');
+  }
 }

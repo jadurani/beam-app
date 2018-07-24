@@ -11,7 +11,7 @@
     </ion-item>
 
     <ion-avatar>
-      <img src="assets/imgs/unknown_person.png">
+      <img [src]="user.photoUrl ? user.photoUrl : 'assets/imgs/unknown_person.png'">
     </ion-avatar>
     <ion-item text-center padding-top>
       <ion-card-title>

@@ -23,23 +23,26 @@ page-add-edit-member {
             }
 
             .profile-image-container {
-                height: 50px;
-                margin: auto;
+                cursor: pointer;
+                overflow: hidden;
                 position: relative;
-                width: 50px;
 
                 .profile-image {
                     box-shadow: 0 0 2px grey;
                     border-radius: 50%;
-                    position: absolute;
+                    height: 50px;
+                    margin-left: auto;
+                    margin-right: auto;
+                    margin-top: 16px;
                     top: 16px;
+                    width: 50px;
                     z-index: 1;
                 }
 
-                .profile-image:hover {
-                    cursor: pointer;
-                    content: url('../assets/imgs/cam_upload_hover.png');
+                input[type=file] {
                     position: absolute;
+                    visibility: hidden;
+                    z-index: -1;
                 }
             }
 

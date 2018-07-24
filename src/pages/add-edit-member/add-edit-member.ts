@@ -20,6 +20,7 @@ import {
 } from '@angular/forms';
 
 import { DateProvider } from './../../providers/date/date';
+import { FileProvider } from '../../providers/file/file';
 import { UserProvider } from '../../providers/user/user';
 
 import {
@@ -49,9 +50,12 @@ export class AddEditMemberPage {
   isEdit: boolean = false;
   partToEdit: string;
   pendingUser: User;
+  profileImageUrl: string;
+  imageFile: File;
 
   constructor(
     private dateProvider: DateProvider,
+    private fileProvider: FileProvider,
     private formBuilder: FormBuilder,
     private navCtrl: NavController,
     private navParams: NavParams,
@@ -61,10 +65,13 @@ export class AddEditMemberPage {
   ) {
     this.isEdit = this.navParams.get('isEdit');
     this.partToEdit = this.navParams.get('partToEdit') || '';
+    this.profileImageUrl = 'assets/imgs/unknown_person.png';
     if (this.isEdit) {
       this.pendingUser = this.navParams.get('user');
       switch (this.partToEdit) {
         case 'basicInfo':
+          if (this.pendingUser.photoUrl)
+            this.profileImageUrl = this.pendingUser.photoUrl;
           this.editBasicInfoFormInit();
           break;
 
@@ -239,6 +246,7 @@ export class AddEditMemberPage {
       };
     } else {
       userObj = {
+        id: this.pendingUser.id,
         dateJoined: this.pendingUser.dateJoined,
         roles: this.pendingUser.roles,
       };
@@ -311,6 +319,52 @@ export class AddEditMemberPage {
   }
 
   /**
+   * EventListener. Fired whenever user selects an image.
+   * Previews the image without uploading it yet.
+   *
+   * @param $event
+   */
+  imageChanged($event) {
+    this.imageFile = $event.target.files[0];
+    if (!this.fileProvider.isImage(this.imageFile)) {
+      alert('Upload an image file type.');
+    }
+
+    let _this = this;
+    this.fileProvider.getDataAsURL(this.imageFile)
+      .then((newUrl:string) => {
+        _this.profileImageUrl = newUrl;
+      });
+  }
+
+  /**
+   * Uploads image. Stores the downloadUrl of the uploaded
+   * image as `photoUrl` of `userToSave`.
+   *
+   * @param userToSave
+   */
+  async _saveToDatabase(userToSave:User) {
+    if (this.imageFile) {
+      const timestamp = this.dateProvider.getFileFormattedTimeNow();
+      const name = userToSave.fullName.replace(/ /g, "_");
+      const imageFileName = `${timestamp}--${name}`;
+      const downloadUrl = await this.fileProvider
+       .uploadImage(this.imageFile, imageFileName);
+
+      userToSave.photoUrl = downloadUrl;
+    }
+
+    if (this.isEdit) {
+      await this.userProvider.updateUser(userToSave);
+    } else {
+      const newUserId = await this.userProvider.addUser(userToSave);
+      userToSave.id = newUserId;
+    }
+
+    return userToSave;
+  }
+
+  /**
    * Validates the form.
    * If the form is valid, a toaster is presented at the bottom
    * informing the user that the request to add a new member is
@@ -337,41 +391,22 @@ export class AddEditMemberPage {
     });
     toast.present();
 
-    if (this.isEdit) {
-      userToSave.id = this.pendingUser.id;
-
-      this.userProvider.updateUser(userToSave)
-        .then(updatedUser => {
-          toast.dismiss();
-          this.navCtrl.pop(updatedUser);
-        })
-        .catch(error => {
-          toast.dismiss();
-          toast = this.toastCtrl.create({
-            message: error.message || 'Server Error. Try again later',
-            position: 'bottom',
-            duration: 3000,
-          });
-          toast.present();
+    this._saveToDatabase(userToSave)
+      .then((userSaved:User) => {
+        toast.dismiss();
+        this.navCtrl.pop();
+        if (!this.isEdit)
+          this.navCtrl.push(ViewMemberPage, { 'user': userSaved });
+      })
+      .catch(error => {
+        toast.dismiss();
+        toast = this.toastCtrl.create({
+          message: error.message || 'Server Error. Try again later',
+          position: 'bottom',
+          duration: 3000,
         });
-    } else {
-      this.userProvider.addUser(userToSave)
-        .then(userId => {
-          toast.dismiss();
-          userToSave.id = userId;
-          this.navCtrl.pop();
-          this.navCtrl.push(ViewMemberPage, { 'user': userToSave });
-        })
-        .catch(error => {
-          toast.dismiss();
-          toast = this.toastCtrl.create({
-            message: error.message || 'Server Error. Try again later',
-            position: 'bottom',
-            duration: 3000,
-          });
-          toast.present();
-        });
-    }
+        toast.present();
+      });
   }
 
   /**
