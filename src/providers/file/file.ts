@@ -29,6 +29,12 @@ export class FileProvider {
 
   uploadImage(file:File, fileName:string): Promise<string> {
     return new Promise((resolve, reject) => {
+      if (!file) {
+        let errorMsg = 'No image file to save!';
+        console.log(errorMsg);
+        reject(errorMsg);
+      }
+
       const task = this.storageRef.child(`images/${fileName}`).put(file);
       task
         .then(snapshot => snapshot.ref.getDownloadURL())

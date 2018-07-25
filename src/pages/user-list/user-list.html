@@ -45,7 +45,6 @@
 
         <ng-container *ngIf="!loading">
           <ng-container *ngIf="users && users.length > 0">
-            <!-- <button ion-item class="user-list-item" *ngFor="let user of users" (click)="showUserDetails(user)"> -->
             <button ion-item class="user-list-item"
               *ngFor="let user of users"
               [navPush]="viewMemberPage"

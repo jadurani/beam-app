@@ -13,6 +13,8 @@ import { ModalEditUserPage } from '../modal-edit-user/modal-edit-user';
 import { ModalAddBodyInfoPage } from '../modal-add-body-info/modal-add-body-info';
 import { ModalAddUserPage } from '../modal-add-user/modal-add-user';
 
+import { SearchUserHelper } from './search-user-helper';
+
 /**
  * UserListPage
  *
@@ -28,13 +30,18 @@ import { ModalAddUserPage } from '../modal-add-user/modal-add-user';
 })
 export class UserListPage {
   users: User[];
-  loading: boolean;
+  unfilteredUserList: User[];
+
   addEditMemberPage: any;
   viewMemberPage: any;
+
   propertySortName: string;
   descOrder: boolean;
   searchControl: FormControl;
   searchTerm: string;
+  searchUserHelper: SearchUserHelper;
+
+  loading: boolean;
 
   // TO DO: Change to next payment date
   NEXT_PAYMENT_DATE: string = 'dateJoined';
@@ -44,9 +51,10 @@ export class UserListPage {
   constructor(
     public modalCtrl: ModalController,
     public navParams: NavParams,
-    public userProvider: UserProvider
+    private userProvider: UserProvider,
   ) {
     this.addEditMemberPage = AddEditMemberPage;
+    this.searchUserHelper = new SearchUserHelper();
     this.viewMemberPage = ViewMemberPage;
     this.searchControl = new FormControl();
     this.searchTerm = '';
@@ -62,9 +70,32 @@ export class UserListPage {
     this.searchControl
       .valueChanges
       .debounceTime(700)
-      .subscribe(search => {
-        this.getUsers();
+      .subscribe(() => {
+        this.searchTerm = this.searchTerm.trim();
+        if (this.searchTerm === '') {
+          this.users = this.unfilteredUserList;
+        } else {
+          let matchedUsers = this.searchUserHelper
+            .getMatches(this.searchTerm);
+          this.users = this._getFilteredUserList(matchedUsers);
+        }
+        this.loading = false;
       });
+  }
+
+  /**
+   * Gets all user instance that have matched the search term.
+   * @param matchedUsers
+   */
+  private _getFilteredUserList(matchedUsers) {
+    let filteredUserList = [];
+    matchedUsers.forEach(matchedUser => {
+      this.users.forEach(user => {
+        if (matchedUser.id === user.id)
+          filteredUserList.push(user);
+      });
+    });
+    return filteredUserList;
   }
 
   /**
@@ -73,10 +104,11 @@ export class UserListPage {
   getUsers(): void {
     let sortOrder = this.descOrder ? this.DESCENDING_ORDER : this.ASCENDING_ORDER;
     this.userProvider.getUsers(
-      this.propertySortName, sortOrder, this.searchTerm
+      this.propertySortName, sortOrder
     )
     .then(users => {
       this.users = users;
+      this.unfilteredUserList = users;
       this.loading = false;
     })
     .catch((error) => {
@@ -181,6 +213,19 @@ export class UserListPage {
     this.loading = true;
     this.descOrder = propertyName === this.propertySortName ? !this.descOrder : true;
     this.propertySortName = propertyName;
+
+    if (this.searchTerm) {
+      this.users.sort((userA, userB) => {
+        let userAName = userA.fullName.toUpperCase();
+        let userBName = userB.fullName.toUpperCase();
+        if (userAName < userBName) return this.descOrder ? 1 : -1;
+        if (userAName > userBName) return this.descOrder ? -1 : 1;
+        return 0;
+      });
+      this.loading = false;
+      return;
+    }
+
     this.getUsers();
   }
 }

@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 import { User, UserBodyInfo } from './../../models/user-model';
 
-import { DateProvider } from './../../providers/date/date';
 import { AuthProvider } from './../../providers/auth/auth';
-
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-
+import { DatabaseProvider } from '../database/database';
+import { DateProvider } from './../../providers/date/date';
+import { SearchProvider } from '../search/search';
 
 /**
  * UserProvider
@@ -22,15 +20,13 @@ export class UserProvider {
   USER_COLLECTION: string = 'users';
 
   constructor(
-    private dateProvider: DateProvider,
     private authProvider: AuthProvider,
+    private databaseProvider: DatabaseProvider,
+    private dateProvider: DateProvider,
+    private searchProvider: SearchProvider,
   ) {
-    const db = firebase.firestore();
-    db.settings({
-      timestampsInSnapshots: true,
-    });
-
-    this.userRef = db.collection(this.USER_COLLECTION);
+    this.userRef = this.databaseProvider
+      .getCollection(this.USER_COLLECTION);
   }
 
   /**
@@ -94,16 +90,9 @@ export class UserProvider {
   getUsers(
     propertyName: string = 'dateJoined',
     sortOrder: string = 'desc',
-    searchTerm: string = ''
   ): Promise<any> {
     return new Promise((resolve, reject) => {
-      let userRef = this.userRef;
-
-      if (searchTerm !== '') {
-        userRef = userRef.where('fullName', '==', searchTerm);
-      }
-
-      userRef.orderBy(propertyName, sortOrder)
+      this.userRef.orderBy(propertyName, sortOrder)
         .get()
         .then(querySnapshot => {
           let usersArray = [];
@@ -158,35 +147,72 @@ export class UserProvider {
    * get the User instance as object before passing it
    * to the database.
    *
+   * Also updates the SearchTerm/Indices for the User.
    * @param user {User}
    */
-  updateUser(user: User): Promise<any> {
-    return new Promise ((resolve, reject) => {
-      this.userRef
-        .doc(user.id)
-        .update(user)
-        .then(() => {
-          resolve(user);
-        })
-        .catch(error => {
-          console.log(error);
-          reject(error);
-        });
-    });
+  async updateUser(user: User): Promise<User> {
+    await this.userRef
+      .doc(user.id)
+      .update(user);
+
+    await this._addSearchKey(user.id, user.fullName, user.displayName);
+    return user;
   }
 
-  addUser(user: User): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this.userRef
-        .add(user)
-        .then(docRef => {
-          resolve(docRef.id);
-        })
-        .catch(error => {
-          reject(error);
-        });
-    });
+  /**
+   * @method UserProvider.updateUser
+   * @description
+   * Adds a new user.
+   *
+   * Also adds the SearchTerm/Indices for the User.
+   * @param user {User}
+   */
+  async addUser(user: User): Promise<string> {
+    const docRef = await this.userRef
+        .add(user);
+    const userId = docRef.id;
+
+    await this._addSearchKey(userId, user.fullName, user.displayName);
+    return userId;
   }
+
+  /**
+   * @method UserProvider.refreshSearchTerms
+   * @description
+   * Repopulate searchKeys with all the users' searchTerms.
+   *
+   * Ideally, Use only on DEV mode.
+   */
+  private async _refreshSearchTerms() {
+    let termSet = {};
+    this.usersList.forEach(user => {
+      termSet[user.id] = {
+        fullName: user.fullName,
+        displayName: user.displayName || '',
+      };
+    });
+
+    await this.searchProvider.addUserTerm(termSet);
+  }
+
+  /**
+   * @method UserProvider._addSearchKey
+   * @description
+   * Adds an individual searchKey into the `searchKeys` collection.
+   *
+   * @param id {User.id}
+   * @param fullName {User.fullName}
+   * @param displayName {User.displayName}
+   */
+  private async _addSearchKey(id: string, fullName:string, displayName:string) {
+    let userSearchTerm = {};
+    userSearchTerm[id] = {
+      fullName,
+      displayName,
+    };
+
+    await this.searchProvider.addUserTerm(userSearchTerm);
+  };
 
   // deactivateUser() {}
 
