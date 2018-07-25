@@ -52,7 +52,14 @@
               <span class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
                 {{ user.fullName }}
               </span>
-              <span class="col-lg-4 hide-md hide-sm hide-xs">{{user.phoneNumber}}</span>
+              <span class="col-lg-4 hide-md hide-sm hide-xs">
+                <ng-container *ngIf="user.phoneNumber">
+                  {{ user.phoneNumber }}
+                </ng-container>
+                <ng-container *ngIf="!user.phoneNumber && user.phoneNumbers && user.phoneNumbers[0]">
+                  {{ user.phoneNumbers[0].number }}
+                </ng-container>
+              </span>
               <span class="col-lg-4 col-md-6 col-sm-6 hide-xs">{{user.dateJoined | date:'d MMM yyyy'}}</span>
             </button>
           </ng-container>
