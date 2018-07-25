@@ -40,6 +40,8 @@ import { UserProvider } from '../providers/user/user';
 import firebase from 'firebase/app';
 import { firebaseConfig } from '../environments/environment';
 import { FileProvider } from '../providers/file/file';
+import { SearchProvider } from '../providers/search/search';
+import { DatabaseProvider } from '../providers/database/database';
 
 @NgModule({
   declarations: [
@@ -91,6 +93,8 @@ import { FileProvider } from '../providers/file/file';
     DateProvider,
     FileProvider,
     UserProvider,
+    SearchProvider,
+    DatabaseProvider,
   ]
 })
 export class AppModule {
