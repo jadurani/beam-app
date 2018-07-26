@@ -1,9 +1,13 @@
 fitness-parameters {
     .body-info-container {
         font-size: 16px;
-        padding-left: 16px;
-        padding-right: 16px;
-        padding-top: 16px;
+        padding: 16px;
+
+        .filler-image {
+            height: auto;
+            margin: auto;
+            max-width: 300px;
+        }
 
         .info-group {
             padding-bottom: 32px;

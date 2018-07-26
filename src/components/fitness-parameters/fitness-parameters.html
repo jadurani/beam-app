@@ -176,11 +176,23 @@
         </ion-item-group>
       </ion-row>
 
-      <ion-row *ngIf="!user.bodyInfo">
-        <label ion-col text-wrap text-center>
-          Fitness Parameters tell you how fit you are. Record your fitness parameters now!
-        </label>
-      </ion-row>
+      <ng-container *ngIf="!user.bodyInfo">
+        <ion-row margin-bottom>
+          <ion-col col-2>&nbsp;</ion-col>
+          <ion-col col-8 text-center>
+            <img class="filler-image" src='assets/imgs/muscle_man.png'>
+          </ion-col>
+          <ion-col col-2>&nbsp;</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-2>&nbsp;</ion-col>
+          <ion-col col-8 text-center>
+            Fitness Parameters tell you how fit you are.
+            <a (click)="addFitnessParams()">Record your fitness parameters now!</a>
+          </ion-col>
+          <ion-col col-2>&nbsp;</ion-col>
+        </ion-row>
+      </ng-container>
     </div>
 
     <ng-container *ngIf="viewType === CHART_VIEW">
