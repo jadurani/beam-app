@@ -1,33 +1,11 @@
-<ion-card-content>
-  <ion-slides #slides>
-    <ion-slide>
-      <canvas #ageCanvas></canvas>
-    </ion-slide>
-    <ion-slide>
-      <canvas #heightCanvas></canvas>
-    </ion-slide>
-    <ion-slide>
-      <canvas #weightAndBMICanvas></canvas>
-    </ion-slide>
-    <ion-slide>
-      <canvas #restingMetabolismCanvas></canvas>
-    </ion-slide>
-    <ion-slide>
-      <canvas #visceralFatRatingCanvas></canvas>
-    </ion-slide>
-    <ion-slide>
-      <canvas #fatPercentageCanvas></canvas>
-    </ion-slide>
-    <ion-slide>
-      <canvas #skeletalMuscleCanvas></canvas>
-    </ion-slide>
-  </ion-slides>
-  <a class="slide-left-container">
+<!-- <ion-card-content>
+  <ion-spinner *ngIf="loading"></ion-spinner>
+</ion-card-content> -->
+<ion-card-content ion-row>
+  <a class="slide-left-container" ion-col col-1>
     <button
       ion-button
       clear
-      round
-      float-left
       color="dark"
       class="slide-nav"
       [disabled]="slides.isBeginning()"
@@ -35,12 +13,35 @@
       <ion-icon name="ios-arrow-back"></ion-icon>
     </button>
   </a>
-  <a class="slide-right-container">
+  <ion-col col-10>
+    <ion-slides #slides>
+      <ion-slide>
+        <canvas #ageCanvas></canvas>
+      </ion-slide>
+      <ion-slide>
+        <canvas #heightCanvas></canvas>
+      </ion-slide>
+      <ion-slide>
+        <canvas #weightAndBMICanvas></canvas>
+      </ion-slide>
+      <ion-slide>
+        <canvas #restingMetabolismCanvas></canvas>
+      </ion-slide>
+      <ion-slide>
+        <canvas #visceralFatRatingCanvas></canvas>
+      </ion-slide>
+      <ion-slide>
+        <canvas #fatPercentageCanvas></canvas>
+      </ion-slide>
+      <ion-slide>
+        <canvas #skeletalMuscleCanvas></canvas>
+      </ion-slide>
+    </ion-slides>
+  </ion-col>
+  <a class="slide-right-container" ion-col col-1>
     <button
       ion-button
       clear
-      round
-      float-right
       color="dark"
       class="slide-nav"
       [disabled]="slides.isEnd()"

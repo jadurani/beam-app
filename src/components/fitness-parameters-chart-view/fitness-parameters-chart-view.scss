@@ -1,3 +1,9 @@
 fitness-parameters-chart-view {
+    .slide-left-container, .slide-right-container {
+        margin: auto;
 
+        button:hover {
+            border-radius: 50%;
+        }
+    }
 }
