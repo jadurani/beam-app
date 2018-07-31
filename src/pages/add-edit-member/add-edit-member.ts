@@ -53,6 +53,9 @@ export class AddEditMemberPage {
   profileImageUrl: string;
   imageFile: File;
 
+  BASIC_INFO = 'basicInfo';
+  ICE_CONTACT = 'iceContact';
+
   constructor(
     private dateProvider: DateProvider,
     private fileProvider: FileProvider,
@@ -69,13 +72,13 @@ export class AddEditMemberPage {
     if (this.isEdit) {
       this.pendingUser = this.navParams.get('user');
       switch (this.partToEdit) {
-        case 'basicInfo':
+        case this.BASIC_INFO:
           if (this.pendingUser.photoUrl)
             this.profileImageUrl = this.pendingUser.photoUrl;
           this.editBasicInfoFormInit();
           break;
 
-        case 'iceContact':
+        case this.ICE_CONTACT:
           this.editICEContactFormInit();
           break;
       }
@@ -252,7 +255,7 @@ export class AddEditMemberPage {
       };
     }
 
-    if (!this.isEdit || (this.isEdit && this.partToEdit === 'basicInfo')) {
+    if (!this.isEdit || (this.isEdit && this.partToEdit === this.BASIC_INFO)) {
       userObj.displayName = formModel.nickname;
       userObj.email = formModel.email;
       userObj.fullName = formModel.fullName;
@@ -280,7 +283,7 @@ export class AddEditMemberPage {
       userObj.address = Object.assign({}, formModel.address);
     }
 
-    if (!this.isEdit || (this.isEdit && this.partToEdit === 'iceContact')) {
+    if (!this.isEdit || (this.isEdit && this.partToEdit === this.ICE_CONTACT)) {
       userObj.iceContact = Object.assign({}, formModel.iceContact);
     }
 
@@ -355,7 +358,7 @@ export class AddEditMemberPage {
     }
 
     if (this.isEdit) {
-      await this.userProvider.updateUser(userToSave);
+      await this.userProvider.updateUser(userToSave, this.partToEdit === this.BASIC_INFO);
     } else {
       const newUserId = await this.userProvider.addUser(userToSave);
       userToSave.id = newUserId;

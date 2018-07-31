@@ -19,7 +19,7 @@
       novalidate
       [formGroup]="userInfoForm">
 
-      <ng-container *ngIf="!isEdit || (isEdit && partToEdit === 'basicInfo')">
+      <ng-container *ngIf="!isEdit || (isEdit && partToEdit === BASIC_INFO)">
         <div class="header">Personal Information</div>
         <ion-card padding-horizontal padding-bottom margin-bottom>
           <ion-list no-lines>
@@ -189,7 +189,7 @@
         </ion-card>
       </ng-container>
 
-      <ng-container *ngIf="!isEdit || (isEdit && partToEdit === 'iceContact')">
+      <ng-container *ngIf="!isEdit || (isEdit && partToEdit === ICE_CONTACT)">
         <div class="header">In Case of Emergency</div>
         <ion-card padding-horizontal padding-bottom margin-bottom formGroupName="iceContact">
           <ion-list no-lines>

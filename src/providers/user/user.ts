@@ -147,15 +147,20 @@ export class UserProvider {
    * get the User instance as object before passing it
    * to the database.
    *
-   * Also updates the SearchTerm/Indices for the User.
+   * Also updates the SearchTerm/Indices for the User if
+   * `onEditBasicInfo` is true.
    * @param user {User}
    */
-  async updateUser(user: User): Promise<User> {
-    await this.userRef
-      .doc(user.id)
-      .update(user);
+  async updateUser(
+    user: User,
+    onEditBasicInfo: boolean = false
+  ): Promise<User> {
 
-    await this._addSearchKey(user.id, user.fullName, user.displayName);
+    await this.userRef.doc(user.id).update(user);
+
+    if (onEditBasicInfo)
+      await this._addSearchKey(user.id, user.fullName, user.displayName);
+
     return user;
   }
 
