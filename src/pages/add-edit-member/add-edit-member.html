@@ -69,9 +69,12 @@
               <ion-col col-12 col-sm-12 col-md-12 col-lg-6>
                 <ion-item [ngClass]="{'has-error': getInputError('sex')}">
                   <ion-label floating>Sex*</ion-label>
-                  <ion-select formControlName="sex" [selectOptions]="{title:'Sex', subTitle: '(on birth)'}">
+                  <ion-select formControlName="sex" [selectOptions]="{title:'Sex'}">
                     <ion-option value="F">Female</ion-option>
                     <ion-option value="M">Male</ion-option>
+                    <ion-option value="MtF">FtM Male</ion-option>
+                    <ion-option value="FtM">MtF Female</ion-option>
+                    <ion-option value="I">Intersex</ion-option>
                   </ion-select>
                 </ion-item>
                 <div padding-left class="input-error"
