@@ -3,6 +3,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import {
+  AlertController,
   Content,
   IonicPage,
   ToastController,
@@ -52,11 +53,13 @@ export class AddEditMemberPage {
   pendingUser: User;
   profileImageUrl: string;
   imageFile: File;
+  confirmedExit: boolean = false;
 
   BASIC_INFO = 'basicInfo';
   ICE_CONTACT = 'iceContact';
 
   constructor(
+    private alertCtrl: AlertController,
     private dateProvider: DateProvider,
     private fileProvider: FileProvider,
     private formBuilder: FormBuilder,
@@ -84,6 +87,38 @@ export class AddEditMemberPage {
       }
     } else {
       this.createNewUserInfoForm();
+    }
+  }
+
+  ionViewCanLeave() {
+    if (this.userInfoForm.dirty && !this.confirmedExit) {
+      let alertPopup = this.alertCtrl.create({
+        title: 'Are you sure?',
+        message: 'You have values entered in the form.',
+        buttons: [
+          {
+            text: 'Yes',
+            handler: () => {
+              this.confirmedExit = true;
+              alertPopup.dismiss()
+              .then(() => {
+                  this.navCtrl.pop();
+                });
+              return false;
+            }
+          },
+          {
+            text: 'No',
+            role: 'cancel',
+            handler: () => {
+              this.confirmedExit = false;
+            }
+          },
+        ],
+      });
+
+      alertPopup.present();
+      return false;
     }
   }
 
