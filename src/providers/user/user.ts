@@ -223,8 +223,6 @@ export class UserProvider {
 
   // activateUser() {}
 
-  // searchUsers() {}
-
   // private log(message: string) {}
 
   private _getUser(
@@ -246,14 +244,8 @@ export class UserProvider {
 
     // BasicInfo
     if (userObj.fullName) user.fullName = userObj.fullName;
-    if (userObj.firstName && userObj.lastName) user.fullName = `${userObj.firstName} ${userObj.lastName}`;
     if (userObj.sex) user.sex = userObj.sex;
     if (userObj.prefix) user.prefix = userObj.prefix;
-
-    if (userObj.firstName) user.firstName = userObj.firstName;
-    if (userObj.lastName) user.lastName = userObj.lastName;
-    if (userObj.suffix) user.suffix = userObj.suffix;
-    if (userObj.gender) user.gender = userObj.gender;
 
     if (userObj.dateOfBirth)
       user.dateOfBirth = this.dateProvider.firebaseDateToDate(userObj.dateOfBirth);

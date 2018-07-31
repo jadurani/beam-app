@@ -16,12 +16,6 @@ export interface User {
     address ?: Address;
     // address ?: string;
 
-    // TO DO: REMOVE
-    gender ?: string;
-    firstName ?: string;
-    lastName ?: string;
-    suffix ?: string;
-
     phoneNumbers ?: Array<PhoneNumber>;
     socialMedia ?: string;
 

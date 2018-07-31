@@ -18,10 +18,7 @@ import { AddEditMemberPage } from '../pages/add-edit-member/add-edit-member';
 import { HomePage } from '../pages/home/home';
 import { LogInPage } from '../pages/log-in/log-in';
 import { ModalAddBodyInfoPage } from '../pages/modal-add-body-info/modal-add-body-info';
-import { ModalAddUserPage } from '../pages/modal-add-user/modal-add-user';
-import { ModalEditUserPage } from '../pages/modal-edit-user/modal-edit-user';
 import { ModalRiskReleasePage } from '../pages/modal-risk-release/modal-risk-release';
-import { ModalUserDetailsPage } from '../pages/modal-user-details/modal-user-details';
 import { SignUpPage } from '../pages/sign-up/sign-up';
 import { UserListPage } from '../pages/user-list/user-list';
 import { ViewMemberPage } from '../pages/view-member/view-member';
@@ -55,10 +52,7 @@ import { DatabaseProvider } from '../providers/database/database';
     HomePage,
     LogInPage,
     ModalAddBodyInfoPage,
-    ModalAddUserPage,
-    ModalEditUserPage,
     ModalRiskReleasePage,
-    ModalUserDetailsPage,
     SignUpPage,
     UserListPage,
     ViewMemberPage,
@@ -76,10 +70,7 @@ import { DatabaseProvider } from '../providers/database/database';
     HomePage,
     LogInPage,
     ModalAddBodyInfoPage,
-    ModalAddUserPage,
-    ModalEditUserPage,
     ModalRiskReleasePage,
-    ModalUserDetailsPage,
     SignUpPage,
     UserListPage,
     ViewMemberPage,
