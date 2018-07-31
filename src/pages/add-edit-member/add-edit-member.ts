@@ -100,7 +100,7 @@ export class AddEditMemberPage {
       nickname: [null, Validators.required],
       otherRemarks: null,
       phoneNumbers: this.formBuilder.array([]),
-      prefix: [null, Validators.required],
+      prefix: null,
       sex: [null, Validators.required],
       signedRelease: [false, Validators.requiredTrue],
       socialMedia: null,
@@ -129,7 +129,7 @@ export class AddEditMemberPage {
       nickname: [this.pendingUser.displayName, Validators.required],
       otherRemarks: this.pendingUser.otherRemarks,
       phoneNumbers: this.formBuilder.array([]),
-      prefix: [this.pendingUser.prefix, Validators.required],
+      prefix: this.pendingUser.prefix,
       sex: [this.pendingUser.sex, Validators.required],
       socialMedia: this.pendingUser.socialMedia,
       workDetails: this.formBuilder.group({

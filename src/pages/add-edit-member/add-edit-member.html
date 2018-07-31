@@ -44,15 +44,13 @@
 
             <ion-row>
               <ion-col col-12 col-md-4 col-lg-3>
-                <ion-item [ngClass]="{'has-error': getInputError('prefix')}">
-                  <ion-label floating>Prefix*</ion-label>
+                <ion-item>
+                  <ion-label floating>Prefix</ion-label>
                   <ion-select formControlName="prefix">
                     <ion-option value="Ms.">Ms.</ion-option>
                     <ion-option value="Mr.">Mr.</ion-option>
                   </ion-select>
                 </ion-item>
-                <div padding-left class="input-error"
-                  [innerHTML]="getInputError('prefix')"></div>
               </ion-col>
 
               <ion-col col-12 col-md-8 col-lg-9>
