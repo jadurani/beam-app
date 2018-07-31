@@ -72,9 +72,8 @@ export class UserListPage {
       .debounceTime(700)
       .subscribe(() => {
         this.searchTerm = this.searchTerm.trim();
-        if (this.searchTerm === '') {
-          this.users = this.unfilteredUserList;
-        } else {
+        this.users = this.unfilteredUserList;
+        if (this.searchTerm) {
           let matchedUsers = this.searchUserHelper
             .getMatches(this.searchTerm);
           this.users = this._getFilteredUserList(matchedUsers);
