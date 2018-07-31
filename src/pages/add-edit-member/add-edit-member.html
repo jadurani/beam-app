@@ -46,7 +46,7 @@
               <ion-col col-12 col-md-4 col-lg-3>
                 <ion-item>
                   <ion-label floating>Prefix</ion-label>
-                  <ion-select formControlName="prefix">
+                  <ion-select formControlName="prefix" interface="popover">
                     <ion-option value="Ms.">Ms.</ion-option>
                     <ion-option value="Mr.">Mr.</ion-option>
                   </ion-select>
@@ -67,7 +67,7 @@
               <ion-col col-12 col-sm-12 col-md-12 col-lg-6>
                 <ion-item [ngClass]="{'has-error': getInputError('sex')}">
                   <ion-label floating>Sex*</ion-label>
-                  <ion-select formControlName="sex" [selectOptions]="{title:'Sex'}">
+                  <ion-select formControlName="sex" interface="popover">
                     <ion-option value="F">Female</ion-option>
                     <ion-option value="M">Male</ion-option>
                     <ion-option value="MtF">FtM Male</ion-option>
@@ -130,7 +130,7 @@
                 <ion-col col-12 col-sm-12 col-md-12 col-lg-6>
                   <ion-item>
                     <ion-label floating>Phone Label</ion-label>
-                    <ion-select formControlName="label">
+                    <ion-select formControlName="label" interface="popover">
                       <ion-option value="Home">Home</ion-option>
                       <ion-option value="Work">Work</ion-option>
                       <ion-option value="Other">Other</ion-option>
@@ -210,7 +210,7 @@
               <ion-col col-12 col-sm-12 col-md-12 col-lg-6>
                 <ion-item [ngClass]="{'has-error': getInputError('relationship', 'iceContact')}">
                   <ion-label floating>Relationship*</ion-label>
-                  <ion-select formControlName="relationship">
+                  <ion-select formControlName="relationship" interface="popover">
                     <ion-option value="parent">Parent</ion-option>
                     <ion-option value="sibling">Sibling</ion-option>
                     <ion-option value="child">Child</ion-option>
