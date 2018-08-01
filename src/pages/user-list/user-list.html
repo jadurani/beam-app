@@ -78,8 +78,23 @@
     </ion-card>
 
   <ion-fab padding right bottom>
-    <button ion-fab color="primary" [navPush]="addEditMemberPage">
+    <button ion-fab color="primary">
       <ion-icon name="add"></ion-icon>
     </button>
+    <ion-fab-list side="top">
+      <button ion-fab color="dark" [navPush]="addEditMemberPage">
+        <span class="letter-icon">M</span>
+        <ion-label>Member</ion-label>
+      </button>
+      <!-- TO DO: IMPLEMENT THE PAGES FOR THE FOLLOWING -->
+      <button ion-fab color="dark">
+        <span class="letter-icon">S</span>
+        <ion-label>Staff</ion-label>
+      </button>
+      <button ion-fab color="dark">
+        <span class="letter-icon">T</span>
+        <ion-label>Trainer</ion-label>
+      </button>
+    </ion-fab-list>
   </ion-fab>
 </ion-content>

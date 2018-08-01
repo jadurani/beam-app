@@ -12,6 +12,34 @@ page-user-list {
         right: 0;
     }
 
+    ion-fab-list {
+        padding-bottom: 12px;
+
+        span.letter-icon {
+            font-weight: 500;
+        }
+
+        button[ion-fab] {
+            overflow: visible;
+            position: relative;
+
+            ion-label {
+                position: absolute;
+                top: -8px;
+                right: 40px;
+
+                color: white;
+                background-color: #343434;
+                line-height: 24px;
+                padding: 4px 8px;
+                border-radius: 4px;
+            }
+        }
+
+        .fab {
+            contain: layout;
+        }
+    }
 
     ion-card {
         @media (min-width: 768px) {
