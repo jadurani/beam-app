@@ -18,7 +18,6 @@
     </ion-buttons>
   </ion-navbar>
 </ion-header>
-
 <ion-content>
     <ion-card>
       <ion-searchbar
@@ -30,16 +29,26 @@
 
       <ion-list class="user-list">
         <ion-item class="header">
-          <span class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
-            Name
+          <span class="col-lg-4 col-md-6 col-sm-6 col-xs-12"
+            [ngClass]="{'sorted-by': propertySortName === FULL_NAME}"
+            (click)="sortBy(FULL_NAME)">
+              Name
+              <ng-container *ngIf="propertySortName === FULL_NAME">
+                <ion-icon small name="arrow-down" *ngIf="descOrder"></ion-icon>
+                <ion-icon small name="arrow-up" *ngIf="!descOrder"></ion-icon>
+              </ng-container>
           </span>
           <span class="col-lg-4 hide-md hide-sm hide-xs">
             Contact Number
           </span>
-          <span class="col-lg-4 col-md-6 col-sm-6 hide-xs" (click)="sortBy(NEXT_PAYMENT_DATE)">
-            Next Payment Date
-            <ion-icon small name="arrow-down" *ngIf="descOrder"></ion-icon>
-            <ion-icon small name="arrow-up" *ngIf="!descOrder"></ion-icon>
+          <span class="col-lg-4 col-md-6 col-sm-6 hide-xs"
+            [ngClass]="{'sorted-by': propertySortName === NEXT_PAYMENT_DATE}"
+            (click)="sortBy(NEXT_PAYMENT_DATE)">
+              Next Payment Date
+              <ng-container *ngIf="propertySortName === NEXT_PAYMENT_DATE">
+                <ion-icon small name="arrow-down" *ngIf="descOrder"></ion-icon>
+                <ion-icon small name="arrow-up" *ngIf="!descOrder"></ion-icon>
+              </ng-container>
           </span>
         </ion-item>
 

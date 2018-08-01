@@ -39,6 +39,7 @@ export class UserListPage {
 
   loading: boolean;
 
+  FULL_NAME: string = 'fullName';
   // TO DO: Change to next payment date
   NEXT_PAYMENT_DATE: string = 'dateJoined';
   ASCENDING_ORDER: string = 'asc';
@@ -98,18 +99,16 @@ export class UserListPage {
    */
   getUsers(): void {
     let sortOrder = this.descOrder ? this.DESCENDING_ORDER : this.ASCENDING_ORDER;
-    this.userProvider.getUsers(
-      this.propertySortName, sortOrder
-    )
-    .then(users => {
-      this.users = users;
-      this.unfilteredUserList = users;
-      this.loading = false;
-    })
-    .catch((error) => {
-      console.log(error);
-      this.loading = false;
-    });
+    this.userProvider.getUsers()
+      .then(users => {
+        this.users = users;
+        this.unfilteredUserList = users;
+        this.loading = false;
+      })
+      .catch((error) => {
+        console.log(error);
+        this.loading = false;
+      });
   }
 
   /**
@@ -122,18 +121,24 @@ export class UserListPage {
     this.descOrder = propertyName === this.propertySortName ? !this.descOrder : true;
     this.propertySortName = propertyName;
 
-    if (this.searchTerm) {
-      this.users.sort((userA, userB) => {
-        let userAName = userA.fullName.toUpperCase();
-        let userBName = userB.fullName.toUpperCase();
-        if (userAName < userBName) return this.descOrder ? 1 : -1;
-        if (userAName > userBName) return this.descOrder ? -1 : 1;
-        return 0;
-      });
-      this.loading = false;
-      return;
-    }
+    let userASortValue;
+    let userBSortValue;
 
-    this.getUsers();
+    this.users.sort((userA, userB) => {
+      if (propertyName === this.FULL_NAME) {
+        userASortValue = userA.fullName.toUpperCase();
+        userBSortValue = userB.fullName.toUpperCase();
+      } else if (propertyName === this.NEXT_PAYMENT_DATE) {
+        // TO DO: Replace with real next payment date
+        userASortValue = userA.dateJoined.getTime();
+        userBSortValue = userB.dateJoined.getTime();
+      }
+
+      if (userASortValue < userBSortValue) return this.descOrder ? 1 : -1;
+      if (userASortValue > userBSortValue) return this.descOrder ? -1 : 1;
+      return 0;
+    });
+
+    this.loading = false;
   }
 }

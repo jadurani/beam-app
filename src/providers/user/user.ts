@@ -80,20 +80,11 @@ export class UserProvider {
   /**
    * @method UserProvider.getUsers
    * @description
-   * Query all the users and order them by `propertyName`
-   * (see schema for `users` document for possible values)
-   * by `sortOrder` (possible values: 'desc', 'asc').
-   *
-   * @param propertyName {string}
-   * @param sortOrder {string}
+   * Query all the users,
    */
-  getUsers(
-    propertyName: string = 'dateJoined',
-    sortOrder: string = 'desc',
-  ): Promise<any> {
+  getUsers(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.userRef.orderBy(propertyName, sortOrder)
-        .get()
+      this.userRef.get()
         .then(querySnapshot => {
           let usersArray = [];
 

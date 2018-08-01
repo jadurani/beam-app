@@ -63,14 +63,20 @@ page-user-list {
         ion-list.user-list {
             ion-item, button.user-list-item {
                 border-bottom: 1px solid #dddddd!important;
+                color: rgba(0,0,0,0.78);
 
                 &.header {
                     background-color: #f8f8f8!important;
                     border-top: 1px solid #dddddd!important;
                     border-bottom: 1px solid #dddddd!important;
+                    color: rgba(0,0,0,0.54);
                     font-size: 14px;
                     font-weight: bold;
                     letter-spacing: .02em;
+
+                    .sorted-by {
+                        color: rgba(0,0,0,0.87);
+                    }
                 }
 
 
