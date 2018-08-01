@@ -33,7 +33,6 @@ page-add-edit-member {
                     height: 50px;
                     margin-left: auto;
                     margin-right: auto;
-                    margin-top: 16px;
                     top: 16px;
                     width: 50px;
                     z-index: 1;
@@ -47,6 +46,10 @@ page-add-edit-member {
             }
 
             ion-card {
+                ion-list {
+                    margin-top: 8px;
+                }
+
                 .risk-release {
                     cursor: pointer;
 
@@ -69,6 +72,10 @@ page-add-edit-member {
                 ion-item {
                     .input-wrapper {
                         border-bottom: 1px solid #dedede;
+
+                        ion-label {
+                            margin-top: 0px;
+                        }
                     }
 
                     &.input-has-focus {
