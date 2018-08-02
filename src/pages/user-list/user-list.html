@@ -19,7 +19,7 @@
   </ion-navbar>
 </ion-header>
 <ion-content>
-  <ion-card>
+  <ion-card [ngClass]="{'is-empty': loading || !users || users.length === 0}">
     <ion-searchbar
       no-padding
       placeholder="Search by name"
@@ -27,7 +27,8 @@
       [formControl]="searchControl"
       (ionInput)="loading = true"></ion-searchbar>
 
-    <ion-list class="user-list">
+    <div class="user-list">
+      <!-- Headers -->
       <ion-item class="header">
         <span class="col-lg-4 col-md-6 col-sm-6 col-xs-12"
           [ngClass]="{'sorted-by': propertySortName === FULL_NAME}"
@@ -52,38 +53,46 @@
         </span>
       </ion-item>
 
-      <ng-container *ngIf="!loading">
-        <ng-container *ngIf="users && users.length > 0">
-          <button ion-item class="user-list-item"
-            *ngFor="let user of users"
-            [navPush]="viewMemberPage"
-            [navParams]="{'user': user}">
-            <span class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
-              {{ user.fullName }}
-            </span>
-            <span class="col-lg-4 hide-md hide-sm hide-xs">
-              <ng-container *ngIf="user.phoneNumber">
-                {{ user.phoneNumber }}
-              </ng-container>
-              <ng-container *ngIf="!user.phoneNumber && user.phoneNumbers && user.phoneNumbers[0]">
-                {{ user.phoneNumbers[0].number }}
-              </ng-container>
-            </span>
-            <span class="col-lg-4 col-md-6 col-sm-6 hide-xs">{{user.dateJoined | date:'d MMM yyyy'}}</span>
-          </button>
-        </ng-container>
-        <ion-item *ngIf="users && users.length === 0">
-          <div class="info-message">
-            No users available. Add one now.
-          </div>
-        </ion-item>
-      </ng-container>
+      <!-- List Proper -->
+      <ion-list *ngIf="!loading && users && users.length > 0">
+        <button ion-item class="user-list-item"
+          *ngFor="let user of users"
+          [navPush]="viewMemberPage"
+          [navParams]="{'user': user}">
+          <span class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+            {{ user.fullName }}
+          </span>
+          <span class="col-lg-4 hide-md hide-sm hide-xs">
+            <ng-container *ngIf="user.phoneNumber">
+              {{ user.phoneNumber }}
+            </ng-container>
+            <ng-container *ngIf="!user.phoneNumber && user.phoneNumbers && user.phoneNumbers[0]">
+              {{ user.phoneNumbers[0].number }}
+            </ng-container>
+          </span>
+          <span class="col-lg-4 col-md-6 col-sm-6 hide-xs">
+            {{user.dateJoined | date:'d MMM yyyy'}}
+          </span>
+        </button>
+      </ion-list>
+    </div>
+
+    <!-- Fillers (When list is empty) -->
+    <div class="filler-container">
       <div *ngIf="loading">
-        <div class="spinner">
-          <ion-spinner></ion-spinner>
-        </div>
+        <ion-spinner></ion-spinner>
       </div>
-    </ion-list>
+      <div class="filler-text"
+        *ngIf="!loading && users && users.length === 0">
+        <ng-container *ngIf="!searchTerm">
+          No users in database yet.
+        </ng-container>
+        <ng-container *ngIf="searchTerm">
+          No matching results for "{{searchTerm}}". <br>
+          Make sure the name is spelled correctly. :)
+        </ng-container>
+      </div>
+    </div>
   </ion-card>
 
   <ion-fab padding right bottom>

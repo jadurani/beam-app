@@ -1,17 +1,4 @@
 page-user-list {
-    .spinner {
-        position: fixed;
-        z-index: 1;
-        height: 2em;
-        width: 2em;
-        overflow: show;
-        margin: auto;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-    }
-
     ion-fab-list {
         padding-bottom: 12px;
 
@@ -25,8 +12,8 @@ page-user-list {
 
             ion-label {
                 position: absolute;
-                top: -8px;
                 right: 40px;
+                top: -8px;
 
                 color: white;
                 background-color: #343434;
@@ -42,13 +29,23 @@ page-user-list {
     }
 
     ion-card {
+        min-height: 10%;
+        position: relative;
+        &.is-empty {
+            min-height: 96%;
+            background-color: #f8f8f8;
+            transition: min-height 300ms ease-in;
+        }
+
         @media (min-width: 768px) {
-            &.card{
+            &.card {
                 margin-left: 10%;
-                width: 80%;
                 margin-right: 10%;
+                margin-top: 20px;
+                width: 80%;
             }
         }
+
 
         ion-searchbar {
             .searchbar-input-container {
@@ -68,7 +65,8 @@ page-user-list {
             }
         }
 
-        ion-list.user-list {
+
+        .user-list {
             ion-item, button.user-list-item {
                 border-bottom: 1px solid #dddddd!important;
                 color: rgba(0,0,0,0.78);
@@ -81,12 +79,12 @@ page-user-list {
                     font-size: 14px;
                     font-weight: bold;
                     letter-spacing: .02em;
+                    z-index: 1;
 
                     .sorted-by {
                         color: rgba(0,0,0,0.87);
                     }
                 }
-
 
                 ion-label {
                     display: flex;
@@ -143,6 +141,22 @@ page-user-list {
                         }
                     }
                 }
+            }
+        }
+
+        .filler-container {
+            left: 50%;
+            position: absolute;
+            text-align: center;
+            top: 55%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+
+            .filler-text {
+                font-size: 18px;
+                font-weight: 400;
+                letter-spacing: .02em;
+                line-height: 1.5;
             }
         }
     }
