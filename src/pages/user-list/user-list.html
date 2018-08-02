@@ -19,72 +19,72 @@
   </ion-navbar>
 </ion-header>
 <ion-content>
-    <ion-card>
-      <ion-searchbar
-        no-padding
-        placeholder="Search by name"
-        [(ngModel)]="searchTerm"
-        [formControl]="searchControl"
-        (ionInput)="loading = true"></ion-searchbar>
+  <ion-card>
+    <ion-searchbar
+      no-padding
+      placeholder="Search by name"
+      [(ngModel)]="searchTerm"
+      [formControl]="searchControl"
+      (ionInput)="loading = true"></ion-searchbar>
 
-      <ion-list class="user-list">
-        <ion-item class="header">
-          <span class="col-lg-4 col-md-6 col-sm-6 col-xs-12"
-            [ngClass]="{'sorted-by': propertySortName === FULL_NAME}"
-            (click)="sortBy(FULL_NAME)">
-              Name
-              <ng-container *ngIf="propertySortName === FULL_NAME">
-                <ion-icon small name="arrow-down" *ngIf="descOrder"></ion-icon>
-                <ion-icon small name="arrow-up" *ngIf="!descOrder"></ion-icon>
-              </ng-container>
-          </span>
-          <span class="col-lg-4 hide-md hide-sm hide-xs">
-            Contact Number
-          </span>
-          <span class="col-lg-4 col-md-6 col-sm-6 hide-xs"
-            [ngClass]="{'sorted-by': propertySortName === NEXT_PAYMENT_DATE}"
-            (click)="sortBy(NEXT_PAYMENT_DATE)">
-              Next Payment Date
-              <ng-container *ngIf="propertySortName === NEXT_PAYMENT_DATE">
-                <ion-icon small name="arrow-down" *ngIf="descOrder"></ion-icon>
-                <ion-icon small name="arrow-up" *ngIf="!descOrder"></ion-icon>
-              </ng-container>
-          </span>
-        </ion-item>
+    <ion-list class="user-list">
+      <ion-item class="header">
+        <span class="col-lg-4 col-md-6 col-sm-6 col-xs-12"
+          [ngClass]="{'sorted-by': propertySortName === FULL_NAME}"
+          (click)="sortBy(FULL_NAME)">
+            Name
+            <ng-container *ngIf="propertySortName === FULL_NAME">
+              <ion-icon small name="arrow-down" *ngIf="descOrder"></ion-icon>
+              <ion-icon small name="arrow-up" *ngIf="!descOrder"></ion-icon>
+            </ng-container>
+        </span>
+        <span class="col-lg-4 hide-md hide-sm hide-xs">
+          Contact Number
+        </span>
+        <span class="col-lg-4 col-md-6 col-sm-6 hide-xs"
+          [ngClass]="{'sorted-by': propertySortName === NEXT_PAYMENT_DATE}"
+          (click)="sortBy(NEXT_PAYMENT_DATE)">
+            Next Payment Date
+            <ng-container *ngIf="propertySortName === NEXT_PAYMENT_DATE">
+              <ion-icon small name="arrow-down" *ngIf="descOrder"></ion-icon>
+              <ion-icon small name="arrow-up" *ngIf="!descOrder"></ion-icon>
+            </ng-container>
+        </span>
+      </ion-item>
 
-        <ng-container *ngIf="!loading">
-          <ng-container *ngIf="users && users.length > 0">
-            <button ion-item class="user-list-item"
-              *ngFor="let user of users"
-              [navPush]="viewMemberPage"
-              [navParams]="{'user': user}">
-              <span class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
-                {{ user.fullName }}
-              </span>
-              <span class="col-lg-4 hide-md hide-sm hide-xs">
-                <ng-container *ngIf="user.phoneNumber">
-                  {{ user.phoneNumber }}
-                </ng-container>
-                <ng-container *ngIf="!user.phoneNumber && user.phoneNumbers && user.phoneNumbers[0]">
-                  {{ user.phoneNumbers[0].number }}
-                </ng-container>
-              </span>
-              <span class="col-lg-4 col-md-6 col-sm-6 hide-xs">{{user.dateJoined | date:'d MMM yyyy'}}</span>
-            </button>
-          </ng-container>
-          <ion-item *ngIf="users && users.length === 0">
-            <div class="info-message">
-              No users available. Add one now.
-            </div>
-          </ion-item>
+      <ng-container *ngIf="!loading">
+        <ng-container *ngIf="users && users.length > 0">
+          <button ion-item class="user-list-item"
+            *ngFor="let user of users"
+            [navPush]="viewMemberPage"
+            [navParams]="{'user': user}">
+            <span class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+              {{ user.fullName }}
+            </span>
+            <span class="col-lg-4 hide-md hide-sm hide-xs">
+              <ng-container *ngIf="user.phoneNumber">
+                {{ user.phoneNumber }}
+              </ng-container>
+              <ng-container *ngIf="!user.phoneNumber && user.phoneNumbers && user.phoneNumbers[0]">
+                {{ user.phoneNumbers[0].number }}
+              </ng-container>
+            </span>
+            <span class="col-lg-4 col-md-6 col-sm-6 hide-xs">{{user.dateJoined | date:'d MMM yyyy'}}</span>
+          </button>
         </ng-container>
-        <div *ngIf="loading">
-          <div class="spinner">
-            <ion-spinner></ion-spinner>
+        <ion-item *ngIf="users && users.length === 0">
+          <div class="info-message">
+            No users available. Add one now.
           </div>
+        </ion-item>
+      </ng-container>
+      <div *ngIf="loading">
+        <div class="spinner">
+          <ion-spinner></ion-spinner>
         </div>
-      </ion-list>
-    </ion-card>
+      </div>
+    </ion-list>
+  </ion-card>
 
   <ion-fab padding right bottom>
     <button ion-fab color="primary">
