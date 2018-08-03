@@ -21,4 +21,10 @@ personal-info {
     .horizontal-rule {
         border-bottom: 1px solid #eee;
     }
+
+    ion-card {
+        ion-list ion-icon {
+            color: #666;
+        }
+    }
 }
