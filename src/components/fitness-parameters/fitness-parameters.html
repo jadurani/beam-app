@@ -8,22 +8,25 @@
       </ion-col>
       <ion-col col-3>
         <ion-item text-right>
-          <button *ngIf="viewType === LIST_VIEW"
-            ion-button
-            clear
-            round
-            color="dark"
-            (click)="getChartView()">
-              <ion-icon name="trending-up"></ion-icon>
-          </button>
-          <button *ngIf="viewType === CHART_VIEW"
-            ion-button
-            clear
-            round
-            color="dark"
-            (click)="getListView()">
-              <ion-icon name="list"></ion-icon>
-          </button>
+          <ng-container *ngIf="user.bodyInfo">
+            <button *ngIf="viewType === LIST_VIEW"
+              ion-button
+              clear
+              round
+              color="dark"
+              (click)="getChartView()">
+                <ion-icon name="trending-up"></ion-icon>
+            </button>
+            <button *ngIf="viewType === CHART_VIEW"
+              ion-button
+              clear
+              round
+              color="dark"
+              (click)="getListView()">
+                <ion-icon name="list"></ion-icon>
+            </button>
+          </ng-container>
+
           <button ion-button
             clear
             round
