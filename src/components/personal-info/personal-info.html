@@ -10,10 +10,16 @@
       </button>
     </ion-item>
 
-    <ion-avatar>
-      <img [src]="user.photoUrl ? user.photoUrl : 'assets/imgs/unknown_person.png'">
-    </ion-avatar>
-    <ion-item text-center padding-top>
+    <div class="profile-image-container">
+      <div class="spinner-container" [hidden]="imageLoaded">
+        <ion-spinner></ion-spinner>
+      </div>
+      <ion-avatar>
+        <img [src]="user.photoUrl ? user.photoUrl : 'assets/imgs/unknown_person.png'"
+          (load)="imageLoaded = true" [hidden]="!imageLoaded">
+      </ion-avatar>
+    </div>
+    <ion-item text-center>
       <ion-card-title>
         {{ user.fullName }}
       </ion-card-title>

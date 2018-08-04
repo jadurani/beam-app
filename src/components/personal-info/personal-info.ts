@@ -10,6 +10,7 @@ import { User } from '../../models/user-model';
 export class PersonalInfoComponent {
   @Input() user: User;
 
+  imageLoaded: boolean = false;
   addEditMemberPage: any = AddEditMemberPage;
   profileExpanded: boolean = false;
 
