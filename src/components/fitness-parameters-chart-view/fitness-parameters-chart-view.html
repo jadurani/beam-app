@@ -1,7 +1,9 @@
-<!-- <ion-card-content>
-  <ion-spinner *ngIf="loading"></ion-spinner>
-</ion-card-content> -->
-<ion-card-content ion-row>
+<ion-card-content *ngIf="loading">
+  <ion-row class="spinner-container">
+    <ion-spinner></ion-spinner>
+  </ion-row>
+</ion-card-content>
+<ion-card-content ion-row [hidden]="loading">
   <a class="slide-left-container" ion-col col-1>
     <button
       ion-button

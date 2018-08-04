@@ -56,6 +56,15 @@ export class FitnessParametersChartViewComponent {
     this.loadBodyInfoList(this.user);
   }
 
+  ngAfterViewInit() {
+    // Hack, for when the slides don't load yet
+    setTimeout(() => {
+      if (this.slides) {
+        this.slides.update();
+      }
+    }, 300);
+  }
+
   loadBodyInfoList(user: User) {
     this.bodyInfoProvider.getAllBodyInfoForUser(user)
       .then(bodyInfoList => {

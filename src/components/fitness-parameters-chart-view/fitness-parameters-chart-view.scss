@@ -1,9 +1,22 @@
 fitness-parameters-chart-view {
-    .slide-left-container, .slide-right-container {
-        margin: auto;
+    ion-card-content {
+        min-height: 150px;
 
-        button:hover {
-            border-radius: 50%;
+        .spinner-container {
+            height: 150px;
+            margin: auto;
+            width: 100%;
+
+            .spinner {
+                position: relative;
+            }
+        }
+
+        .slide-left-container, .slide-right-container {
+            margin: auto;
+            button:hover {
+                border-radius: 50%;
+            }
         }
     }
 }
