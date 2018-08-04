@@ -1,7 +1,10 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{ user.fullName }}</ion-title>
+    <ion-title>
+      <span>{{ user.fullName }}</span>
+      <span *ngIf="user.displayName">({{ user.displayName }})</span>
+    </ion-title>
   </ion-navbar>
 
 </ion-header>
