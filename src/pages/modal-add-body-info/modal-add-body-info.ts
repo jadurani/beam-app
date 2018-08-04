@@ -1,14 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import {
   IonicPage,
   NavParams,
   ToastController,
   ViewController,
+  Content,
 } from 'ionic-angular';
 import {
   FormBuilder,
   FormGroup,
-  Validators
+  Validators,
+  AbstractControl,
+  FormControl
 } from '@angular/forms';
 
 import { DateProvider } from './../../providers/date/date';
@@ -24,6 +27,8 @@ import { BodyInfoProvider } from '../../providers/body-info/body-info';
   templateUrl: 'modal-add-body-info.html',
 })
 export class ModalAddBodyInfoPage {
+  @ViewChild(Content) content: Content;
+
   user: User;
   addBodyInfoForm: FormGroup;
 
@@ -56,18 +61,14 @@ export class ModalAddBodyInfoPage {
       restingMetabolism: [null, Validators.required],
       bodyAge: [null, Validators.required],
       bmi: [null, Validators.required],
-      subcutaneousMeasurements: this.formBuilder.group({
-        total: [null, Validators.required],
-        trunk: [null, Validators.required],
-        arms: [null, Validators.required],
-        legs: [null, Validators.required],
-      }),
-      skeletalMeasurements: this.formBuilder.group({
-        total: [null, Validators.required],
-        trunk: [null, Validators.required],
-        arms: [null, Validators.required],
-        legs: [null, Validators.required],
-      }),
+      subCutFatTotal: [null, Validators.required],
+      subCutFatTrunk: [null, Validators.required],
+      subCutFatArms: [null, Validators.required],
+      subCutFatLegs: [null, Validators.required],
+      skeletalMuscleTotal: [null, Validators.required],
+      skeletalMuscleTrunk: [null, Validators.required],
+      skeletalMuscleArms: [null, Validators.required],
+      skeletalMuscleLegs: [null, Validators.required]
     });
   }
 
@@ -90,7 +91,11 @@ export class ModalAddBodyInfoPage {
   }
 
   save() {
-    if (this.addBodyInfoForm.invalid) return;
+    if (this.addBodyInfoForm.invalid) {
+      this._validateAllFormFields(this.addBodyInfoForm);
+      this._scrollToTop();
+      return;
+    }
 
     const newUserBodyInfo = this._prepareBodyInfo();
     let toast = this.toastCtrl.create({
@@ -120,200 +125,60 @@ export class ModalAddBodyInfoPage {
     this.viewCtrl.dismiss();
   }
 
-  get dateTakenError() {
-    const formControl = this.addBodyInfoForm.get('dateTaken');
-    if (!(formControl.invalid && formControl.dirty))
-      return null;
-
-    if (formControl.errors.required)
-      return 'Required';
-
-    return null;
+  /**
+   * Marks all form fields as touched.
+   * Called recursively for FormGroups and FormArrays.
+   * Called whenever user attempts to save.
+   *
+   * @param control
+   */
+  private _validateAllFormFields(control: AbstractControl) {
+    if (control instanceof FormControl)
+      control.markAsTouched();
+    else if (control instanceof FormGroup) {
+      Object.keys(control.controls).forEach((field: string) => {
+        const formGroupControl = control.get(field);
+        this._validateAllFormFields(formGroupControl);
+      });
+    }
   }
 
-  get trueAgeError() {
-    const formControl = this.addBodyInfoForm.get('trueAge');
-    if (!(formControl.invalid && formControl.dirty))
+  /**
+   * Called in the templates to check for input field errors.
+   *
+   * If the input item is purely a `FormControl` on its own,
+   * `formGroupName` and `index` should be null.
+   *
+   * If the input item belongs to a `FormGroup`, only `index`
+   * should be null.
+   *
+   * If the input item belongs to a `FormGroup` in a
+   * `FormArray`, none of the parameters should be left blank.
+   *
+   * @param formControlName
+   */
+  getInputError(formControlName: string): string | null {
+    if (!formControlName)
       return null;
 
-    if (formControl.errors.required)
-      return 'Required';
-
-    return null;
-  }
-
-  get weightError() {
-    const formControl = this.addBodyInfoForm.get('weight');
-    if (!(formControl.invalid && formControl.dirty))
+    let formControl = this.addBodyInfoForm.get(formControlName);
+    if (!(formControl.invalid && formControl.touched))
       return null;
 
-    if (formControl.errors.required)
-      return 'Required';
-
-    return null;
-  }
-
-  get heightError() {
-    const formControl = this.addBodyInfoForm.get('height');
-    if (!(formControl.invalid && formControl.dirty))
-      return null;
-
-    if (formControl.errors.required)
-      return 'Required';
-
-    return null;
-  }
-
-  get percBodyFatError() {
-    const formControl = this.addBodyInfoForm.get('percBodyFat');
-    if (!(formControl.invalid && formControl.dirty))
-      return null;
-
-    if (formControl.errors.required)
-      return 'Required';
-
-    return null;
-  }
-
-  get visceralFatRatingError() {
-    const formControl = this.addBodyInfoForm.get('visceralFatRating');
-    if (!(formControl.invalid && formControl.dirty))
-      return null;
-
-    if (formControl.errors.required)
-      return 'Required';
-
-    return null;
-  }
-
-  get restingMetabolismError() {
-    const formControl = this.addBodyInfoForm.get('restingMetabolism');
-    if (!(formControl.invalid && formControl.dirty))
-      return null;
-
-    if (formControl.errors.required)
-      return 'Required';
-
-    return null;
-  }
-
-  get bodyAgeError() {
-    const formControl = this.addBodyInfoForm.get('bodyAge');
-    if (!(formControl.invalid && formControl.dirty))
-      return null;
-
-    if (formControl.errors.required)
-      return 'Required';
-
-    return null;
-  }
-
-  get bmiError() {
-    const formControl = this.addBodyInfoForm.get('bmi');
-    if (!(formControl.invalid && formControl.dirty))
-      return null;
-
-    if (formControl.errors.required) {
-      return 'Required';
+    if (formControl.errors) {
+      if (formControl.errors.required)
+        return '*Required';
     }
 
     return null;
   }
 
-  get subCutTotalError() {
-    const formControl =
-      this.addBodyInfoForm.get('subcutaneousMeasurements').get('total');
-    if (!(formControl.invalid && formControl.dirty))
-      return null;
-
-    if (formControl.errors.required)
-      return 'Required';
-
-    return null;
-  }
-
-  get subCutTrunkError() {
-    const formControl =
-      this.addBodyInfoForm.get('subcutaneousMeasurements').get('trunk');
-    if (!(formControl.invalid && formControl.dirty))
-      return null;
-
-    if (formControl.errors.required)
-      return 'Required';
-
-    return null;
-  }
-
-  get subCutArmsError() {
-    const formControl =
-      this.addBodyInfoForm.get('subcutaneousMeasurements').get('arms');
-    if (!(formControl.invalid && formControl.dirty))
-      return null;
-
-    if (formControl.errors.required)
-      return 'Required';
-
-    return null;
-  }
-
-  get subCutLegsError() {
-    const formControl =
-      this.addBodyInfoForm.get('subcutaneousMeasurements').get('legs');
-    if (!(formControl.invalid && formControl.dirty))
-      return null;
-
-    if (formControl.errors.required)
-      return 'Required';
-
-    return null;
-  }
-
-  get skeleTotalError() {
-    const formControl =
-      this.addBodyInfoForm.get('skeletalMeasurements').get('total');
-    if (!(formControl.invalid && formControl.dirty))
-      return null;
-
-    if (formControl.errors.required)
-      return 'Required';
-
-    return null;
-  }
-
-  get skeleTrunkError() {
-    const formControl =
-      this.addBodyInfoForm.get('skeletalMeasurements').get('trunk');
-    if (!(formControl.invalid && formControl.dirty))
-      return null;
-
-    if (formControl.errors.required)
-      return 'Required';
-
-    return null;
-  }
-
-  get skeleArmsError() {
-    const formControl =
-      this.addBodyInfoForm.get('skeletalMeasurements').get('arms');
-    if (!(formControl.invalid && formControl.dirty))
-      return null;
-
-    if (formControl.errors.required)
-      return 'Required';
-
-    return null;
-  }
-
-  get skeleLegsError() {
-    const formControl =
-      this.addBodyInfoForm.get('skeletalMeasurements').get('legs');
-    if (!(formControl.invalid && formControl.dirty))
-      return null;
-
-    if (formControl.errors.required)
-      return 'Required';
-
-    return null;
+  /**
+   * Scrolls to the top of the page. Called after an attempt
+   * to save with invalid details.
+   */
+  private _scrollToTop() {
+    this.content.scrollToTop();
   }
 
   private _prepareBodyInfo(): UserBodyInfo {
@@ -329,14 +194,14 @@ export class ModalAddBodyInfoPage {
       restingMetabolism: formModel.restingMetabolism,
       bodyAge: formModel.bodyAge,
       bmi: formModel.bmi,
-      subCutFatTotal: formModel.subcutaneousMeasurements.total,
-      subCutFatTrunk: formModel.subcutaneousMeasurements.trunk,
-      subCutFatArms: formModel.subcutaneousMeasurements.arms,
-      subCutFatLegs: formModel.subcutaneousMeasurements.legs,
-      skeletalMuscleTotal: formModel.skeletalMeasurements.total,
-      skeletalMuscleTrunk: formModel.skeletalMeasurements.trunk,
-      skeletalMuscleArms: formModel.skeletalMeasurements.arms,
-      skeletalMuscleLegs: formModel.skeletalMeasurements.legs
+      subCutFatTotal: formModel.subCutFatTotal,
+      subCutFatTrunk: formModel.subCutFatTrunk,
+      subCutFatArms: formModel.subCutFatArms,
+      subCutFatLegs: formModel.subCutFatLegs,
+      skeletalMuscleTotal: formModel.skeletalMuscleTotal,
+      skeletalMuscleTrunk: formModel.skeletalMuscleTrunk,
+      skeletalMuscleArms: formModel.skeletalMuscleArms,
+      skeletalMuscleLegs: formModel.skeletalMuscleLegs
     };
 
     return newUserBodyInfo;

@@ -59,7 +59,7 @@
           <ion-col col-5 class="AddBodyInfo-bodyInfo-label">
             <ion-label
               [ngClass]="{'AddBodyInfo-bodyInfo-label-hasError':
-                trueAgeError}">
+                getInputError('trueAge')}">
               Age
             </ion-label>
           </ion-col>
@@ -67,13 +67,13 @@
             <ion-input
               class="AddBodyInfo-textInput"
               [ngClass]="{'AddBodyInfo-textInput-hasError':
-                trueAgeError}"
+                getInputError('trueAge')}"
               type="number"
               placeholder="0"
               formControlName="trueAge">
             </ion-input>
             <div class="AddBodyInfo-errorMessage"
-              [innerHTML]="trueAgeError"></div>
+              [innerHTML]="getInputError('trueAge')"></div>
           </ion-col>
           <ion-col>
             &nbsp;
@@ -85,7 +85,7 @@
           <ion-col col-5 class="AddBodyInfo-bodyInfo-label">
             <ion-label
               [ngClass]="{'AddBodyInfo-bodyInfo-label-hasError':
-                weightError}">
+                getInputError('weight')}">
                 Weight (kg)
             </ion-label>
           </ion-col>
@@ -93,13 +93,13 @@
             <ion-input
               class="AddBodyInfo-textInput"
               [ngClass]="{'AddBodyInfo-textInput-hasError':
-                weightError}"
+                 getInputError('weight')}"
               type="number"
               placeholder="0"
               formControlName="weight">
             </ion-input>
             <div class="AddBodyInfo-errorMessage"
-              [innerHTML]="weightError"></div>
+              [innerHTML]="getInputError('weight')"></div>
           </ion-col>
           <ion-col>
             &nbsp;
@@ -111,7 +111,7 @@
           <ion-col col-5 class="AddBodyInfo-bodyInfo-label">
             <ion-label
               [ngClass]="{'AddBodyInfo-bodyInfo-label-hasError':
-                heightError}">
+                getInputError('height')}">
                 Height (cm)
             </ion-label>
           </ion-col>
@@ -119,13 +119,13 @@
             <ion-input
               class="AddBodyInfo-textInput"
               [ngClass]="{'AddBodyInfo-textInput-hasError':
-                heightError}"
+                getInputError('height')}"
               type="number"
               placeholder="0"
               formControlName="height">
             </ion-input>
             <div class="AddBodyInfo-errorMessage"
-              [innerHTML]="heightError"></div>
+              [innerHTML]="getInputError('height')"></div>
           </ion-col>
           <ion-col>
             &nbsp;
@@ -137,7 +137,7 @@
           <ion-col col-5 class="AddBodyInfo-bodyInfo-label">
             <ion-label
               [ngClass]="{'AddBodyInfo-bodyInfo-label-hasError':
-                percBodyFatError}">
+                getInputError('percBodyFat')}">
                 % Body Fat
             </ion-label>
           </ion-col>
@@ -145,13 +145,13 @@
             <ion-input
               class="AddBodyInfo-textInput"
               [ngClass]="{'AddBodyInfo-textInput-hasError':
-                percBodyFatError}"
+                getInputError('percBodyFat')}"
               type="number"
               placeholder="0"
               formControlName="percBodyFat">
             </ion-input>
             <div class="AddBodyInfo-errorMessage"
-              [innerHTML]="percBodyFatError"></div>
+              [innerHTML]="getInputError('percBodyFat')"></div>
           </ion-col>
           <ion-col>
             &nbsp;
@@ -163,7 +163,7 @@
           <ion-col col-5 class="AddBodyInfo-bodyInfo-label">
             <ion-label
               [ngClass]="{'AddBodyInfo-bodyInfo-label-hasError':
-                visceralFatRatingError}">
+                getInputError('visceralFatRating')}">
                 % Visceral Fat Rating
             </ion-label>
           </ion-col>
@@ -171,13 +171,13 @@
             <ion-input
               class="AddBodyInfo-textInput"
               [ngClass]="{'AddBodyInfo-textInput-hasError':
-                visceralFatRatingError}"
+                getInputError('visceralFatRating')}"
               type="number"
               placeholder="0"
               formControlName="visceralFatRating">
             </ion-input>
             <div class="AddBodyInfo-errorMessage"
-              [innerHTML]="visceralFatRatingError"></div>
+              [innerHTML]="getInputError('visceralFatRating')"></div>
           </ion-col>
           <ion-col>
             &nbsp;
@@ -189,7 +189,7 @@
           <ion-col col-5 class="AddBodyInfo-bodyInfo-label">
             <ion-label
               [ngClass]="{'AddBodyInfo-bodyInfo-label-hasError':
-                restingMetabolismError}">
+                getInputError('restingMetabolism')}">
                 Resting Metabolism
             </ion-label>
           </ion-col>
@@ -197,13 +197,13 @@
             <ion-input
               class="AddBodyInfo-textInput"
               [ngClass]="{'AddBodyInfo-textInput-hasError':
-                restingMetabolismError}"
+                getInputError('restingMetabolism')}"
               type="number"
               placeholder="0"
               formControlName="restingMetabolism">
             </ion-input>
             <div class="AddBodyInfo-errorMessage"
-              [innerHTML]="restingMetabolismError"></div>
+              [innerHTML]="getInputError('restingMetabolism')"></div>
           </ion-col>
           <ion-col>
             &nbsp;
@@ -215,7 +215,7 @@
           <ion-col col-5 class="AddBodyInfo-bodyInfo-label">
             <ion-label
               [ngClass]="{'AddBodyInfo-bodyInfo-label-hasError':
-                bodyAgeError}">
+                getInputError('bodyAge')}">
                 Body Age
             </ion-label>
           </ion-col>
@@ -223,13 +223,13 @@
             <ion-input
               class="AddBodyInfo-textInput"
               [ngClass]="{'AddBodyInfo-textInput-hasError':
-                bodyAgeError}"
+                getInputError('bodyAge')}"
               type="number"
               placeholder="0"
               formControlName="bodyAge">
             </ion-input>
             <div class="AddBodyInfo-errorMessage"
-              [innerHTML]="bodyAgeError"></div>
+              [innerHTML]="getInputError('bodyAge')"></div>
           </ion-col>
           <ion-col>
             &nbsp;
@@ -241,7 +241,7 @@
           <ion-col col-5 class="AddBodyInfo-bodyInfo-label">
             <ion-label
               [ngClass]="{'AddBodyInfo-bodyInfo-label-hasError':
-                bmiError}">
+                getInputError('bmi')}">
                 Body Mass Index
             </ion-label>
           </ion-col>
@@ -249,13 +249,13 @@
             <ion-input
               class="AddBodyInfo-textInput"
               [ngClass]="{'AddBodyInfo-textInput-hasError':
-                bmiError}"
+                getInputError('bmi')}"
               type="number"
               placeholder="0"
               formControlName="bmi">
             </ion-input>
             <div class="AddBodyInfo-errorMessage"
-              [innerHTML]="bmiError"></div>
+              [innerHTML]="getInputError('bmi')"></div>
           </ion-col>
           <ion-col>
             &nbsp;
@@ -263,7 +263,7 @@
         </ion-row>
 
         <!-- SUBCUT -->
-        <ng-container formGroupName="subcutaneousMeasurements">
+        <ng-container>
           <ion-row>
             <ion-col col-5 class="AddBodyInfo-bodyInfo-label">
               <ion-label>% Subcutaneous Fat</ion-label>
@@ -278,7 +278,7 @@
             <ion-col col-5 class="AddBodyInfo-bodyInfo-sublabel">
               <ion-label
                 [ngClass]="{'AddBodyInfo-bodyInfo-label-hasError':
-                  subCutTotalError}">
+                  getInputError('subCutFatTotal')}">
                 Total
               </ion-label>
             </ion-col>
@@ -286,13 +286,13 @@
               <ion-input
                 class="AddBodyInfo-textInput"
                 [ngClass]="{'AddBodyInfo-textInput-hasError':
-                  subCutTotalError}"
+                  getInputError('subCutFatTotal')}"
                 type="number"
                 placeholder="0"
-                formControlName="total">
+                formControlName="subCutFatTotal">
               </ion-input>
             <div class="AddBodyInfo-errorMessage"
-              [innerHTML]="subCutTotalError"></div>
+              [innerHTML]="getInputError('subCutFatTotal')"></div>
             </ion-col>
             <ion-col>
               &nbsp;
@@ -304,7 +304,7 @@
             <ion-col col-5 class="AddBodyInfo-bodyInfo-sublabel">
               <ion-label
                 [ngClass]="{'AddBodyInfo-bodyInfo-label-hasError':
-                  subCutTrunkError}">
+                  getInputError('subCutFatTrunk')}">
                 Trunk
               </ion-label>
             </ion-col>
@@ -312,13 +312,13 @@
               <ion-input
                 class="AddBodyInfo-textInput"
                 [ngClass]="{'AddBodyInfo-textInput-hasError':
-                  subCutTrunkError}"
+                  getInputError('subCutFatTrunk')}"
                 type="number"
                 placeholder="0"
-                formControlName="trunk">
+                formControlName="subCutFatTrunk">
               </ion-input>
             <div class="AddBodyInfo-errorMessage"
-              [innerHTML]="subCutTrunkError"></div>
+              [innerHTML]="getInputError('subCutFatTrunk')"></div>
             </ion-col>
             <ion-col>
               &nbsp;
@@ -330,7 +330,7 @@
             <ion-col col-5 class="AddBodyInfo-bodyInfo-sublabel">
               <ion-label
                 [ngClass]="{'AddBodyInfo-bodyInfo-label-hasError':
-                  subCutArmsError}">
+                  getInputError('subCutFatArms')}">
                 Arms
               </ion-label>
             </ion-col>
@@ -338,13 +338,13 @@
               <ion-input
                 class="AddBodyInfo-textInput"
                 [ngClass]="{'AddBodyInfo-textInput-hasError':
-                  subCutArmsError}"
+                  getInputError('subCutFatArms')}"
                 type="number"
                 placeholder="0"
-                formControlName="arms">
+                formControlName="subCutFatArms">
               </ion-input>
               <div class="AddBodyInfo-errorMessage"
-                [innerHTML]="subCutArmsError"></div>
+                [innerHTML]="getInputError('subCutFatArms')"></div>
             </ion-col>
             <ion-col>
               &nbsp;
@@ -356,7 +356,7 @@
             <ion-col col-5 class="AddBodyInfo-bodyInfo-sublabel">
               <ion-label
                 [ngClass]="{'AddBodyInfo-bodyInfo-label-hasError':
-                  subCutLegsError}">
+                  getInputError('subCutFatLegs')}">
                 Legs
               </ion-label>
             </ion-col>
@@ -364,13 +364,13 @@
               <ion-input
                 class="AddBodyInfo-textInput"
                 [ngClass]="{'AddBodyInfo-textInput-hasError':
-                  subCutLegsError}"
+                  getInputError('subCutFatLegs')}"
                 ype="number"
                 placeholder="0"
-                formControlName="legs">
+                formControlName="subCutFatLegs">
               </ion-input>
               <div class="AddBodyInfo-errorMessage"
-                [innerHTML]="subCutLegsError"></div>
+                [innerHTML]="getInputError('subCutFatLegs')"></div>
             </ion-col>
             <ion-col>
               &nbsp;
@@ -379,7 +379,7 @@
         </ng-container>
 
         <!-- SKELETAL -->
-        <ng-container formGroupName="skeletalMeasurements">
+        <ng-container>
           <ion-row>
             <ion-col col-5 class="AddBodyInfo-bodyInfo-label">
               <ion-label>% Skeletal Muscle</ion-label>
@@ -394,7 +394,7 @@
             <ion-col col-5 class="AddBodyInfo-bodyInfo-sublabel">
               <ion-label
                 [ngClass]="{'AddBodyInfo-bodyInfo-label-hasError':
-                   skeleTotalError}">
+                   getInputError('skeletalMuscleTotal')}">
                 Total
               </ion-label>
             </ion-col>
@@ -402,13 +402,13 @@
               <ion-input
                 class="AddBodyInfo-textInput"
                 [ngClass]="{'AddBodyInfo-textInput-hasError':
-                  skeleTotalError}"
+                  getInputError('skeletalMuscleTotal')}"
                 type="number"
                 placeholder="0"
-                formControlName="total">
+                formControlName="skeletalMuscleTotal">
               </ion-input>
               <div class="AddBodyInfo-errorMessage"
-                [innerHTML]="skeleTotalError"></div>
+                [innerHTML]="getInputError('skeletalMuscleTotal')"></div>
             </ion-col>
             <ion-col>
               &nbsp;
@@ -420,7 +420,7 @@
             <ion-col col-5 class="AddBodyInfo-bodyInfo-sublabel">
               <ion-label
                 [ngClass]="{'AddBodyInfo-bodyInfo-label-hasError':
-                   skeleTrunkError}">
+                   getInputError('skeletalMuscleTrunk')}">
                 Trunk
               </ion-label>
             </ion-col>
@@ -428,13 +428,13 @@
               <ion-input
                 class="AddBodyInfo-textInput"
                 [ngClass]="{'AddBodyInfo-textInput-hasError':
-                  skeleTrunkError}"
+                  getInputError('skeletalMuscleTrunk')}"
                 type="number"
                 placeholder="0"
-                formControlName="trunk">
+                formControlName="skeletalMuscleTrunk">
               </ion-input>
               <div class="AddBodyInfo-errorMessage"
-                [innerHTML]="skeleTrunkError"></div>
+                [innerHTML]="getInputError('skeletalMuscleTrunk')"></div>
             </ion-col>
             <ion-col>
               &nbsp;
@@ -446,7 +446,7 @@
             <ion-col col-5 class="AddBodyInfo-bodyInfo-sublabel">
               <ion-label
                 [ngClass]="{'AddBodyInfo-bodyInfo-label-hasError':
-                  skeleArmsError}">
+                  getInputError('skeletalMuscleArms')}">
                 Arms
               </ion-label>
             </ion-col>
@@ -454,13 +454,13 @@
               <ion-input
                 class="AddBodyInfo-textInput"
                 [ngClass]="{'AddBodyInfo-textInput-hasError':
-                  skeleArmsError}"
+                  getInputError('skeletalMuscleArms')}"
                 type="number"
                 placeholder="0"
-                formControlName="arms">
+                formControlName="skeletalMuscleArms">
               </ion-input>
               <div class="AddBodyInfo-errorMessage"
-                [innerHTML]="skeleArmsError"></div>
+                [innerHTML]="getInputError('skeletalMuscleArms')"></div>
             </ion-col>
             <ion-col>
               &nbsp;
@@ -472,7 +472,7 @@
             <ion-col col-5 class="AddBodyInfo-bodyInfo-sublabel">
               <ion-label
                 [ngClass]="{'AddBodyInfo-bodyInfo-label-hasError':
-                  skeleLegsError}">
+                  getInputError('skeletalMuscleLegs')}">
                 Legs
               </ion-label>
             </ion-col>
@@ -480,13 +480,13 @@
               <ion-input
                 class="AddBodyInfo-textInput"
                 [ngClass]="{'AddBodyInfo-textInput-hasError':
-                  skeleLegsError}"
+                  getInputError('skeletalMuscleLegs')}"
                 type="number"
                 placeholder="0"
-                formControlName="legs">
+                formControlName="skeletalMuscleLegs">
               </ion-input>
               <div class="AddBodyInfo-errorMessage"
-                [innerHTML]="skeleLegsError"></div>
+                [innerHTML]="getInputError('skeletalMuscleLegs')"></div>
             </ion-col>
             <ion-col>
               &nbsp;
