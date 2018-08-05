@@ -1,12 +1,22 @@
 contact-ice {
-    ion-card .contact-details {
-        ion-icon {
-            color: #666;
+    ion-card {
+        ion-card-title.ContactICE-title {
+            color: rgba(0, 0, 0, 0.84);
+            font-size: 20px;
+            font-weight: 500;
+            letter-spacing: 0.2px;
         }
 
-        ion-item.text-wrapped[text-wrap]  {
-            ion-label {
-                font-size: 16px;
+        .contact-details {
+
+            ion-icon {
+                color: #666;
+            }
+
+            ion-item.text-wrapped[text-wrap]  {
+                ion-label {
+                    font-size: 16px;
+                }
             }
         }
     }

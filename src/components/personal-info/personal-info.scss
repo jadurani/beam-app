@@ -22,6 +22,13 @@ personal-info {
         }
     }
 
+    ion-card-title.Personal-Info-title {
+        color: rgba(0, 0, 0, 0.84);
+        font-size: 20px;
+        font-weight: 500;
+        letter-spacing: 0.2px;
+    }
+
     .collapsible-details {
         max-height: 0;
         overflow: hidden;
