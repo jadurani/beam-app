@@ -439,6 +439,7 @@ export class AddEditMemberPage {
 
     this._saveToDatabase(userToSave)
       .then((userSaved:User) => {
+        this.confirmedExit = true;
         toast.dismiss();
         this.navCtrl.pop();
         if (!this.isEdit)
