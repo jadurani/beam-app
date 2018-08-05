@@ -36,9 +36,19 @@
           </ion-item>
         </ion-col>
         <ion-col col-9>
-          <ion-item text-left>
+          <ion-item text-left *ngIf="!profileExpanded">
             {{ user.phoneNumbers[0].number }}
           </ion-item>
+          <ng-container *ngIf="profileExpanded">
+            <ion-item *ngFor="let phone of user.phoneNumbers">
+              <span>
+                 {{ phone.number }}
+              </span>
+              <span *ngIf="phone.label">
+                ({{ phone.label }})
+              </span>
+            </ion-item>
+          </ng-container>
         </ion-col>
       </ion-row>
 
@@ -49,7 +59,7 @@
           </ion-item>
         </ion-col>
         <ion-col col-9>
-          <ion-item text-left>
+          <ion-item text-left text-wrap padding-right class="text-wrapped">
             {{ user.email }}
           </ion-item>
         </ion-col>
@@ -62,7 +72,7 @@
           </ion-item>
         </ion-col>
         <ion-col col-9>
-          <ion-item text-left text-wrap>
+          <ion-item text-left text-wrap padding-right class="text-wrapped">
             <span *ngIf="profileExpanded">
               {{ user.address.street }} {{ user.address.barangay }}
             </span>
@@ -108,7 +118,7 @@
             </ion-item>
           </ion-col>
           <ion-col col-9>
-            <ion-item text-left text-wrap>
+            <ion-item text-left text-wrap padding-right class="text-wrapped">
               {{ user.otherRemarks }}
             </ion-item>
           </ion-col>

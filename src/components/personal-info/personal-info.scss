@@ -40,5 +40,11 @@ personal-info {
         ion-list ion-icon {
             color: #666;
         }
+
+        ion-item.text-wrapped[text-wrap]  {
+            ion-label {
+                font-size: 16px;
+            }
+        }
     }
 }
