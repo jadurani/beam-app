@@ -9,7 +9,9 @@
       </ion-col>
       <ion-col col-3>
         <ion-item text-right>
-          <button ion-button clear color="dark" [navPush]="addEditMemberPage" [navParams]="{'isEdit': true, 'partToEdit': 'iceContact', 'user': user}">
+          <button ion-button clear color="dark"
+            [navPush]="addEditMemberPage"
+            [navParams]="{'isEdit': true, 'partToEdit': 'iceContact', 'user': user}">
             <ion-icon name="create"></ion-icon>
           </button>
         </ion-item>
@@ -58,15 +60,28 @@
         </ion-col>
       </ion-row>
 
-      <ion-row>
+      <ion-row *ngIf="user.iceContact.email">
         <ion-col col-3>
           <ion-item text-right>
             <ion-icon name="mail"></ion-icon>
           </ion-item>
         </ion-col>
         <ion-col col-9>
-          <ion-item text-left>
+          <ion-item text-left text-wrap class="text-wrapped">
             {{ user.iceContact.email }}
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="user.iceContact.socialMedia">
+        <ion-col col-3>
+          <ion-item text-right>
+            <ion-icon name="globe"></ion-icon>
+          </ion-item>
+        </ion-col>
+        <ion-col col-9>
+          <ion-item text-left text-wrap class="text-wrapped">
+            {{ user.iceContact.socialMedia }}
           </ion-item>
         </ion-col>
       </ion-row>
