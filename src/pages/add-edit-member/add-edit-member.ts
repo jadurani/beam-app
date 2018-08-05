@@ -300,9 +300,11 @@ export class AddEditMemberPage {
         this.dateProvider.stringToDate(formModel.dateOfBirth);
 
       if (formModel.socialMedia)
-      userObj.socialMedia = formModel.socialMedia;
+        userObj.socialMedia = formModel.socialMedia;
       if (formModel.otherRemarks)
-      userObj.otherRemarks = formModel.otherRemarks;
+        userObj.otherRemarks = formModel.otherRemarks;
+      if (formModel.workDetails)
+        userObj.workDetails = Object.assign({}, formModel.workDetails);
 
       const newNumbers = formModel.phoneNumbers
         .filter(
@@ -315,7 +317,13 @@ export class AddEditMemberPage {
       if (newNumbers)
         userObj.phoneNumbers = newNumbers;
 
-      userObj.address = Object.assign({}, formModel.address);
+      userObj.address = {
+        city: formModel.address.city
+      };
+      if (formModel.address.barangay)
+        userObj.address.barangay = formModel.address.barangay;
+      if (formModel.address.street)
+        userObj.address.street = formModel.address.street;
     }
 
     if (!this.isEdit || (this.isEdit && this.partToEdit === this.ICE_CONTACT)) {

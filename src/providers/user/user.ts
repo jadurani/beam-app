@@ -248,7 +248,8 @@ export class UserProvider {
       if (userObj.bodyInfo) {
         const userBodyInfo : UserBodyInfo = {
           uid: userObj.id,
-          dateTaken: this.dateProvider.firebaseDateToDate(userObj.bodyInfo.dateTaken),
+          dateTaken: this.dateProvider.firebaseDateToDate(
+            userObj.bodyInfo.dateTaken),
           trueAge: userObj.bodyInfo.trueAge,
           weight: userObj.bodyInfo.weight,
           height: userObj.bodyInfo.height,
@@ -272,8 +273,9 @@ export class UserProvider {
       if (userObj.iceContact)
         user.iceContact = Object.assign({}, userObj.iceContact);
 
-      if (userObj.otherRemarks)
-        user.otherRemarks = userObj.otherRemarks;
+      if (userObj.workDetails) user.workDetails = userObj.workDetails;
+      if (userObj.socialMedia) user.socialMedia = userObj.socialMedia;
+      if (userObj.otherRemarks) user.otherRemarks = userObj.otherRemarks;
     }
 
     return user;

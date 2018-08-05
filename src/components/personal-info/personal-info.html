@@ -85,14 +85,28 @@
 
       <ion-item-group class="collapsible-details"
         [ngClass]="{'expanded': profileExpanded}">
-        <ion-row *ngIf="user.workDetails">
+
+        <ion-row *ngIf="user.socialMedia">
           <ion-col col-3>
             <ion-item text-right>
-              <ion-icon name="alert"></ion-icon>
+              <ion-icon name="globe"></ion-icon>
             </ion-item>
           </ion-col>
           <ion-col col-9>
-            <ion-item text-left>
+            <ion-item text-left text-wrap class="text-wrapped">
+              {{ user.socialMedia }}
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row *ngIf="user.workDetails">
+          <ion-col col-3>
+            <ion-item text-right>
+              <ion-icon name="briefcase"></ion-icon>
+            </ion-item>
+          </ion-col>
+          <ion-col col-9>
+            <ion-item text-left text-wrap class="text-wrapped">
               {{ user.workDetails.title }} at {{ user.workDetails.company }}
             </ion-item>
           </ion-col>
