@@ -1,11 +1,9 @@
 page-modal-add-body-info {
     .AddBodyInfo {
+        font-size: 16px;
 
-        &-section {
-            &-title {
-                color: #444;
-                font-weight: bold;
-            }
+        ion-datetime.AddBodyInfo-textInput  {
+            padding: 8px 0 8px 16px;
         }
 
         &-textInput {
@@ -24,7 +22,10 @@ page-modal-add-body-info {
 
             input {
                 padding-left: 8px;
+                margin: 8px;
             }
+
+
         }
 
         &-errorMessage {
@@ -35,9 +36,14 @@ page-modal-add-body-info {
         }
 
         &-bodyInfo {
+
             &-label {
                 color: #444;
+                font-weight: 500;
                 padding-left: 6%;
+                ion-label.label {
+                    margin: 8px;
+                }
 
                 &-hasError {
                     color: #ff0000;
