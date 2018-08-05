@@ -31,6 +31,7 @@ export class ModalAddBodyInfoPage {
 
   user: User;
   addBodyInfoForm: FormGroup;
+  numberPattern: RegExp = /^\d+(\.\d+)?$/;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -54,21 +55,111 @@ export class ModalAddBodyInfoPage {
           this.dateProvider.getAgeToday(this.user.dateOfBirth) :
           null),
         Validators.required],
-      weight: [null, Validators.required],
-      height: [null, Validators.required],
-      percBodyFat: [null, Validators.required],
-      visceralFatRating: [null, Validators.required],
-      restingMetabolism: [null, Validators.required],
-      bodyAge: [null, Validators.required],
-      bmi: [null, Validators.required],
-      subCutFatTotal: [null, Validators.required],
-      subCutFatTrunk: [null, Validators.required],
-      subCutFatArms: [null, Validators.required],
-      subCutFatLegs: [null, Validators.required],
-      skeletalMuscleTotal: [null, Validators.required],
-      skeletalMuscleTrunk: [null, Validators.required],
-      skeletalMuscleArms: [null, Validators.required],
-      skeletalMuscleLegs: [null, Validators.required]
+      weight: [
+        null,
+        [
+          Validators.required,
+          Validators.pattern(this.numberPattern)
+        ]
+      ],
+      height: [
+        null,
+        [
+          Validators.required,
+          Validators.pattern(this.numberPattern)
+        ]
+      ],
+      percBodyFat: [
+        null,
+        [
+          Validators.required,
+          Validators.pattern(this.numberPattern)
+        ]
+      ],
+      visceralFatRating: [
+        null,
+        [
+          Validators.required,
+          Validators.pattern(this.numberPattern)
+        ]
+      ],
+      restingMetabolism: [
+        null,
+        [
+          Validators.required,
+          Validators.pattern(this.numberPattern)
+        ]
+      ],
+      bodyAge: [
+        null,
+        [
+          Validators.required,
+          Validators.pattern(this.numberPattern)
+        ]
+      ],
+      bmi: [
+        null,
+        [
+          Validators.required,
+          Validators.pattern(this.numberPattern)
+        ]
+      ],
+      subCutFatTotal: [
+        null,
+        [
+          Validators.required,
+          Validators.pattern(this.numberPattern)
+        ]
+      ],
+      subCutFatTrunk: [
+        null,
+        [
+          Validators.required,
+          Validators.pattern(this.numberPattern)
+        ]
+      ],
+      subCutFatArms: [
+        null,
+        [
+          Validators.required,
+          Validators.pattern(this.numberPattern)
+        ]
+      ],
+      subCutFatLegs: [
+        null,
+        [
+          Validators.required,
+          Validators.pattern(this.numberPattern)
+        ]
+      ],
+      skeletalMuscleTotal: [
+        null,
+        [
+          Validators.required,
+          Validators.pattern(this.numberPattern)
+        ]
+      ],
+      skeletalMuscleTrunk: [
+        null,
+        [
+          Validators.required,
+          Validators.pattern(this.numberPattern)
+        ]
+      ],
+      skeletalMuscleArms: [
+        null,
+        [
+          Validators.required,
+          Validators.pattern(this.numberPattern)
+        ]
+      ],
+      skeletalMuscleLegs: [
+        null,
+        [
+          Validators.required,
+          Validators.pattern(this.numberPattern)
+        ]
+      ]
     });
   }
 
@@ -165,9 +256,12 @@ export class ModalAddBodyInfoPage {
     if (!(formControl.invalid && formControl.touched))
       return null;
 
-    if (formControl.errors) {
-      if (formControl.errors.required)
+      if (formControl.errors) {
+        if (formControl.errors.required)
         return '*Required';
+
+      if (formControl.errors.pattern)
+        return 'Valid number formats: 10, 1.01';
     }
 
     return null;
