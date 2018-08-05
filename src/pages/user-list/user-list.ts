@@ -98,10 +98,9 @@ export class UserListPage {
    * Load all the users from the database.
    */
   getUsers(): void {
-    let sortOrder = this.descOrder ? this.DESCENDING_ORDER : this.ASCENDING_ORDER;
     this.userProvider.getUsers()
       .then(users => {
-        this.users = users;
+        this.users = users.filter(user => user.roles.client);
         this.unfilteredUserList = users;
         this.loading = false;
       })

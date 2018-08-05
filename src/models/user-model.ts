@@ -10,7 +10,7 @@ export interface User {
     id ?: string; // Document ID in Firebase
     prefix ?: string;
     fullName ?: string;
-    dateJoined: Date;
+    dateJoined ?: Date;
     sex ?: string;
     dateOfBirth ?: Date;
     address ?: Address;
@@ -85,6 +85,7 @@ export interface FirebaseDate {
 }
 
 interface UserPermissions {
+    admin ?: boolean;
     owner ?: boolean,
     staff ?: boolean,
     trainer ?: boolean,

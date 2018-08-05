@@ -50,6 +50,7 @@ export class UserProvider {
 
         querySnapshot.forEach(doc => {
           userObj = doc.data();
+          userObj.id = doc.id;
         });
 
         userObj.displayName = authCurrentUser.displayName;
